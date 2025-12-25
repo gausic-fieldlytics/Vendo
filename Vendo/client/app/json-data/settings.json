@@ -1,0 +1,18 @@
+[
+	{
+	
+      "name":"Settings",
+      "iconclass":"zmdi zmdi-settings",
+	  "anchorlinks":"#/form/setting" ,
+	  "pageid":"38"   
+	},
+	{
+	"name":"Email Template",
+	"iconclass":"zmdi zmdi-email",
+	"anchorlinks" : "#/form/emailtemplate",
+	"pageid":"39"
+	}
+
+
+	
+]

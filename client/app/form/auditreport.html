@@ -1,0 +1,300 @@
+<div class="page page-table" data-ng-controller="AuditReportCtrl" ng-init="show = 1" style="min-height: 500px">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">Audit Report</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right" ng-show="currentPageresultData.length>0">
+                <button  ng-click="exceller()" style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="Add Stock<"><span class="ng-scope"><i class="zmdi zmdi-download"></i>&nbsp;&nbsp;Excel</span></button>
+                <button ng-click="print()" style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Purchaseindent"><span class="ng-scope"> <i class="zmdi zmdi-print"></i>&nbsp;&nbsp;Print</span></button>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2 ">
+                            From Date
+                            <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                <div class="input-group ui-datepicker" style="width: 100%">
+                                    <input type="text"
+                                        class="form-control"
+                                        name="Fromdate"
+                                        id="Fromdate"
+                                        uib-datepicker-popup="dd/MM/yyyy"
+                                        ng-model="taskreport.fromdate"
+                                        is-open="popup1.opened"
+                                        datepicker-options="dateOptions2"
+                                       
+                                        max-date="today_max"
+                                        close-text="Close"
+                                        alt-input-formats="altInputFormats"
+                                        alt-input-formats="dd/MM/yyyy"
+                                        close-text="Close"
+                                        ng-click="open1()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 ">
+                            To Date
+                            <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                <div class="input-group ui-datepicker" style="width: 100%">
+                                    <input type="text"
+                                        class="form-control"
+                                        name="ToDate"
+                                        id="ToDate"
+                                        uib-datepicker-popup="dd/MM/yyyy"
+                                        ng-model="taskreport.todate"
+                                        is-open="popup1.opened"
+                                        datepicker-options="dateOptions2"
+                                        max-date="today_max"
+                                        ng-required="false"
+                                        close-text="Close"
+                                        alt-input-formats="altInputFormats"
+                                        alt-input-formats="dd/MM/yyyy"
+                                        ng-required="true"
+                                        close-text="Close"
+                                        ng-click="open1()" />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-sm-2">
+                            <label>Project</label>
+                            <form>
+                                <md-autocomplete class="someeee" md-input-name="autocompleteField"
+                                    md-no-cache="noCache"
+                                    md-search-text="searchprojectitem"
+                                    md-selected-item="selectedprojectitem"
+                                    md-selected-item-change="selectedItemChange('P')"
+                                    md-items="item in querySearch(searchprojectitem,'project')"
+                                    md-item-text="item.projectname"
+                                    md-input-id="project"
+                                    md-min-length="0"
+                                    md-autoselect="true"
+                                    >
+                                    <md-item-template>
+                                        <span md-highlight-text="searchprojectitem" id="{{item.projectname}}" md-highlight-flags="^i">{{item.projectname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Project matching "{{searchprojectitem}}" were found.
+                                    </md-not-found>
+                             </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Task</label>
+                            <form>
+                                <md-autocomplete class="someeee" md-input-name="autocompleteField"
+                                    md-no-cache="noCache"
+                                    md-search-text="searchtaskitem"
+                                    md-selected-item="selectedtaskitem"
+                                    md-selected-item-change="selectedItemChange('T')"
+                                    md-items="item in querySearch(searchtaskitem,'task')"
+                                    md-item-text="item.tasktitle"
+                                    md-input-id="task"
+                                    md-min-length="0"
+                                    md-autoselect="true"
+                                   >
+                                    <md-item-template>
+                                        <span md-highlight-text="searchtaskitem" id="{{item.tasktitle}}" md-highlight-flags="^i">{{item.tasktitle}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Task matching "{{searchtaskitem}}" were found.
+                                    </md-not-found>
+                             </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Target</label>
+                            <form>
+                                <md-autocomplete class="someeee" md-input-name="autocompleteField"
+                                    md-no-cache="noCache"
+                                    md-search-text="searchtargetitem"
+                                    md-selected-item="selectedtargetitem"
+                                    md-selected-item-change="selectedItemChange()"
+                                    md-items="item in querySearch(searchtargetitem,'target')"
+                                    md-item-text="item.targetname"
+                                    md-input-id="target"
+                                    md-min-length="0"
+                                    md-autoselect="true"    
+                                    >   
+                                    <md-item-template>
+                                        <span md-highlight-text="searchtargetitem" id="{{item.targetname}}" md-highlight-flags="^i">{{item.targetname}}</span>
+                                    </md-item-template>
+                                    <!-- <md-not-found>
+                                        No Target matching "{{searchtargetitem}}" were found.
+                                    </md-not-found> -->
+                             </md-autocomplete>
+                            </form>
+                        </div>
+                       
+                       <div class="col-sm-2">
+                           <button   ng-click="runReport()" style="margin-top:17px;" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Salescalltracker"><span class="ng-scope">Run</span></button>
+                       </div>
+                        
+                    </div>
+                     <div class="row">
+                          <div class="col-sm-2">
+                            <label>Audit By</label>
+                            <form>
+                                <md-autocomplete class="someeee" md-input-name="autocompleteField"
+                                    md-no-cache="noCache"
+                                    md-search-text="searchuseritem"
+                                    md-selected-item="selecteduseritem"
+                                    md-selected-item-change="selectedItemChange()"
+                                    md-items="item in querySearch(searchuseritem,'user')"
+                                    md-item-text="item.username"
+                                    md-input-id="user"
+                                    md-min-length="0"
+                                    md-autoselect="true"
+                                    >
+                                    <md-item-template>
+                                        <span md-highlight-text="searchuseritem" id="{{item.username}}" md-highlight-flags="^i">{{item.username}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Audit by matching "{{searchuseritem}}" were found.
+                                    </md-not-found>
+                             </md-autocomplete>
+                            </form>
+                        </div>
+                         <div class="col-sm-2">
+                            <label>City</label>
+                            <form>
+                                <md-autocomplete class="someeee" md-input-name="autocompleteField"
+                                    md-no-cache="noCache"
+                                    md-search-text="searchcityitem"
+                                    md-selected-item="selectedcityitem"
+                                    md-selected-item-change="selectedItemChange('C')"
+                                    md-items="item in querySearch(searchcityitem,'city')"
+                                    md-item-text="item.cityname"
+                                    md-input-id="city"
+                                    md-min-length="0"
+                                    md-autoselect="true">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchcityitem" id="{{item.cityname}}" md-highlight-flags="^i">{{item.cityname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No City matching "{{searchcityitem}}" were found.
+                                    </md-not-found>
+                             </md-autocomplete>
+                            </form>
+                        </div>
+                          <div class="col-sm-2">
+                            <label>Agency/ISP</label>
+                            <form class="someeee">
+                                <input type="text" placeholder="Agency/ISP" class="form-control"data-ng-model="usernamesearchKeywords"data-ng-keyup="userNamesearch()" style=" border-radius:29px;">
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <form style="margin-top:17px;">
+                                <input type="text"placeholder="Search..."class="form-control"data-ng-model="searchKeywords"data-ng-keyup="search()" style=" border-radius:29px;">
+                            </form>
+                        </div>
+                        <div class="col-sm-5" >
+                        
+                            <div class=" page-num-info">
+                              <span style="margin-top: 15px;display: inline-block;">Show 
+                                  <select class="pageno" data-ng-model="numPerPage"
+                                      data-ng-options="num for num in numPerPageOpt"
+                                      data-ng-change="onNumPerPageChange()">
+                              </select>
+                              Entries Per Page
+                              </span>
+                      </div>
+                       </div>
+                     </div>
+                </div>
+                <div class="table-responsive table-bordered" id="gridviewreport">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                          
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                       Target
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Project
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                       Task
+                                    </div>
+                                </th>
+
+                                 <th>
+                                    <div class="th">
+                                        Agency/ISP
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                      Complete Date
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                      Audit By
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                      Audit Date
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="rowData in currentPageresultData">
+                                <td>{{rowData.targetname}} </td>
+                                <td>{{rowData.projecttitle}}</td>
+                                <td>{{rowData.tasktitle}}</td>
+                               
+                                <td>{{rowData.username }}  </td>
+                                <td>{{rowData.actenddate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{rowData.auditusername}}</td>
+                                <td>{{rowData.auditdate | date:'dd/MM/yyyy'}}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>Showing {{filteredresultData.length}}/{{resultData.length}} Entries
+                            </span>
+                        </div>
+                        <!--   urlDDLoad-->
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredresultData.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                previous-text="&lsaquo;" next-text="&rsaquo;"
+                                boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,323 @@
+
+<div class="page page-table" data-ng-controller="TaskstepsCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1" >
+    <div class="row ui-section topbar">
+    <div class="col-xs-8 clearfix">
+        <h2 class="section-header" style="display:inline-block">Tasksteps</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align:right">
+            <span class="showon"  style="float:right;margin-top: 10px;" clearfix">
+        <a ng-click="show = 2"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="Add Tasksteps"><span class="fa fa-plus ng-scope"></span></button></a>
+    </span>
+            <span ng-show="access_permission.addshow">
+                <a ng-click="show =2"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button"  aria-label="Add Tasksteps<" ng-click ="addTasksteps()"><span class="ng-scope">Add Tasksteps</span></button></a>
+            </span>
+        
+    </div>
+    
+    </div>
+    <div class="row ui-section">
+        <section class="panel panel-default table-dynamic">
+        <div class="table-filters">
+            <div class="row">
+			           
+
+            <div class="col-sm-4 ">
+                <form>
+                <input type="text"
+                     placeholder="Search..."
+                     class="form-control"
+                     data-ng-model="searchKeywords"
+                     data-ng-keyup="search()" style="border-radius:29px;">
+                </form>
+            </div>
+
+                 <div class="col-sm-6 page-num-info">
+                <span>
+                Show 
+                <select class="pageno" data-ng-model="numPerPage"
+                    data-ng-options="num for num in numPerPageOpt"
+                    data-ng-change="onNumPerPageChange()">
+                </select> 
+                entries per page
+                </span>
+            </div>
+
+            </div>
+        </div>
+            <div class="table-responsive table-bordered">
+
+            
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                                <th><div class="th">
+              S.No
+                
+                </div></th>     
+                <th><div class="th">
+              Client 
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('companyname') "
+                    data-ng-class="{active: row == 'companyname'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-companyname') "
+                    data-ng-class="{active: row == '-companyname'}"></span>
+                </div></th>                    <th><div class="th">
+              Project
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('projecttitle') "
+                    data-ng-class="{active: row == 'projecttitle'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-projecttitle') "
+                    data-ng-class="{active: row == '-projecttitle'}"></span>
+                </div></th>                       <th><div class="th">
+              Task Count
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('taskcount') "
+                    data-ng-class="{active: row == 'taskcount'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-taskcount') "
+                    data-ng-class="{active: row == '-taskcount'}"></span>
+                </div></th>   
+               <!-- <th>
+                                    <div class="th">
+                                        Action
+                                       
+                                    </div>
+                                </th> -->          
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="rowData in currentPageresultData" >
+               <td>{{$index+1}}
+                   <span ng-if="rowData.expanded" ng-click="rowData.expanded = false;$event.stopPropagation();" title="less"><span class="zmdi zmdi-minus-circle btnexpand"></span></span>
+                   <span ng-if="!rowData.expanded" ng-click="expandSelected(rowData);$event.stopPropagation();" title="More"><span class="zmdi zmdi-plus-circle btnexpand"></span></span>
+               </td>
+                <td>{{rowData.companyname}}</td>
+                <td>{{rowData.projecttitle}}</td>
+                <td>{{rowData.taskcount}}</td>
+                
+                
+            </tr>
+                 <tr ng-if="rowData.expanded" ng-repeat-end="">
+                                <td colspan="5" class="stockdetaildiv" style="padding:20px!important;">
+                                  
+                                  <table  class="table-responsive" style="width:100%">
+                                        <tr>
+
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Task
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        Steps Count
+                                    </div>
+                                </th>
+                                            <th>
+
+                                            </th>
+                            </tr>
+                                  <tr  data-ng-repeat="task in listalltask" >
+                                <td class="text-center">{{$index+1}}
+                                </td>
+                                <td>{{task.taskname}}</td>
+                                <td>{{task.stepcount}}</td>
+                                      <td>
+                                          <button ng-show="access_permission.editshow"  ng-click="viewTasksteps(task)" class="md-icon-button md-button md-ink-ripple" ><span title="View" class="zmdi zmdi-eye ng-scope"></span></button>
+                                      </td>
+                               
+                            </tr>
+                                    </table>
+                                </td>
+                            </tr>
+            </tbody>
+        </table>
+		</div>
+        <footer class="table-footer">
+            <div class="row">
+
+                  <div class="col-sm-6 filter-result-info">
+                <span>
+                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                </span>       
+                </div>
+            <div class="col-md-6 text-right pagination-container">
+                <uib-pagination class="pagination-sm"
+                    ng-model="currentPage"
+                    total-items="filteredresultData.length"
+                    max-size="4"
+                    ng-change="select(currentPage)"
+                    items-per-page="numPerPage"
+                    rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    boundary-links="true"></uib-pagination>
+            </div>
+            </div>
+        </footer>
+        </section>
+    </div>
+       </div>
+      
+    
+   <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2" >
+
+
+    <div class="row ui-section">
+    <div class="col-xs-8 clearfix">
+        <h2 class="section-header" style="display:inline-block">New Tasksteps</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align:right"> 
+             <span class="showon"  style="float:right;margin-top: 10px;" clearfix" >
+        <a ng-click="show = 1"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="view Tasksteps"><span class="fa fa-caret-right ng-scope"></span></button></a>
+    </span>
+        <a  ng-click="show =1" class="hideon"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Tasksteps"><span class="ng-scope">View Tasksteps</span></button></a>
+    </div>
+    
+    </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default" >
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row" >
+                        <div class="col-lg-12">
+
+                            <form name="material_login_form" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+                                <fieldset>
+                              <ng-form name="step_form">
+                                   <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <div class=" col-md-6">
+                                                <md-input-container >
+
+                                                    <label>Project</label>
+                                                     <md-icon class="zmdi zmdi-filter-frames"></md-icon>
+                                                    <md-select ng-model="projectid" required class="mandatoryselect"  ng-change="loadtask(projectid)">
+                                                        <md-option ng-value="project.id" data-ng-repeat="project in listproject">
+                                                            {{project.projecttitle}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                </div>
+                                                <div class=" col-md-6">
+                                                <md-input-container >
+
+                                                    <label>Task</label>
+                                                     <md-icon class="zmdi zmdi-filter-frames"></md-icon>
+                                                    <md-select ng-model="taskid" required class="mandatoryselect"   ng-change="loadtasksteps(taskid)" >
+                                                        <md-option ng-value="task.id" data-ng-repeat="task in listtask">
+                                                            {{task.tasktitle}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                </div>
+                                                
+                                            </div>
+                                  <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                      <table class="table table-striped table-bordered no-margin invoiceItems">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th style="width: 200px;">Step</th>
+                                                                <th>Sequence</th>
+                                                                <!--<th>Execution Hours</th>
+                                                                <th>Notes</th>
+                                                                <th>Is Mandatory</th>
+                                                                <th>Weightage</th>
+                                                                <th>Sample Image</th>-->
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        
+
+                                                    <tbody>
+
+                                                            <tr ng-repeat="taskstep in tasksteps.liststep track by $index">
+                                                                <td style="text-align: right; padding: 17px 12px 5px!important;">
+                                                                    <span ng-if="$index+1 < 10">0{{$index+1}}</span>
+                                                                    <span ng-if="$index+1 > 10||$index+1 == 10" ng-bind="$index+1"></span>
+                                                                </td>
+
+                                                                <td>
+
+                                                                        <textarea  style="width: 764px;height: 57px;" rows="4" required ng-maxlength="200"  name="steps{{$index}}" ng-model="taskstep.step" class="form-control" style="background:transparent"></textarea>
+                                                                       
+                                                                       <div  ng-messages="step_form['steps' + $index].$error" multiple ng-show="step_form['steps' + $index].$dirty">
+                                                                             <div ng-message="required">Task Step is required.</div>
+                                                                             <div ng-message="maxlength">Task Step up to 200 characters</div>
+                                                                       </div>
+
+                                                                </td>
+                                                                <td>
+
+                                                                    <md-input-container flex="" class="flex mandatoryselect">
+
+                                                                        <input type="text"
+                                                                               ng-model="taskstep.sequence"
+                                                                               style="margin-bottom: 0px;" required
+                                                                               ng-maxlength="4"  
+                                                                               name="sequence{{$index}}"
+                                                                               ng-pattern="/^[0-9]*$/"
+                                                                             />
+
+                                                                        <div  ng-messages="step_form['sequence' + $index].$error" multiple ng-show="step_form['sequence' + $index].$dirty">
+                                                                             <div ng-message="required">Sequence is required.</div>
+                                                                             <div ng-message="maxlength">Sequence up to 4 characters</div>
+                                                                             <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                                       </div>
+                                                                    </md-input-container>
+                                                                </td>
+
+                                                              
+                                                                <td ng-show="access_permission.deleteshow" style="white-space: nowrap">
+                                                                 
+                                                                    <button class="md-fab md-fab-xs md-button md-primary md-raised"
+                                                                            style="border: 1px solid #f44336; background: transparent; color: #f44336;"
+                                                                            title="Delete" ng-click="taskstepsDelete(taskstep)">
+                                                                        <i class="zmdi zmdi-delete"></i>
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                </table>
+                                  </div>
+                                               
+                                            </ng-form>
+                                             <div class="col-md-6" style="padding: 10px 0px 0px;" >
+                                                    <md-button ng-show="access_permission.addshow"  class="md-fab md-primary md-fab-xs" data-ng-click="addtaskstepsField(tasksteps.liststep)" data-ng-disabled="!childParam_step(step_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                                    <md-button ng-show="access_permission.deleteshow" class="md-fab md-primary md-fab-xs" data-ng-click="rmtaskstepsField(tasksteps.liststep)" data-ng-disabled="tasksteps.liststep.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                                </div>
+                                            <div >
+                                                <div class="col-md-6" style="text-align: right;    padding-top: 15px;">
+                                                    <md-button type="submit" ng-click="savesteps()" data-ng-disabled="!childParam_step(step_form)"
+                                                    class="md-raised btn-w-md md-primary">Save
+                                             </md-button>
+                                                </div>
+                                    </div>                   
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    
+   
+
+
+

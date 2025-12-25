@@ -1,0 +1,519 @@
+<div class="page-signup asu"  ng-controller="AgencysignupCtrl ">
+  <div ng-controller="authCtrl ">
+
+  </div>
+
+    <div class="wrapper" style="margin-top:0px">
+        <div class="main-body">
+            <div class="body-inner">
+                <div class="card bg-white" style="margin: auto;">
+                    <div class="card-content" style="padding: 0px 20px;">
+                        <section class="logo text-center">
+                            <h3><a >Register Vendo</a></h3>
+                         
+                            
+                        <div ng-show="!showotp">
+                            <form name="material_login_form" class="form-horizontal form-validation" style="font-size:14px;text-align:left" >
+                                      <div class="col-lg-6" style="margin-top: 28px; border-right: 1px solid #eee;">
+                                          
+                                           <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="flex ">
+                                                <label class="mandatory">Agency Name </label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input required
+                                                    type="text"
+                                                       name="companyname"
+                                                       ng-model="user.companyname"
+                                                    ng-maxlength="100"
+                                                     ng-change="listerrormsg.responsedata=0"/>
+                                                <div ng-messages="material_login_form.companyname.$error" multiple ng-if='material_login_form.companyname.$dirty'> 
+											        <div ng-message="maxlength">Agency Name up to 100 characters</div>
+                                                    <div ng-message="required">Agency Name is required.</div>
+											    </div> 
+                                                <p style="color:red" ng-show="listerrormsg.responsedata==-1">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                              
+                                        </div>
+                                           
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label class="mandatory">First Name</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="firstname"
+                                                       ng-model="user.firstname"
+                                                    ng-maxlength="45"
+                                                    ng-change="listerrormsg.responsedata=0"
+                                                    />
+
+                                                <div ng-messages="material_login_form.firstname.$error" multiple ng-if='material_login_form.firstname.$dirty'> 
+											        <div ng-message="maxlength">First Name up to 45 characters</div>
+                                                    <div ng-message="required">First Name is required.</div>
+											    </div> 
+                                                 <p style="color:red" ng-show="listerrormsg.responsedata==-2">{{listerrormsg.msg}} </p>  
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label >Last Name</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                       name="lastname"
+                                                       ng-model="user.lastname"
+                                                    ng-maxlength="45"/>
+                                                <div ng-messages="material_login_form.lastname.$error" multiple ng-if='material_login_form.lastname.$dirty'> 
+											        <div ng-message="maxlength">Last Name up to 45 characters</div>
+											    </div> 
+                                               
+                                            </md-input-container>
+                                        </div>
+                                         
+                                         
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                              <md-input-container flex="" class="col-md-6">
+                                                <label >Constitution</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select  ng-model="contact.constitutionid"   style="margin-bottom: 15px;">
+                                                    <md-option ng-value="constitution.id" data-ng-repeat="constitution in listconstitution">
+                                                        {{constitution.name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                              
+                                              <md-input-container flex="" >
+                                                <label class="mandatory">Email Address</label>
+                                                <md-icon class="zmdi zmdi-email"></md-icon>
+                                                <input type="text"
+                                                       name="email"
+                                                    required
+                                                       ng-model="contact.email"
+                                                    ng-maxlength="100"
+                                                     ng-change="listerrormsg.responsedata=0"
+                                                       ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" style="color: black;" />
+                                                 <div ng-messages="material_login_form.email.$error" multiple ng-if='material_login_form.email.$dirty'> 
+											        <div ng-message="pattern">Enter a valid email.</div>
+                                                     <div ng-message="required">Email is required.</div>
+                                                     <div ng-message="maxlength">Email up to 100 characters</div>
+											    </div> 
+                                                   <p style="color:red" ng-show="listerrormsg.responsedata==-4">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                          </div>
+
+                                           <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                            <md-input-container flex="" >
+                                                <label >Contact Type</label>
+                                                <md-icon class="zmdi zmdi-smartphone-setting"></md-icon>
+                                                 <md-select class="mandatoryselect" ng-model="contact.contacttypeid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="contacttype.id" data-ng-repeat="contacttype in listcontacttype">
+                                                        {{contacttype.contacttypename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                              <md-input-container flex="" class="col-md-6">
+                                                <label class="mandatory"> Contact No</label>
+                                                <md-icon class="zmdi zmdi-phone"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="contactno"
+                                                       ng-model="contact.mobileno"
+                                                       ng-maxlength="10"
+                                                       ng-minlength="10"
+                                                       ng-change="listerrormsg.responsedata=0"
+                                                       ng-pattern="/^[0-9]*$/" />
+                                                <div ng-messages="material_login_form.contactno.$error" multiple ng-if='material_login_form.contactno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                    <div ng-message="required">Contact No is required.</div>
+                                                     <div ng-message="maxlength">Contact No up to 10 characters</div>
+                                                    <div ng-message="minlength">Contact No must be atleast 10 characters long</div>
+											    </div>
+                                                <p style="color:red" ng-show="listerrormsg.responsedata==-3">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row mb-4">
+                                            
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >Landline </label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                                <input 
+                                                       type="text"
+                                                       name="telephoneno"
+                                                       ng-model="contact.telephoneno"
+                                                       ng-maxlength="10"
+                                                       ng-minlength="10"
+                                                       ng-pattern="/^[0-9]*$/" />
+
+                                               <div ng-messages="material_login_form.telephoneno.$error" multiple ng-if='material_login_form.telephoneno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">Landline up to 10 characters</div>
+                                                   <div ng-message="minlength">Landline must be atleast 10 characters long</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex">
+                                                <label class="mandatory" >GST No</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                    required
+                                                    name="gstno"
+                                                    ng-model="user.gstno"
+                                                    ng-pattern="validategstno"
+                                                    ng-maxlength="15"/>
+                                                <div ng-messages="material_login_form.gstno.$error" multiple ng-if='material_login_form.gstno.$dirty'> 
+											        <div ng-message="maxlength">GST No up to 15 characters</div>
+                                                    <div ng-message="required">GST No is required.</div>
+                                                    <div ng-message="pattern">Enter a valid GST No.</div>
+											    </div>
+                                                <small><span style="color:red"> Note:</span> If you doesn't gst   number,enter 000000000000000  </small> 
+                                            </md-input-container>
+                                        </div>
+                                           <div layout='' layout-sm="column" class="layout-sm-column layout-row" >
+									
+                                        <md-input-container flex="" class="flex ">
+                                             <label>Alternative contact person </label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactperson" 
+                                               ng-model="contact.contactperson" 
+                                              ng-maxlength="50" />
+                                             <div ng-messages="material_login_form.contactperson.$error" multiple ng-if='material_login_form.contactperson.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact person up to 100 characters</div>
+											    </div> 
+                                   </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                        <label>Alternative contact mobile number</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactpersonno" 
+                                               ng-model="contact.contactpersonmobile" 
+                                             ng-maxlength="10"
+                                             allow-decimal-numbers   />
+                                             <div ng-messages="material_login_form.contactpersonno.$error" multiple ng-if='material_login_form.contactpersonno.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact mobile number up to 10 characters</div>
+                                             </div> 
+                                   </md-input-container>
+                                   
+                                     </div>
+
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                            <md-input-container flex="" >
+                                                <label >Nationality</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select class="mandatoryselect" ng-model="contact.nationalityid"  style="margin-bottom: 15px;">
+                                                    <md-option ng-value="nationality.id" data-ng-repeat="nationality in listnationality">
+                                                        {{nationality.nationalityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >Country</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select class="mandatoryselect" ng-model="contact.countryid" required ng-change="loadChilds(contact.countryid,'countryid')"  style="margin-bottom: 15px;">
+                                                    <md-option ng-value="country.id" data-ng-repeat="country in listcountry">
+                                                        {{country.countryname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                     </div>
+
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                         
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >State</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select  class="mandatoryselect" ng-model="contact.stateid" required ng-change="loadChilds(contact.stateid,'stateid')" style="margin-bottom: 15px;">
+                                                    <md-option ng-value="state.id" data-ng-repeat="state in liststate">
+                                                        {{state.statename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >City</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select  class="mandatoryselect" ng-model="contact.cityid" required  ng-change="loadarea(contact.stateid,contact.cityid)" style="margin-bottom: 15px;">
+                                                    <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                        {{city.cityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                             
+                                             <md-input-container flex="" class="col-md-6">
+                                                <label >Pincode</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select class="mandatoryselect" ng-model="contact.areaid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="area.id" data-ng-repeat="area in listallarea">
+                                                        {{area.areaname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <!-- <md-input-container flex="" class="col-md-6">
+                                                <label class="mandatory">Pin Code</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="zipcode"
+                                                       ng-model="contact.zipcode"
+                                                       ng-maxlength="6"
+                                                       ng-pattern="/^[0-9]*$/" />
+                                               <div ng-messages="material_login_form.zipcode.$error" multiple ng-if='material_login_form.zipcode.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">Pin Code up to 6 characters</div>
+                                                     <div ng-message="required">Pin Code is required.</div>
+											    </div>
+                                            </md-input-container> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" style="margin-top: 28px;">
+                                        <div>
+                                             <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                                <div class="col-md-12" style="padding-left:0px;text-align:left;margin-bottom: 20px;">
+                                               <label  class="mandatory" style="    FONT-SIZE: 12PX;    COLOR: #949494;">Address</label>
+                                                    <textarea style="margin-top: 3px; "  required  name="address"  rows="3"  ng-maxlength="1000" ng-model="contact.address" class="form-control"></textarea>
+                                                 <div ng-messages="material_login_form.address.$error" multiple ng-if='material_login_form.address.$dirty'> 
+                                                     <div ng-message="required">Address is required.</div>
+                                                     <div ng-message="maxlength">Address up to 1000 characters</div>
+											    </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                       
+                                       <div>
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" >
+                                                <label class="mandatory">User Name</label>
+                                                <md-icon class="zmdi zmdi-face"></md-icon>
+                                                <input type="text"
+                                                       name="username"
+                                                       ng-model="userlogin.username"
+                                                       required
+                                                     ng-change="listerrormsg.responsedata=0"
+                                                       ng-minlength="6"
+                                                     ng-maxlength="50"/>
+
+                                                <div ng-messages="material_login_form.username.$error" multiple ng-if='material_login_form.username.$dirty'> 
+                                                     <div ng-message="required">User Name is required.</div>
+                                                     <div ng-message="maxlength">User Name up to 50 characters</div>
+                                                    <div ng-message="minlength">User Name must be atleast 6 characters long</div>
+											    </div>
+                                                 <p style="color:red" ng-show="listerrormsg.responsedata==-5">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                            <md-input-container flex="">
+                                                <label class="mandatory">Password</label>
+                                                <md-icon class="zmdi zmdi-lock-outline"></md-icon>
+                                                <input  id="password-field" 
+                                                    type="{{hidepassword}}"
+                                                       name="password"
+                                                       ng-model="userlogin.password"
+                                                       required
+                                                       ng-pattern="/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,30}$/"
+                                                      ng-maxlength="20"
+                                                       ng-minlength="6"
+                                                       />
+                                                  <div class="showic" style="position: absolute;    right: 0px;">
+
+                                               
+                                                <md-icon style="display: inline-block!important;" ng-if="ispasswordview" ng-click="changepasswordtype('P')" class="zmdi zmdi-eye"></md-icon>
+                                                <md-icon style="display: inline-block!important;" ng-if="!ispasswordview" ng-click="changetypepassword('P')" class="zmdi zmdi-eye-off"></md-icon>
+                                                 </div>
+                                               <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'> 
+                                                      <div ng-message="required">Password is required.</div>
+                                                     <div ng-message="maxlength">Password up to 20 characters</div>
+                                                   <div ng-message="minlength">Password must be atleast 6 characters long</div>
+                                                   <div ng-message="pattern">Your Password must cantain atleast one uppercase,one lowercase and one Number</div>
+                                                   
+											    </div>
+                                            </md-input-container>
+                                               
+                                        </div>
+                                       </div>
+
+                                        <div>
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-5" style="margin-right: 0px">
+                                                <label  class="mandatory" >Aadhar Number</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="aadharno"
+                                                       ng-model="aadharno"
+                                                       ng-maxlength="12"
+                                                       ng-pattern="/^[0-9]{2}[0-9]{10}$/" />
+
+                                               <div ng-messages="material_login_form.aadharno.$error" multiple ng-if='material_login_form.aadharno.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid Aadhar Number.</div>
+                                                     <div ng-message="maxlength">Aadhar Number up to 12 characters</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-2" style="margin-right: 0px">
+                                             <span>License(DL)</span><md-switch style="display:inline-flex;" ng-model="ispan" > </md-switch><span>PAN</span>  
+                                            </md-input-container>
+                                            <md-input-container ng-show="ispan" flex="" class="col-md-5" style="margin-right: 0px">
+                                                
+                                                <label class="mandatory">Pan Number</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input ng-required="ispan"
+                                                       type="text"
+                                                       name="panno"
+                                                       ng-model="panno"
+                                                       ng-maxlength="10"
+                                                       ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" />
+                                               <div ng-messages="material_login_form.panno.$error" multiple ng-if='material_login_form.panno.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid Pan Number.</div>
+                                                     <div ng-message="maxlength">Pan Number up to 10 characters</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container ng-show="!ispan" flex="" class="col-md-5" style="margin-right: 0px">
+                                                <label   class="mandatory">License Number</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input ng-required="!ispan"
+                                                       type="text"
+                                                       name="license"
+                                                       ng-model="license"
+                                                       ng-pattern="^(([A-Z]{2}[0-9]{2})|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$" />
+                                               <div ng-messages="material_login_form.license.$error" multiple ng-if='material_login_form.license.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid License Number.</div>
+                                                     <div ng-message="maxlength">Pan Number up to 6 characters</div>
+											    </div>
+                                            </md-input-container>
+                                        </div>
+                                            <div>
+                                                 <div class="col-md-4">
+                                                <div >
+                                                    <label   style="color: #9e9e9e;
+                                                    font-size: 12px;"><span style="color: red"> *</span>Aadhar Image</label>
+                                                    <div style="height:100px;margin-bottom:10px"> 
+                                                    <img  ng-if="isDefined(aadharimage)" src="{{filePath}}{{aadharimage}}" style="max-width: 150px;max-height: 100px;" />                      
+                                                    <img ng-if="isObject(aadharimage)" ngf-src="aadharimage" style="max-width: 150px;max-height: 100px;" />
+                                                  </div>  <div >
+                                                        <a href="#" onclick="document.getElementById('aadharicon').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background: #eee;">
+                                                            <i class="zmdi zmdi-upload"></i>  
+                                                        </a>
+                                                        <input  type="file" ngf-select="" ng-model="aadharimage" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="aadharicon">
+                                                        <a   ng-click="downloadimg(filePath+aadharimage)"   ng-if="aadharimage!=null && aadharimage!=''&&  isDefined(aadharimage)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-download"></i>  
+                                                        </a> 
+                                                         <a   ng-click="removeimg(userbankdet,'B')"    ng-if="aadharimage!=null && aadharimage!=''&&  isDefined(aadharimage)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-delete"></i>  
+                                                        </a>    
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                 <div class="col-md-4"  ng-show="ispan">
+                                                <div >
+                                                    <label   style="color: #9e9e9e;
+                                                    font-size: 12px;"><span style="color: red"> *</span>Pan Image</label>
+                                                      <div style="height:100px;margin-bottom:10px"> 
+                                                        
+                                                    <img  ng-if="isDefined(panimage)" src="{{filePath}}{{panimage}}" style="max-width: 150px;max-height: 100px;" />                      
+                                                    <img ng-if="isObject(panimage)" ngf-src="panimage" style="max-width: 150px;max-height: 100px;" />
+                                                    </div>
+                                                            <div >
+                                                        <a href="#" onclick="document.getElementById('icon').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background: #eee;">
+                                                            <i class="zmdi zmdi-upload"></i>  
+                                                        </a>
+                                                        <input  type="file" ngf-select="" ng-model="panimage" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="icon">
+                                                        <a   ng-click="downloadimg(filePath+panimage)"   ng-if="panimage!=null && panimage!=''&&  isDefined(panimage)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-download"></i>  
+                                                        </a> 
+                                                         <a   ng-click="removeimg(userbankdet,'B')"    ng-if="panimage!=null && panimage!=''&&  isDefined(panimage)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-delete"></i>  
+                                                        </a>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-4"  ng-show="!ispan">
+                                                <div >
+                                                    <label   style="color: #9e9e9e;
+                                                    font-size: 12px;"><span style="color: red"> *</span>License Image</label>
+                                                      <div style="height:100px;margin-bottom:10px"> 
+                                                        
+                                                    <img  ng-if="isDefined(licenseimage)" src="{{filePath}}{{licenseimage}}" style="max-width: 150px;max-height: 100px;" />                      
+                                                    <img ng-if="isObject(licenseimage)" ngf-src="licenseimage" style="max-width: 150px;max-height: 100px;" />
+                                                    </div>
+                                                            <div >
+                                                        <a href="#" onclick="document.getElementById('licenseicon').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background: #eee;">
+                                                            <i class="zmdi zmdi-upload"></i>  
+                                                        </a>
+                                                        <input  type="file" ngf-select="" ng-model="licenseimage" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="licenseicon">
+                                                        <a   ng-click="downloadimg(filePath+licenseimage)"   ng-if="licenseimage!=null && licenseimage!=''&&  isDefined(licenseimage)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-download"></i>  
+                                                        </a> 
+                                                         <a   ng-click="removeimg(userbankdet,'B')"    ng-if="licenseimage!=null && licenseimage!=''&&  isDefined(licenseimage)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-delete"></i>  
+                                                        </a>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="col-md-4" ng-show="user.gstno != '000000000000000'">
+                                                <div >
+                                                    <label   style="color: #9e9e9e;
+                                                    font-size: 12px;"><span style="color: red"> *</span>GST Image</label>
+                                                      <div style="height:100px;margin-bottom:10px"> 
+                                                        
+                                                    <img  ng-if="isDefined(gstimage)" src="{{filePath}}{{gstimage}}" style="max-width: 150px;max-height: 100px;" />                      
+                                                    <img ng-if="isObject(gstimage)" ngf-src="gstimage" style="max-width: 150px;max-height: 100px;" />
+                                                    </div>
+                                                            <div >
+                                                        <a href="#" onclick="document.getElementById('gstimg').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background: #eee;">
+                                                            <i class="zmdi zmdi-upload"></i>  
+                                                        </a>
+                                                        <input  type="file" ngf-select="" ng-model="gstimage" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="gstimg">
+                                                        <a   ng-click="downloadimg(filePath+gstimage)"   ng-if="gstimage!=null && gstimage!=''&&  isDefined(gstimage)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-download"></i>  
+                                                        </a> 
+                                                         <a   ng-click="removeimg(userbankdet,'B')"    ng-if="gstimage!=null && gstimage!=''&&  isDefined(gstimage)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-delete"></i>  
+                                                        </a>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="display: inline-block; border-top: 1px solid #f1f1f1; padding: 15px;">
+                                          <div style="text-align: right;margin-right: 115px;">
+                                                <md-checkbox aria-label="Finished?" id="Md-checkbox2" ng-model="ddlterms">  <a target="_blank"href="app/page/terms.html"  style="color:#0000EE;">Terms & Conditions</a></md-checkbox>
+                                        </div>
+                                       
+                                        <div style="text-align: right">
+                                            <a href="#/page/signin.html" style="COLOR: BLACK;">
+                                                <md-button type="submit"   class="md-raised btn-w-md md-warn" >Cancel</md-button>
+                                            </a>
+                                            <md-button type="submit" data-ng-disabled="!(canSubmit()&&ddlterms)" class="md-raised btn-w-md md-primary" data-ng-click="sendotp()">Send OTP</md-button>
+                                        </div>
+                                    </div>
+
+                                      </form>
+                        </div>
+                        <div ng-show="showotp">
+                             <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                            <md-input-container flex="">
+                                                <label class="mandatory">OTP</label>
+                                                <input type="text"
+                                                       name="otp"
+                                                       ng-model="newotp"
+                                                       required
+                                                        ng-maxlength="4"/>
+                                            </md-input-container>
+                                               
+                             </div>
+                             <div class="col-md-12" style="display: inline-block; padding: 15px;">
+                                <md-button type="submit" data-ng-disabled="!newotp" class="md-raised btn-w-md md-primary" data-ng-click="uploadproof()">Register</md-button>
+                             </div>
+                        </div>
+                        
+                            </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

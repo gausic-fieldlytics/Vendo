@@ -1,0 +1,203 @@
+<div class="page page-table" data-ng-controller="NewTaskCtrl" ng-init="show = 2">
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2">
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">Task Selection</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 1">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view Task"><span class="fa fa-caret-right ng-scope"></span></button>
+                    </a>
+                </span>
+                <!--<a ng-click="show =1" class="hideon">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Task"><span class="ng-scope">Back</span></button>
+                </a>-->
+            </div>
+        </div>
+        <div class="row ui-section">
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" ng-cloak style="padding-top:0px">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <md-content>
+                                <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
+                                    <md-tab label="Task Preview" >
+                                        <md-content >
+                                             <div class="col-md-12" style="padding: 0px;  margin-top: 20px;">
+                                                 <table class="table table-bordered table-striped " style="font-size: 13px">
+                                                    <tbody>
+                                                        <tr ng-repeat-start="rowData in listtaskpreview" ng-click="expandSelected_tr(rowData,rowData.expanded)">
+                                                            <td style="    padding: 13px!important;">
+                                                                <span ng-if="rowData.expanded" ng-click="rowData.expanded = false;$event.stopPropagation();" title="less"><span class="zmdi zmdi-minus-circle"></span></span>
+                                                                <span ng-if="!rowData.expanded" ng-click="expandSelected(rowData);$event.stopPropagation();" title="More"><span class="zmdi zmdi-plus-circle"></span></span>
+                                                                <h6 style="display: inline-block;  margin: 0px;" >{{rowData.projecttitle}} </h6>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-if="rowData.expanded" ng-repeat-end="">
+                                                            <td  class="stockdetaildiv" style="padding: 0px 10px!important;">
+                                                                <div data-ng-repeat="task in listprojecttask track by $index " style="padding-top: 5px">
+                                                                    <div ng-click="loadtasksteps(task)" style="    padding: 7px 15px;    border-bottom: 1px solid #eee;">{{task.tasktitle}}</div>
+                                                                </div>
+                                                                <div ng-if="listprojecttask.length==0">No Task Found</div>
+                                                            </td>
+                                                
+                                                        </tr>
+                                                    </tbody>
+                                                 </table>
+                                               <!--<div   tree-view="directory"  tree-view-options="options"></div>
+                                                 <div style="text-align: center;padding-top: 40px;" ng-show="listtargetselection.length==0" >No Task found</div>-->
+                                             </div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Target Selection" >
+                                        <md-content class="md-padding">
+                                            <div class="col-md-12"  >
+                                                <tree-view  checkbox  click="loadtask(node);$event.stopPropagation();" model="targetnodes"></tree-view>
+                                            </div>
+                                            <md-button  ng-show="listtargetselection.length>0"   type="submit" ng-click="savetaskbucket()" class="md-raised btn-w-md md-primary">Pick Targets</md-button>
+                                             <div style="    text-align: center;    padding-top: 40px;" ng-show="listtargetselection.length==0" >No Task found</div>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </md-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/ng-template" id="Taskinfo.html">
+
+        <div class="modal-header">
+            <div  class="col-md-8">
+                <h5>Task Details and Instructions</h5>
+            </div>
+            <div  class="col-md-4" style="text-align: right;}">
+                <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()"><i class="zmdi zmdi-close"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive" style="background:#f9f9f9">
+                <div  class="col-md-7">
+                    <h4 >{{task.tasktitle}}</h4>
+                    <div class="col-md-12" >
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="padding: 10px">
+                                    <table class="tabtable">
+                                        <tr>
+                                            <td>Start Date</td>
+                                            <td>:</td>
+                                            <th><span ng-bind="task.startdate | date : 'MMMM d, y'"></span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>Weightage</td>
+                                            <td>:</td>
+                                            <th><span ng-bind="task.weightage"></span></th>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="padding: 10px">
+                                    <table class="tabtable">
+                                        <tr>
+                                            <td>End Date </td>
+                                            <td>:</td>
+                                            <th><span ng-bind="task.enddate | date : 'MMMM d, y'"></span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>Cost</td>
+                                            <td>:</td>
+                                            <th><span ng-bind="task.amount"></span></th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12 masonry" style="margin-top: 10px;padding:0px" >
+                        <div class="item"  ng-repeat="img in listimg track by $index ">
+    <div style="" >
+      <img style="border-radius: 3px;width: 100%" src="{{filepaths}}{{img}}" />
+    </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-md-5" >
+                    <h5 >Task Instructions</h5>
+    <ol style=" -webkit-padding-start: 16px;"> 
+                    <li ng-repeat="stp in listtasksteps track by $index ">
+                        {{stp.step}}
+                    </li>
+    </ol>
+                </div>
+            </div>
+        </div>
+
+    </script>
+
+<style>
+    
+.masonry { /* Masonry container */
+    -webkit-column-count: 4;
+  -moz-column-count:4;
+  column-count: 4;
+  -webkit-column-gap: 1em;
+  -moz-column-gap: 1em;
+  column-gap: 1em;
+  
+    padding: 0;
+    -moz-column-gap: 1.5em;
+    -webkit-column-gap: 1.5em;
+    column-gap: 1.5em;
+    font-size: .85em;
+}
+.item {
+    display: inline-block;
+    background: #fff;
+    margin-bottom:10px;
+    width: 100%;
+	-webkit-transition:1s ease all;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+   
+}
+.item img{max-width:100%;}
+
+@media only screen and (max-width: 320px) {
+    .masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 768px){
+    .masonry {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 1200px){
+    .masonry {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+}
+@media only screen and (min-width: 1201px) {
+    .masonry {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+}
+</style>

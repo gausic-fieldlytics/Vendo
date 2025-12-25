@@ -1,0 +1,269 @@
+
+<div class="page page-table" data-ng-controller="PaymentmodeCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1" >
+    <div class="row ui-section topbar">
+    <div class="col-xs-6 clearfix">
+        <h2 class="section-header" style="display:inline-block">Payment Mode</h2>
+        </div>
+        <div class="col-xs-6 clearfix" style="text-align:right">
+            <span class="showon"  style="float:right;margin-top: 10px;" clearfix">
+                <a ng-click="show = 2"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="Add Paymentmode"><span class="fa fa-plus ng-scope"></span></button></a>
+            </span>
+            <span ng-show="access_permission.addshow">
+                <a ng-click="show =2"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button"  aria-label="Add Paymentmode<" ng-click ="addPaymentmode()"><span class="ng-scope">Add Paymentmode</span></button></a>
+                <input type="file" ngf-select="" ng-model="newtargetexcel" name="profile" ngf-max-size="19MB" style="visibility: hidden;display:inline;width:0px" id="files">
+                <a style="top: 12px;" class="md-raised btn-sm md-primary md-button md-ink-ripple" href="#" onclick="document.getElementById('files').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple">
+                    <i class="zmdi zmdi-upload"></i>&nbsp; Upload
+                </a>
+                <a style="padding-left: 5px;" href="images/sampleexcel/paymentmode.xlsx">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple"><span class="ng-scope"><i class="zmdi zmdi-upload"></i>&nbsp; Sample File</span></button>
+                </a>
+                <button style="display:none" type="button" id="openpopup" class="btn btn-info btn-lg" data-toggle="modal" data-target="#inputModel">Open Modal</button>
+            </span>
+        
+    </div>
+    
+    </div>
+    <div class="row ui-section">
+        <section class="panel panel-default table-dynamic">
+        <div class="table-filters">
+            <div class="row">
+			
+            <div class="col-sm-4 ">
+                <form>
+                <input type="text"
+                     placeholder="Search..."
+                     class="form-control"
+                     data-ng-model="searchKeywords"
+                     data-ng-keyup="search()" style="border-radius:29px;">
+                </form>
+            </div>
+
+                 <div class="col-sm-6 page-num-info">
+                <span>
+                Show 
+                <select class="pageno" data-ng-model="numPerPage"
+                    data-ng-options="num for num in numPerPageOpt"
+                    data-ng-change="onNumPerPageChange()">
+                </select> 
+                entries per page
+                </span>
+            </div>
+
+            </div>
+        </div>
+            <div class="table-responsive table-bordered">
+
+            
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                                    <div class="th text-center">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th><div class="th">
+              Payment Mode 
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('paymentmodename') "
+                    data-ng-class="{active: row == 'paymentmodename'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-paymentmodename') "
+                    data-ng-class="{active: row == '-paymentmodename'}"></span>
+                </div></th>                <th><div class="th">
+               Code
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('paymentmodecode') "
+                    data-ng-class="{active: row == 'paymentmodecode'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-paymentmodecode') "
+                    data-ng-class="{active: row == '-paymentmodecode'}"></span>
+                </div></th>
+                <th>
+                    <div class="th">
+                        Action
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="rowData in currentPageresultData">
+                <td class="text-center">{{$index + 1}}</td>
+               <td>{{rowData.paymentmodename}}</td>
+                <td>{{rowData.paymentmodecode}}</td>
+                <td style="padding:0px">
+                    <div class="action">
+                  <button ng-show="access_permission.editshow"  ng-click="editPaymentmode(rowData)" class="md-icon-button md-primary md-button md-ink-ripple"  ><span title="Edit" class="zmdi zmdi-edit ng-scope"></span></button>
+                            <!--<button  ng-click="viewPaymentmode(rowData)" class="md-icon-button md-button md-ink-ripple" ><span title="View" class="zmdi zmdi-eye ng-scope"></span></button>-->
+                  <button ng-show="access_permission.deleteshow" ng-click="deletePaymentmode(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>
+                         </div>  
+                       </td>
+            </tr>
+            </tbody>
+        </table>
+		</div>
+        <footer class="table-footer">
+            <div class="row">
+
+                  <div class="col-sm-6 filter-result-info">
+                <span>
+                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                </span>       
+                </div>
+            <div class="col-md-6 text-right pagination-container">
+                <uib-pagination class="pagination-sm"
+                    ng-model="currentPage"
+                    total-items="filteredresultData.length"
+                    max-size="4"
+                    ng-change="select(currentPage)"
+                    items-per-page="numPerPage"
+                    rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    boundary-links="true"></uib-pagination>
+            </div>
+            </div>
+        </footer>
+        </section>
+    </div>
+       </div>
+      
+    
+   <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2" >
+
+
+    <div class="row ui-section">
+    <div class="col-xs-8 clearfix">
+        <h2 class="section-header" style="display:inline-block">New Payment Mode</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align:right"> 
+             <span class="showon"  style="float:right;margin-top: 10px;" clearfix" >
+        <a ng-click="show = 1"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="view Paymentmode"><span class="fa fa-caret-right ng-scope"></span></button></a>
+    </span>
+        <a  ng-click="show =1" class="hideon"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Paymentmode"><span class="ng-scope">View Paymentmode</span></button></a>
+    </div>
+    
+    </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default" >
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row" >
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <form name="material_login_form" class="form-horizontal form-validation" >
+                                <fieldset>
+                                <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label><span style="color: red"> *</span>Payment Mode</label>
+                                        <md-icon class=""><i ng-bind-html="bindcurrency"></i></md-icon>
+                                        <input required 
+                                               type="text" capitalize
+                                               name="paymentmodename" 
+                                               ng-model="paymentmode.paymentmodename" 
+                                            ng-maxlength="45" />
+											    <div ng-messages="material_login_form.paymentmodename.$error" multiple ng-if='material_login_form.paymentmodename.$dirty'> 
+											        <div ng-message="required">Paymentmode is required.</div>
+                                                    <div ng-message="maxlength">Paymentmode up to 45 characters</div>
+											    </div>                                       
+                                    </md-input-container>
+								   <md-input-container flex="" class="flex ">
+                                             <label>Payment Mode Code</label>
+                                       <md-icon class="zmdi zmdi-receipt"></md-icon>
+                                        <input  
+                                               type="text" class="text-uppercase"
+                                               name="paymentmodecode" 
+                                               ng-model="paymentmode.paymentmodecode"
+                                            ng-maxlength="10"  />
+                                       <div ng-messages="material_login_form.paymentmodecode.$error" multiple ng-if='material_login_form.paymentmodecode.$dirty'> 
+                                                    <div ng-message="maxlength">Code up to 10 characters</div>
+											    </div>
+											      
+                                   </md-input-container>
+ 								  </div>    
+								  <div>                                                                                                            
+                                    <md-button type="submit" ng-click="savePaymentmode()"
+                                               class="md-raised btn-w-md md-primary"
+                                              data-ng-disabled="!canSubmit()">Save</md-button>
+                                    <md-button class="btn-w-md"
+                                               data-ng-disabled="!canRevert()"
+                                               data-ng-click="revert()">Revert</md-button>
+
+                                    <div class="divider"></div>
+                                  </div>                               
+                                                          
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+        </div>
+    </div>
+
+    <div id="inputModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align:center;">Payment Mode Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body uploadmodel">
+                        <ng-form name="input_form">
+                            <table class="table table-bordered table-striped table-responsive tabtable">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th><span style="color: red"> *</span>Payment Mode</th>
+                                    <th>Code</th>
+                                    <th></th>
+                                </tr>
+                                <tr data-ng-repeat="newrow in  listalltask">
+                                    <td>{{$index+1}}</td>
+                                    <td>
+                                        <md-input-container class="no-error-space">
+                                            <input  type="text" required name="paymentmodename{{$index}}" ng-model="newrow.paymentmodename"  ng-maxlength="45"   />
+                                            <div  ng-messages="input_form['paymentmodename' + $index].$error" multiple ng-show="input_form['paymentmodename' + $index].$dirty">
+                                                <div ng-message="required">Payment Mode is required.</div>
+                                                <div ng-message="maxlength">Payment Mode up to 45 characters</div>
+                                            </div>
+                                        </md-input-container>
+                                    </td>
+                                    <td>
+                                        <md-input-container class="no-error-space">
+                                            <input  type="text" name="code{{$index}}" ng-model="newrow.paymentmodecode" ng-maxlength="10"   />
+                                            <div  ng-messages="input_form['code' + $index].$error" multiple ng-show="input_form['code' + $index].$dirty">
+                                               <div ng-message="required">Payment Mode Code is required.</div>
+                                                <div ng-message="maxlength">Payment Mode Code up to 10 characters</div>
+                                            </div>
+                                        </md-input-container>
+                                    </td>
+                                    
+                                    <td>
+                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listalltask,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ng-form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     <button ui-wave class="btn btn-flat btn-primary" style="background: #0c3344; color: white" 
+                          data-ng-disabled="!(canSubmit_childform(input_form)&&listalltask.length>0)"
+                         data-dismiss="modal"
+                          ng-click="savebulkitem()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+   
+
+
+

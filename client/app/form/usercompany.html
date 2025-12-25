@@ -1,0 +1,487 @@
+
+<div class="page page-table" data-ng-controller="UsercompanyCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1" >
+    <div class="row ui-section topbar">
+    <div class="col-xs-8 clearfix">
+        <h2 class="section-header" style="display:inline-block">Usercompany</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align:right">
+            <span class="showon"  style="float:right;margin-top: 10px;" clearfix">
+        <a ng-click="show = 2"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="Add Usercompany"><span class="fa fa-plus ng-scope"></span></button></a>
+    </span>
+        <a ng-click="show =2"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button"  aria-label="Add Usercompany<" ng-click ="addUsercompany()"><span class="ng-scope">Add Usercompany</span></button></a>
+    </div>
+    
+    </div>
+    <div class="row ui-section">
+        <section class="panel panel-default table-dynamic">
+        <div class="table-filters">
+            <div class="row">
+			             <div class="col-sm-4 ">
+               <form>
+                <md-autocomplete                    
+                    md-no-cache="noCache"                                        
+                    md-search-text="searchText"
+                    md-selected-item-change="selectedItemChange(item,'Usercompany')"
+                    md-items="item in querySearch(searchText,'city')"
+                    md-item-text="item.cityname"
+                    md-min-length="0"
+                    placeholder="Seacrh City?">
+                    <md-item-template>
+                     <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.cityname}}</span>
+                        </md-item-template>
+                           <md-not-found>
+                               No Usercompanys matching "{{searchText}}" were found.                                      
+                           </md-not-found>
+                        </md-autocomplete>
+             </form>	
+            </div>
+             <div class="col-sm-4 ">
+               <form>
+                <md-autocomplete                    
+                    md-no-cache="noCache"                                        
+                    md-search-text="searchText"
+                    md-selected-item-change="selectedItemChange(item,'Usercompany')"
+                    md-items="item in querySearch(searchText,'companytype')"
+                    md-item-text="item.companytypename"
+                    md-min-length="0"
+                    placeholder="Seacrh Companytype?">
+                    <md-item-template>
+                     <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.companytypename}}</span>
+                        </md-item-template>
+                           <md-not-found>
+                               No Usercompanys matching "{{searchText}}" were found.                                      
+                           </md-not-found>
+                        </md-autocomplete>
+             </form>	
+            </div>
+             <div class="col-sm-4 ">
+               <form>
+                <md-autocomplete                    
+                    md-no-cache="noCache"                                        
+                    md-search-text="searchText"
+                    md-selected-item-change="selectedItemChange(item,'Usercompany')"
+                    md-items="item in querySearch(searchText,'state')"
+                    md-item-text="item.statename"
+                    md-min-length="0"
+                    placeholder="Seacrh State?">
+                    <md-item-template>
+                     <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.statename}}</span>
+                        </md-item-template>
+                           <md-not-found>
+                               No Usercompanys matching "{{searchText}}" were found.                                      
+                           </md-not-found>
+                        </md-autocomplete>
+             </form>	
+            </div>
+             <div class="col-sm-4 ">
+               <form>
+                <md-autocomplete                    
+                    md-no-cache="noCache"                                        
+                    md-search-text="searchText"
+                    md-selected-item-change="selectedItemChange(item,'Usercompany')"
+                    md-items="item in querySearch(searchText,'user')"
+                    md-item-text="item.username"
+                    md-min-length="0"
+                    placeholder="Seacrh User?">
+                    <md-item-template>
+                     <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.username}}</span>
+                        </md-item-template>
+                           <md-not-found>
+                               No Usercompanys matching "{{searchText}}" were found.                                      
+                           </md-not-found>
+                        </md-autocomplete>
+             </form>	
+            </div>
+
+            <div class="col-sm-4 ">
+                <form>
+                <input type="text"
+                     placeholder="Search..."
+                     class="form-control"
+                     data-ng-model="searchKeywords"
+                     data-ng-keyup="search()" style="border-radius:29px;">
+                </form>
+            </div>
+
+                 <div class="col-sm-6 page-num-info">
+                <span>
+                Show 
+                <select class="pageno" data-ng-model="numPerPage"
+                    data-ng-options="num for num in numPerPageOpt"
+                    data-ng-change="onNumPerPageChange()">
+                </select> 
+                entries per page
+                </span>
+            </div>
+
+            </div>
+        </div>
+            <div class="table-responsive table-bordered">
+
+            
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                                <th><div class="th">
+              User
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('userid') "
+                    data-ng-class="{active: row == 'userid'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-userid') "
+                    data-ng-class="{active: row == '-userid'}"></span>
+                </div></th>                <th><div class="th">
+              Companyname
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('companyname') "
+                    data-ng-class="{active: row == 'companyname'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-companyname') "
+                    data-ng-class="{active: row == '-companyname'}"></span>
+                </div></th>                <th><div class="th">
+              Address
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('address') "
+                    data-ng-class="{active: row == 'address'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-address') "
+                    data-ng-class="{active: row == '-address'}"></span>
+                </div></th>                <th><div class="th">
+              City
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('cityid') "
+                    data-ng-class="{active: row == 'cityid'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-cityid') "
+                    data-ng-class="{active: row == '-cityid'}"></span>
+                </div></th>                <th><div class="th">
+              State
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('stateid') "
+                    data-ng-class="{active: row == 'stateid'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-stateid') "
+                    data-ng-class="{active: row == '-stateid'}"></span>
+                </div></th>                <th><div class="th">
+              Gstno
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('gstno') "
+                    data-ng-class="{active: row == 'gstno'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-gstno') "
+                    data-ng-class="{active: row == '-gstno'}"></span>
+                </div></th>                <th><div class="th">
+              Panno
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('panno') "
+                    data-ng-class="{active: row == 'panno'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-panno') "
+                    data-ng-class="{active: row == '-panno'}"></span>
+                </div></th>                <th><div class="th">
+              Regno
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('regno') "
+                    data-ng-class="{active: row == 'regno'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-regno') "
+                    data-ng-class="{active: row == '-regno'}"></span>
+                </div></th>                <th><div class="th">
+              Pincode
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('pincode') "
+                    data-ng-class="{active: row == 'pincode'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-pincode') "
+                    data-ng-class="{active: row == '-pincode'}"></span>
+                </div></th>                <th><div class="th">
+              Contactno
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('contactno') "
+                    data-ng-class="{active: row == 'contactno'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-contactno') "
+                    data-ng-class="{active: row == '-contactno'}"></span>
+                </div></th>                <th><div class="th">
+              Email
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('email') "
+                    data-ng-class="{active: row == 'email'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-email') "
+                    data-ng-class="{active: row == '-email'}"></span>
+                </div></th>                <th><div class="th">
+              Website
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('website') "
+                    data-ng-class="{active: row == 'website'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-website') "
+                    data-ng-class="{active: row == '-website'}"></span>
+                </div></th>                <th><div class="th">
+              Remarks
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('remarks') "
+                    data-ng-class="{active: row == 'remarks'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-remarks') "
+                    data-ng-class="{active: row == '-remarks'}"></span>
+                </div></th>                <th><div class="th">
+              Compstartdate
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('compstartdate') "
+                    data-ng-class="{active: row == 'compstartdate'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-compstartdate') "
+                    data-ng-class="{active: row == '-compstartdate'}"></span>
+                </div></th>                <th><div class="th">
+              Companytype
+                <span class="fa fa-angle-up"
+                    data-ng-click=" order('companytypeid') "
+                    data-ng-class="{active: row == 'companytypeid'}"></span>
+                <span class="fa fa-angle-down"
+                    data-ng-click=" order('-companytypeid') "
+                    data-ng-class="{active: row == '-companytypeid'}"></span>
+                </div></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="rowData in currentPageresultData">
+               <td>{{rowData.username}}</td><td>{{rowData.companyname}}</td><td>{{rowData.address}}</td><td>{{rowData.cityname}}</td><td>{{rowData.statename}}</td><td>{{rowData.gstno}}</td><td>{{rowData.panno}}</td><td>{{rowData.regno}}</td><td>{{rowData.pincode}}</td><td>{{rowData.contactno}}</td><td>{{rowData.email}}</td><td>{{rowData.website}}</td><td>{{rowData.remarks}}</td><td>{{rowData.compstartdate}}</td><td>{{rowData.companytypename}}</td>
+                <td style="padding:0px">
+                    <div class="action">
+                  <button  ng-click="editUsercompany(rowData)" class="md-icon-button md-primary md-button md-ink-ripple"  ><span title="Edit" class="zmdi zmdi-edit ng-scope"></span></button>
+                            
+                            <button  ng-click="viewUsercompany(rowData)" class="md-icon-button md-button md-ink-ripple" ><span title="View" class="zmdi zmdi-eye ng-scope"></span></button>
+                          <button ng-click="deleteUsercompany(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>
+                         </div>  
+                       </td>
+            </tr>
+            </tbody>
+        </table>
+		</div>
+        <footer class="table-footer">
+            <div class="row">
+
+                  <div class="col-sm-6 filter-result-info">
+                <span>
+                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                </span>       
+                </div>
+        <!--   urlDDLoad-->
+            <div class="col-md-6 text-right pagination-container">
+                <uib-pagination class="pagination-sm"
+                    ng-model="currentPage"
+                    total-items="filteredresultData.length"
+                    max-size="4"
+                    ng-change="select(currentPage)"
+                    items-per-page="numPerPage"
+                    rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    boundary-links="true"></uib-pagination>
+            </div>
+            </div>
+        </footer>
+        </section>
+    </div>
+       </div>
+      
+    
+   <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2" >
+
+
+    <div class="row ui-section">
+    <div class="col-xs-8 clearfix">
+        <h2 class="section-header" style="display:inline-block">New Usercompany</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align:right"> 
+             <span class="showon"  style="float:right;margin-top: 10px;" clearfix" >
+        <a ng-click="show = 1"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button"  aria-label="view Usercompany"><span class="fa fa-caret-right ng-scope"></span></button></a>
+    </span>
+        <a  ng-click="show =1" class="hideon"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Usercompany"><span class="ng-scope">View Usercompany</span></button></a>
+    </div>
+    
+    </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default" >
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row" >
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <form name="material_login_form" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+                                <fieldset>
+                                <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                           
+                                             <label>User</label>
+                                                 <md-select ng-model="usercompany.userid">
+                                                    <md-option ng-value="user.id" data-ng-repeat="user in listuser">
+                                                     {{user.username}}
+                                                    </md-option>
+                                                </md-select>
+                                   </md-input-container>								   <md-input-container flex="" class="flex ">
+                                             <label>Companyname</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input required 
+                                               type="text"
+                                               name="companyname" 
+                                               ng-model="usercompany.companyname"  />
+											    <div ng-messages="material_login_form.Companyname.$error" multiple ng-if='material_login_form.Companyname.$dirty'> 
+<div ng-message="required">Companyname is required.</div>
+</div>   
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Address</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="address" 
+                                               ng-model="usercompany.address"  />
+											                                          
+                                    </md-input-container>
+								 <md-input-container flex="" class="flex ">
+                                           
+                                             <label>City</label>
+                                                 <md-select ng-model="usercompany.cityid">
+                                                    <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                     {{city.cityname}}
+                                                    </md-option>
+                                                </md-select>
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                           
+                                             <label>State</label>
+                                                 <md-select ng-model="usercompany.stateid">
+                                                    <md-option ng-value="state.id" data-ng-repeat="state in liststate">
+                                                     {{state.statename}}
+                                                    </md-option>
+                                                </md-select>
+                                   </md-input-container>								   <md-input-container flex="" class="flex ">
+                                             <label>Gstno</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="gstno" 
+                                               ng-model="usercompany.gstno"  />
+											      
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Panno</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="panno" 
+                                               ng-model="usercompany.panno"  />
+											                                          
+                                    </md-input-container>
+								   <md-input-container flex="" class="flex ">
+                                             <label>Regno</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="regno" 
+                                               ng-model="usercompany.regno"  />
+											      
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Pincode</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="pincode" 
+                                               ng-model="usercompany.pincode"  />
+											                                          
+                                    </md-input-container>
+								   <md-input-container flex="" class="flex ">
+                                             <label>Contactno</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactno" 
+                                               ng-model="usercompany.contactno"  />
+											      
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Email</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="email" 
+                                               ng-model="usercompany.email"  />
+											                                          
+                                    </md-input-container>
+								   <md-input-container flex="" class="flex ">
+                                             <label>Website</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="website" 
+                                               ng-model="usercompany.website"  />
+											      
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Remarks</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="remarks" 
+                                               ng-model="usercompany.remarks"  />
+											                                          
+                                    </md-input-container>
+								   <md-input-container flex="" class="flex ">
+                                             <label>Compstartdate</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="compstartdate" 
+                                               ng-model="usercompany.compstartdate"  />
+											      
+                                   </md-input-container>
+ </div><div layout='' layout-sm="column" class="layout-sm-column layout-row">
+									<md-input-container flex="" class="col-md-6">
+                                           
+                                             <label>Companytype</label>
+                                                 <md-select ng-model="usercompany.companytypeid">
+                                                    <md-option ng-value="companytype.id" data-ng-repeat="companytype in listcompanytype">
+                                                     {{companytype.companytypename}}
+                                                    </md-option>
+                                                </md-select>
+                                   </md-input-container>
+ </div>    
+								  <div>                                                                                                            
+                                    <md-button type="submit" ng-click="saveUsercompany()"
+                                               class="md-raised btn-w-md md-primary"
+                                              data-ng-disabled="!canSubmit()">Save</md-button>
+                                    <md-button class="btn-w-md"
+                                               data-ng-disabled="!canRevert()"
+                                               data-ng-click="revert()">Revert</md-button>
+
+                                    <div class="divider"></div>
+                                  </div>                               
+                                                          
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    
+   
+
+
+

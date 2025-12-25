@@ -1,0 +1,589 @@
+<div class="page page-table" data-ng-controller="TargetMappingCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-6 clearfix">
+                <h2 class="section-header" style="display: inline-block">Task & Target Mapping</h2>
+            </div>
+            <div ng-show="access_permission.addshow" class="col-xs-6 clearfix" style="text-align: right;">
+
+                <a ng-click="show =2">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="Add Target" ng-click="addTarget()"><span class="ng-scope">Add Mapping</span></button>
+                </a>
+               
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchclientText"
+                                                 md-selected-item="selectedclient"
+                                                 md-selected-item-change="selectedItemChange(item,'CL')"
+                                                 md-items="item in querySearch(searchclientText,'client')"
+                                                 md-item-text="item.companyname"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh Client?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchclientText" md-highlight-flags="^i">{{item.companyname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Client matching "{{searchclientText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-3">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchprojectText"
+                                    md-selected-item="selectedproject"
+                                                 md-selected-item-change="selectedItemChange(item,'P')"
+                                                 md-items="item in querySearch(searchprojectText,'project')"
+                                                 md-item-text="item.projecttitle"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh Project?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchprojectText" md-highlight-flags="^i">{{item.projecttitle}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Project matching "{{searchprojectText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                       
+
+                        <div class="col-sm-3 ">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search..."
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()" style="border-radius: 29px;">
+                            </form>
+                        </div>
+
+                        <div class="col-sm-6 page-num-info">
+                            <span>
+                                Show
+                                <select class="pageno" data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="table-responsive table-bordered">
+
+
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                               
+                                <th style="width:65px!important;">
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        Client
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Project
+                                    </div>
+                                </th>
+                                
+                                 <th>
+                                    <div class="th">
+                                        Task
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Target Count
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('targetname') "
+                                              data-ng-class="{active: row == 'targetname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-targetname') "
+                                              data-ng-class="{active: row == '-targetname'}"></span>
+                                    </div>
+                                </th>
+                               
+                               <th>
+                                    <div class="th">
+                                        Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr ng-repeat-start="rowData in currentPageresultData" >
+                                <td class="text-center">{{$index+1}}
+                                    <span ng-if="rowData.expanded" ng-click="rowData.expanded = false;$event.stopPropagation();" title="less"><span class="zmdi zmdi-minus-circle btnexpand"></span></span>
+                                    <span ng-if="!rowData.expanded" ng-click="expandSelected(rowData);$event.stopPropagation();" title="More"><span class="zmdi zmdi-plus-circle btnexpand"></span></span>
+                                </td>
+                                 <td>{{rowData.clientname}}</td>
+                                <td>{{rowData.projectname}}</td>
+                                
+                                <td>{{rowData.taskname}}</td>
+                                <td>{{rowData.targetcount}}</td>
+                               <td ng-show="access_permission.editshow">
+                                    <!-- <button ng-click="loadtasktarget(rowData.taskid,rowData.projectid)" class="md-icon-button md-button md-ink-ripple"><span title="View" class="zmdi zmdi-eye ng-scope"></span></button> -->
+                                   <button  ng-show="rowData.targetcount>0" ng-click="getprojecttarget(rowData,'D')" class="md-icon-button md-button md-ink-ripple"><span title="Download" class="zmdi zmdi-download ng-scope"></span></button>
+                               </td>
+                            </tr>
+                            <tr ng-if="rowData.expanded" ng-repeat-end="">
+                                <td colspan="5" class="stockdetaildiv" style="padding:20px!important;">
+                                  <table  class="table-responsive" style="width:100%">
+                                        <tr>
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Target
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        State
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        City
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Area
+                                    </div>
+                                </th>
+                            </tr>
+                                  <tr  data-ng-repeat="target in listalltarget" >
+                            
+                                
+                                <td class="text-center">{{$index+1}}
+
+                                    
+                                </td>
+                                <td>{{target.targetname}}</td>
+                                <td>{{target.statename}}</td>
+                                <td>{{target.cityname}}</td>
+                                <td>{{target.areaname}}</td>
+                               
+                            </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>
+                                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredresultData.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-if="show == 2">
+
+
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">Task & Target Mapping</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 1">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view Target"><span class="fa fa-caret-right ng-scope"></span></button>
+                    </a>
+                </span>
+                <!-- <a ng-click="show = 1" class="hideon">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Target"><span class="ng-scope">View Target</span></button>
+                </a> -->
+                <a ng-click="show =1" class="hideon">
+                    <button  style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Target"  ng-click="removeval()"><span class="ng-scope">View Target</span></button>
+                </a>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <form name="material_login_form" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+                                <fieldset>
+                                      <!-- <div style="color: blue;cursor: pointer;display: inline-block">  
+                                              <md-checkbox  aria-label="Finished?" id="Md-checkbox2" data-ng-disabled="!projectid" ng-model="isshow.alltask" ng-change="loadtask(projectid,isshow.alltask,0)"  >  Show all  task</md-checkbox>
+                                             
+
+                                         </div> -->
+                                     <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <!-- <div class="col-md-3"> -->
+                                                <md-input-container flex="" class="col-md-3">
+                                                    <label>Project</label>
+                                                     <md-icon class="zmdi zmdi-filter-frames"></md-icon>
+                                                    <md-select ng-model="projectid" required class="mandatoryselect" data-ng-change="loadtask(projectid,isshow.alltask,0)">
+                                                        <md-option ng-value="project.id" data-ng-repeat="project in listproject" >
+                                                            {{project.projecttitle}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                            <!-- </div> -->
+                                                <md-input-container flex="" class="col-md-3 ">
+                                                    <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                  <label>State</label>
+                                                  <md-select ng-model="stateid"  class="mandatoryselect" required ng-change="loadChilds(stateid,'stateid')">
+                                                      <md-option ng-value="state.id" data-ng-repeat="state in liststate">
+                                                          {{state.statename}}
+                                                      </md-option>
+                                                  </md-select>
+                                              </md-input-container>
+                                              <md-input-container flex="" class="col-md-3 ">
+    
+                                                <label>City</label>
+                                                 <md-icon class="zmdi zmdi-city"></md-icon>
+                                                <md-select ng-model="cityid"  class="mandatoryselect" required ng-change="loadChilds(cityid,'cityid')">
+                                                    <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                        {{city.cityname}}
+                                                    </md-option>
+                                                </md-select>
+                                              </md-input-container>
+                                       
+                                                <md-input-container flex="" class="col-md-3 pt-2">
+                                                    <label>Search Target </label>
+                                                    <md-icon class="zmdi zmdi-flag"></md-icon>
+                                                    <input type="text"                                                       
+                                                        required
+                                                        class="form-control mandatoryselect"
+                                                        data-ng-model="searchTargetName"
+                                                        data-ng-change="searchTarget(searchTargetName)">
+                                                </md-input-container>
+                                            
+                                          
+                                            <!-- <div>
+                                               
+                                        <md-button type="submit" ng-click="loadtask(projectid,isshow.alltask,0)"
+                                                   class="md-raised btn-w-md md-primary"
+                                                   data-ng-disabled="!projectid">Find Task</md-button>
+                                        
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-6" style="max-height: 250px;overflow: auto;" ng-show="listtask.length > 0"> 
+                                           <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th >
+                                                        <md-checkbox aria-label="Select All" ng-checked="isChecked(selected,items)" md-indeterminate="isIndeterminate(selected,items)" ng-click="toggleAll('TASK')"></md-checkbox>
+                                                    </th>
+                                                    <th>Task</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-ng-repeat="task in listtask">
+                                                    <td >
+                                                        <md-checkbox ng-checked="exists(task.id, selected,'TASK')" ng-click="toggle(task.id, selected)"> </md-checkbox>
+                                                    </td>
+                               
+                                                    <td >{{task.tasktitle}}</td>
+                                                </tr>
+                                            </tbody>
+                                           </table>
+                                        </div>
+                                       <div class="col-md-6" style="max-height: 250px;overflow: auto;" ng-show="listtarget.length > 0">
+                                            <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th >
+                                                       <md-checkbox aria-label="Select All" ng-checked="isChecked(selected_target,items_target)" md-indeterminate="isIndeterminate(selected_target,items_target)" ng-click="toggleAll('TARGET')"></md-checkbox>
+                                                    </th>
+                                                    <th>Target</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr data-ng-repeat="target in listtarget track by $index">
+                                                    <td >
+                                                        <md-checkbox ng-show="!target.isDisabled" ng-checked="exists(target, selected,'TARGET')" ng-click="toggle_target(target, selected_target)"> </md-checkbox>
+                                                    </td>
+                                                    <td >{{target.targetname}}</td>
+                                                </tr>
+                                            </tbody>
+                                           </table>
+                                </div>
+                                   
+                                    <div class="col-md-12 mt-3">
+                                        <md-button type="submit" ng-click="saveTargetmapping()"
+                                                   class="md-raised btn-w-md md-primary"
+                                                   data-ng-disabled="(selected.length==0 || selected_target.length==0)">Mapping</md-button>
+                                        <!-- <md-button class="btn-w-md"
+                                                   data-ng-disabled="!canRevert()"
+                                                   data-ng-click="revert()">Revert</md-button> -->
+
+                                        <div class="divider"></div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="taskexcellist.html">
+
+        <div class="modal-header">
+            <h5 style="text-align: center;">
+                Target Excel Upload</h5>
+                <div>
+                    <!--<div class="col-sm-4 ">
+                        <form>
+                            <md-autocomplete flex class="someeee"
+                                             md-input-name="autocompleteField"
+                                             md-no-cache="noCache"
+                                             md-search-text="searchitem"
+                                             md-selected-item="selecteditem"
+                                             md-selected-item-change="selectedItemChange()"
+                                             md-items="item in querySearch(searchitem,'task')"
+                                             md-item-text="item.tasktitle"
+                                             md-min-length="0"
+                                             md-autoselect="true"
+                                             placeholder="Search Task">
+                                <md-item-template>
+                                    <span md-highlight-text="searchitem" md-highlight-flags="^i">{{item.tasktitle}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No Clients matching "{{searchitem}}" were found.
+                                </md-not-found>
+                            </md-autocomplete>
+                        </form>
+                    </div>-->
+
+                    <div class="col-sm-4 ">
+                        <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()">Cancel</button>
+                        <button ui-wave class="btn btn-flat btn-primary" style="background: #0c3344; color: white"  data-ng-disabled="!canSubmit_childform(target_form)" ng-click="ok()">Save</button>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+
+                <ng-form name="target_form">
+               
+                <table class="storetable table">
+                    <tr class="showonlyonce" id="Tr1">
+                        <th>S#</th>
+                        <th>Target </th>
+                        <th>State </th>
+                        <th>City </th>
+                        <th>Area </th>
+                        <th>Street </th>
+                        <th>Address </th>
+                        <th>Land Mark </th>
+                        <th>Contact </th>
+                        <th>Distributor </th>
+                        <th>Distributor Contact </th>
+                        <th>Pickup Location </th>
+                        <th>Support Contact</th>
+                        <th>Support Number </th>
+                    </tr>
+                    <tr ng-repeat="target in listtarget" class="totalcl">
+
+                        <td>{{$index+1}}</td>
+
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required
+                                   name="targetname{{$index}}"
+                                   ng-model="target.targetname"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['targetname' + $index].$error" multiple ng-show="target_form['targetname' + $index].$invalid">
+                               <div ng-message="required">Target is required.</div>
+                                <div ng-message="maxlength">Target up to 100 characters</div>
+                            </div>
+                        </td>
+                         <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="state{{$index}}"
+                                   ng-model="target.state"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['state' + $index].$error" multiple ng-show="target_form['state' + $index].$invalid">
+                                <div ng-message="maxlength">State up to 45 characters</div>
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="city{{$index}}"
+                                   ng-model="target.city"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['city' + $index].$error" multiple ng-show="target_form['city' + $index].$invalid">
+                                <div ng-message="maxlength">City up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="area{{$index}}"
+                                   ng-model="target.area"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['area' + $index].$error" multiple ng-show="target_form['area' + $index].$invalid">
+                                <div ng-message="maxlength">Area up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="street{{$index}}"
+                                   ng-model="target.street"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['street' + $index].$error" multiple ng-show="target_form['street' + $index].$invalid">
+                                <div ng-message="maxlength">Street up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="address{{$index}}"
+                                   ng-model="target.address"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['address' + $index].$error" multiple ng-show="target_form['address' + $index].$invalid">
+                                <div ng-message="maxlength">Address up to 200 characters</div>
+                            </div>
+                        </td>
+                        
+                       <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="landmark{{$index}}"
+                                   ng-model="target.landmark"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['landmark' + $index].$error" multiple ng-show="target_form['landmark' + $index].$invalid">
+                                <div ng-message="maxlength">Land mark up to 200 characters</div>
+                            </div>
+                        </td>
+                      <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="phoneno{{$index}}"
+                                   ng-model="target.phoneno"
+                                   ng-maxlength="25"  />
+                            <div  ng-messages="target_form['phoneno' + $index].$error" multiple ng-show="target_form['phoneno' + $index].$invalid">
+                                <div ng-message="maxlength">Phone no up to 25 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="distributor{{$index}}"
+                                   ng-model="target.distributor"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['distributor' + $index].$error" multiple ng-show="target_form['distributor' + $index].$invalid">
+                                <div ng-message="maxlength">Distributor up to 100 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="districontact{{$index}}"
+                                   ng-model="target.districontact"
+                                   ng-maxlength="15"  />
+                            <div  ng-messages="target_form['districontact' + $index].$error" multiple ng-show="target_form['districontact' + $index].$invalid">
+                                <div ng-message="maxlength">Distributor Contact up to 15 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="pickuplocation{{$index}}"
+                                   ng-model="target.pickuplocation"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['pickuplocation' + $index].$error" multiple ng-show="target_form['pickuplocation' + $index].$invalid">
+                                <div ng-message="maxlength">Pickup Location up to 200 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="supportcontact{{$index}}"
+                                   ng-model="target.supportcontact"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['supportcontact' + $index].$error" multiple ng-show="target_form['supportcontact' + $index].$invalid">
+                                <div ng-message="maxlength">Support Contact Person up to 45 characters</div>
+                            </div>
+                        </td>
+                       <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="supportnumber{{$index}}"
+                                   ng-model="target.supportnumber"
+                                   ng-maxlength="15"  />
+                            <div  ng-messages="target_form['supportnumber' + $index].$error" multiple ng-show="target_form['supportnumber' + $index].$invalid">
+                                <div ng-message="maxlength">Support Contact  up to 15 characters</div>
+                            </div>
+                        </td>
+                       
+                    </tr>
+
+                </table>
+                     </ng-form>
+            </div>
+        </div>
+
+    </script>
+
+</div>
+
+
+
+
+
+<style>
+    .table-filters md-autocomplete {
+    margin-bottom: 10px;
+}
+</style>
+

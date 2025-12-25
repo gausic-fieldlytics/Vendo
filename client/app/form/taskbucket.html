@@ -1,0 +1,353 @@
+<div class="page page-table" data-ng-controller="TaskbucketCtrl">
+
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add ">
+        <div class="row ui-section topbar">
+            <div class="col-xs-6 clearfix">
+                <h2 class="section-header" style="display: inline-block">My Tasks</h2>
+            </div>
+            <div class="col-xs-6 clearfix" style="text-align: right;">               
+                <span>
+                    <input type="file" ngf-select="" ng-model="newtargetexcel" name="profile" ngf-max-size="19MB" style="visibility: hidden;display:inline;width:0px" id="files">
+                    <a style="top: 12px;" class="md-raised btn-sm md-primary md-button md-ink-ripple" href="#" onclick="document.getElementById('files').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple">
+                        <i class="zmdi zmdi-upload"></i>&nbsp; Upload
+                    </a>
+                    <a style="padding-left: 5px;" href="images/sampleexcel/TaskAssignToAR.xlsx">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple"><span class="ng-scope"><i class="zmdi zmdi-upload"></i>&nbsp; Sample File</span></button>
+                </a>
+                </span>
+                
+            </div>
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" style="padding-top: 20px;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <md-content>
+                                <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
+                                    <md-tab label="Un Assign Task" >
+                                        <md-content class="md-padding">
+                                            <div class="col-lg-12">
+                                                 <div class="col-sm-6">
+                                <table style="width: 100%" class="table  table-responsive tripendhead">
+                                        <tr>
+                                            <th style="text-align:center">
+                                                Select Target(s)
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <tree-view checkbox  click="loadtask(node);$event.stopPropagation();" model="targetnodes"></tree-view>
+                                            </td>
+                                            
+                                        </tr>
+                                    </table>
+                                
+                            </div>
+                            <div class="col-sm-4">
+                                <md-radio-group ng-model="ddlsubagent">
+                                    <table style="width: 100%" class="table  table-responsive tripendhead">
+                                        <tr>
+                                            <th style="text-align:center"> 
+                                                Assign to AR
+                                            </th>
+                                        </tr>
+                                        <tr data-ng-repeat="user in listuser">
+                                            <td >
+                                                <md-radio-button ng-value="{{user.id}}" class="md-primary"  style="margin-left: 9em;">{{user.firstname}} &nbsp {{user.lastname}}</md-radio-button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </md-radio-group>
+                            </div>
+                                            </div>
+                                            <div class="col-md-12" style="text-align:center">
+                                                 <md-button type="submit" ng-click="updatecancel()" class="md-raised btn-w-md md-warn">Cancel</md-button>
+                                                <md-button type="submit" ng-click="updateassign()" class="md-raised btn-w-md md-primary">Assign</md-button>
+                                            </div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Reassign" ng-click="loadassigntask()" >
+                                        <md-content class="md-padding">
+                                            <div class="col-lg-12">
+                                                 <div class="col-sm-6">
+                                                 <table style="width: 100%" class="table  table-responsive tripendhead">
+                                                 <tr>
+                                                      <th >
+                                                        <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()"></md-checkbox>
+                                                        </th>
+                                                    <th >Task</th>
+                                                     <th >Target</th>
+                                                     <th >Current AR</th>
+                                                 </tr>
+                                                 <tr data-ng-repeat="rowData in listagencytask">
+                                                   <td >
+                                                        <md-checkbox ng-checked="exists(rowData.id, selected)" ng-click="toggle(rowData.id, selected)"> </md-checkbox>
+                                                    </td>
+                                                   <td>{{rowData.tasktitle}}</td>
+                                                   <td>{{rowData.targetname}}</td>
+                                                    <td>{{rowData.firstname}}  <span ng-if="rowData.lastname!=null">{{rowData.lastname}}</span></td>
+                                                 </tr>
+                                                 </table>
+                                                 </div>
+                                                <div class="col-sm-4">
+                                                    <md-radio-group ng-model="ddlselectsubagent">
+                                                        <table style="width: 100%" class="table  table-responsive tripendhead">
+                                                            <tr>
+                                                                <th style="text-align:center">Assign to AR</th>
+                                                            </tr>
+                                                            <tr data-ng-repeat="user in listuser">
+                                                                <td >
+                                                                    <md-radio-button ng-value="{{user.id}}" class="md-primary" style="margin-left: 9em;">{{user.firstname}} &nbsp {{user.lastname}}</md-radio-button>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </md-radio-group>
+                                                 </div>
+                                            </div>
+                                            <div class="col-md-12" style="text-align:center">
+                                                <md-button type="submit" ng-click="updatereassign()" class="md-raised btn-w-md md-primary">Reassign</md-button>
+                                            </div>
+                                        </md-content>
+                                    </md-tab>
+                                     <!--<md-tab label="Collected Items" >
+                                        <md-content class="md-padding">
+                                            <div class="table-responsive table-bordered" id="gridviewreport">
+                                                <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                                    <md-input-container  class="col-md-8">
+                                                        </md-input-container>
+                                        <md-input-container  class="col-md-4">
+                                            <label>Project</label>
+                                            <md-select ng-model="ddlprojectid" ng-change="getcollecteditem()"  >
+                                                <md-option ng-value="project.id" data-ng-repeat="project in listproject">
+                                                    {{project.projectname}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                       
+                                    </div>
+
+                                                <table  class="table table-bordered table-striped table-responsive" cellpadding="0" cellspacing="0" style="width:100%">
+                                                    <thead>
+                          
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                        </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                       AR
+                
+                                    </div>
+                                </th>
+                                  <th>
+                                    <div class="th">
+                                      Collected Date
+                
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Project
+               
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                       Task
+               
+                                    </div>
+                                </th>
+                               
+                                
+                                 <th>
+                                    <div class="th">
+                                        Target
+               
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                      Item
+              
+                                    </div>
+                                </th>
+                            </tr>
+                                                    </thead>
+                                                    <tbody  data-ng-repeat="rowData in listcollecteditem" >
+                                                        <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{rowData.username}}</td>
+                                <td>{{rowData.collecteddate | date : 'MMMM d, y'}}</td>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" style="width:100%">
+                                        <tbody ng-repeat="project in rowData.listproject">
+                                            <tr>
+                                                <td>{{project}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" style="width:100%">
+                                        <tbody ng-repeat="task in rowData.listtask">
+                                            <tr>
+                                                <td>{{task}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" style="width:100%">
+                                        <tbody ng-repeat="target in rowData.listtarget">
+                                            <tr>
+                                                <td>{{target}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                                            <td>
+                                    <table cellpadding="0" cellspacing="0" style="width:100%">
+                                        <tbody ng-repeat="item in rowData.listitem">
+                                            <tr>
+                                                <td>{{item}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </md-content>
+                                    </md-tab>-->
+                                </md-tabs>
+                            </md-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="taskexcellist.html">
+
+        <div class="modal-header">
+            <h5 style="text-align: center;">
+                Target Excel Upload</h5>
+                <div>
+                    <!--<div class="col-sm-4 ">
+                        <form>
+                            <md-autocomplete flex class="someeee"
+                                             md-input-name="autocompleteField"
+                                             md-no-cache="noCache"
+                                             md-search-text="searchitem"
+                                             md-selected-item="selecteditem"
+                                             md-selected-item-change="selectedItemChange()"
+                                             md-items="item in querySearch(searchitem,'task')"
+                                             md-item-text="item.tasktitle"
+                                             md-min-length="0"
+                                             md-autoselect="true"
+                                             placeholder="Search Task">
+                                <md-item-template>
+                                    <span md-highlight-text="searchitem" md-highlight-flags="^i">{{item.tasktitle}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No Clients matching "{{searchitem}}" were found.
+                                </md-not-found>
+                            </md-autocomplete>
+                        </form>
+                    </div>-->
+
+                    <div class="col-sm-4 ">
+                        <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                        <button ui-wave class="btn btn-flat btn-primary" style="background: #0c3344; color: white"  
+                            data-ng-disabled="!(canSubmit_childform(target_form)&&listbinddata.length>0" data-dismiss="modal"ng-click="ok()">Save</button>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+
+                <ng-form name="target_form">
+               
+                <table class="storetable table">
+                    <tr class="showonlyonce" id="Tr1">
+                        <th>S#</th>
+                        <th>Task</th>
+                        <th>Target</th>
+                        <th>AR Name</th>                        
+                    </tr>
+                    <tr ng-repeat="target in listbinddata" class="totalcl">
+
+                        <td>{{$index+1}}</td>
+
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required
+                                   name="taskname{{$index}}"
+                                   ng-model="target.taskname"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['taskname' + $index].$error" multiple ng-show="target_form['taskname' + $index].$invalid">
+                               <div ng-message="required">Target is required.</div>
+                                <div ng-message="maxlength">Target up to 100 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required
+                                   name="targetname{{$index}}"
+                                   ng-model="target.targetname"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['targetname' + $index].$error" multiple ng-show="target_form['targetname' + $index].$invalid">
+                               <div ng-message="required">Target is required.</div>
+                                <div ng-message="maxlength">Target up to 100 characters</div>
+                            </div>
+                        </td>
+                         <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="arname{{$index}}"
+                                   ng-model="target.arname"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['arname' + $index].$error" multiple ng-show="target_form['arname' + $index].$invalid">
+                                <div ng-message="maxlength">State up to 45 characters</div>
+                            </div>
+                        </td>                                            
+                        <td>
+                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listtarget,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                        </td>
+                    </tr>
+
+                </table>
+        <div class="col-md-6 text-right pagination-container">
+                <uib-pagination class="pagination-sm"
+                    ng-model="currentPage"
+                    total-items="listtarget.length"
+                    max-size="4"
+                    ng-change="select(currentPage)"
+                    items-per-page="numPerPage"
+                    rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    boundary-links="true"></uib-pagination>
+            </div>
+                     </ng-form>
+            </div>
+        </div>
+
+    </script>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,229 @@
+<div class="page page-table" data-ng-controller="RessignCtrl">
+    <div class="animate-fade-up" id="#IDTITLE#add ">
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">My Tasks</h2>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" style="padding-top: 20px;">
+                    <div class="row">
+                        <md-content>
+                            <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex"   >
+                                <md-tab ng-click="FilerGrid(assignusertype,'A')"  >
+                                     <md-tab-label >
+                                         Assigning
+                                     </md-tab-label>
+                                    <md-tab-body>
+                                        <md-content class="md-padding">
+                                            <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="col-sm-6">
+                                    <div>
+                                        <md-radio-group  ng-click="FilerGrid(assignusertype,'A')" class="ui-md-radio-group-inline" ng-model="assignusertype">
+                                            <md-radio-button style="margin:0px"   ng-value="0" >Agency</md-radio-button> &nbsp; &nbsp;
+                                            <md-radio-button style="margin:0px"  ng-value="1">ISP </md-radio-button>      
+                                        </md-radio-group>
+                                    </div>
+                                    <div ng-show="assignusertype==0">
+                                        <form>
+                                            <md-autocomplete class="nobrdr"
+                                                style="margin-top: 13px;  max-width: 360px;" md-no-cache="noCache"
+                                                md-search-text="searchassignagn"
+                                                md-selected-item="selectedassignItem"
+                                                md-selected-item-change="selectedItemChange('A','AGN')"
+                                                md-items="item in querySearch(searchassignagn,'agency')"
+                                                md-item-text="item.agencyname"
+                                                md-min-length="0"
+                                                placeholder="Seacrh Agency">
+                                                <md-item-template>
+                                                    <span md-highlight-text="searchassignagn" md-highlight-flags="^i"> {{item.agencyname}}</span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    No Agency matching "{{searchassignagn}}" were found.
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                        </form>
+                                    </div>
+                                    <div ng-show="assignusertype==1">
+                                        <form>
+                                            <md-autocomplete  class="nobrdr"
+                                                style="margin-top: 13px;  max-width: 360px;" md-no-cache="noCache"
+                                                md-search-text="searchassignispText"
+                                                md-selected-item="selectedassignispItem"
+                                                md-selected-item-change="selectedItemChange('A','ISP')"
+                                                md-items="item in querySearch(searchassignispText,'agency','ISP')"
+                                                md-item-text="item.username"
+                                                md-min-length="0"
+                                                placeholder="Seacrh ISP">
+                                                <md-item-template>
+                                                    <span md-highlight-text="searchassignispText" md-highlight-flags="^i">{{item.username}}</span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    No ISP matching "{{searchassignispText}}" were found.
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <tree-view checkbox click="loadtask(node);$event.stopPropagation();" model="assign_targetnodes"></tree-view>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="col-md-12" style="text-align: center">
+                                <md-button type="submit" ng-click="assignuser()" class="md-raised btn-w-md md-primary">Assign</md-button>
+                            </div>
+                        </div>
+                                        </md-content>
+                                    </md-tab-body>
+                                </md-tab>
+                                <md-tab  ng-click="FilerGrid(usertype)"  >
+                                     <md-tab-label >
+                                         Re-Open/Re-Assign
+                                     </md-tab-label>
+                                     <md-tab-body> 
+                                         <md-content class="md-padding">
+                                             <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="col-sm-6">
+                                    <div>
+                                        <md-radio-group  ng-click="FilerGrid(usertype)" class="ui-md-radio-group-inline" ng-model="usertype">
+                                            <md-radio-button style="margin:0px"   ng-value="0" >Agency</md-radio-button> &nbsp; &nbsp;
+                                            <md-radio-button style="margin:0px"  ng-value="1">ISP </md-radio-button>      
+                                        </md-radio-group>
+                                    </div>
+                                    <div ng-show="usertype==0">
+                                        <form>
+                                            <md-autocomplete class="nobrdr"
+                                                style="margin-top: 13px;  max-width: 360px;" md-no-cache="noCache"
+                                                md-search-text="searchText"
+                                                md-selected-item="selectedItem"
+                                                md-selected-item-change="selectedItemChange('RA','AGN')"
+                                                md-items="item in querySearch(searchText,'agency')"
+                                                md-item-text="item.agencyname"
+                                                md-min-length="0"
+                                                placeholder="Seacrh Agency">
+                                                <md-item-template>
+                                                    <span md-highlight-text="searchText" md-highlight-flags="^i"> {{item.agencyname}}</span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    No Agency matching "{{searchText}}" were found.
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                        </form>
+                                    </div>
+                                    <div ng-show="usertype==1">
+                                        <form>
+                                            <md-autocomplete  class="nobrdr"
+                                                style="margin-top: 13px;  max-width: 360px;" md-no-cache="noCache"
+                                                md-search-text="searchispText"
+                                                md-selected-item="selectedispItem"
+                                                md-selected-item-change="selectedItemChange('RA','ISP')"
+                                                md-items="item in querySearch(searchispText,'agency','ISP')"
+                                                md-item-text="item.username"
+                                                md-min-length="0"
+                                                placeholder="Seacrh ISP">
+                                                <md-item-template>
+                                                    <span md-highlight-text="searchispText" md-highlight-flags="^i">{{item.username}}</span>
+                                                </md-item-template>
+                                                <md-not-found>
+                                                    No ISP matching "{{searchispText}}" were found.
+                                                </md-not-found>
+                                            </md-autocomplete>
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <tree-view checkbox click="loadtask(node);$event.stopPropagation();" model="targetnodes"></tree-view>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <md-radio-group ng-model="ddlsubagent">
+                                    <table style="width: 100%;border: 1px solid #eae9e9;" class="table  table-responsive tripendhead">
+                                        <tr>
+                                            <th style="text-align:center"> 
+                                                Agency
+                                            </th>
+                                            <th style="text-align: center;">
+                                                ISP
+                                            </th>
+                                        </tr>
+                                        <tr >
+                                            <td style="border-right: 1px solid #eae9e9;padding-top: 10px!important;">
+                                                <table>
+                                                    <tr data-ng-repeat="user in listuser">
+                                                        <td style="border: none;" ng-show="user.id!=ddlagencyid&& user.usertypecode=='AGNS'" >
+                                                            <md-radio-button ng-value="{{user.id}}" class="md-primary"  >
+                                                                {{user.agencyname}}
+                                                            </md-radio-button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                             <td style="    padding-left: 10px!important;padding-top: 10px!important;">
+                                                 <table>
+                                                     <tr data-ng-repeat="user in listuser">
+                                                         <td style="border: none;" ng-show="user.id!=ddlagencyid&& user.usertypecode=='ISP'" >
+                                                            <md-radio-button ng-value="{{user.id}}" class="md-primary"  >
+                                                                {{user.username}}
+                                                            </md-radio-button>
+                                                         </td>
+                                                     </tr>
+                                                 </table>
+                                             </td>
+                                        </tr>
+                                    </table>
+                                </md-radio-group>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="text-align: center">
+                                <md-button type="submit" ng-click="updatecancel()" class="md-raised btn-w-md md-warn">Re-Open</md-button>
+                                <md-button type="submit" ng-click="updateassign()" class="md-raised btn-w-md md-primary">Re-Assign</md-button>
+                            </div>
+                        </div>
+                                        </md-content>   
+                                     </md-tab-body>                                                                
+                                </md-tab>
+                            </md-tabs>
+                        </md-content>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<style>
+    .nobrdr md-autocomplete-wrap {
+        border: none!important;
+        border-bottom: 1px solid rgb(238, 238, 238)!important;
+        border-radius: 0px!important;
+    }
+
+        .nobrdr md-autocomplete-wrap:before {
+            font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+            content: '\f1c3';
+            position: absolute;
+            bottom: 8px;
+            font-size: 18px;
+            color: #b3b3b3;
+        }
+
+        .nobrdr md-autocomplete-wrap input {
+            margin-left: 8px;
+        }
+
+    .target_CAN {
+        color: red;
+    }
+</style>

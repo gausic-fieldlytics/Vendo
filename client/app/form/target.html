@@ -1,0 +1,766 @@
+<div class="page page-table" data-ng-controller="TargetCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-6 clearfix">
+                <h2 class="section-header" style="display: inline-block">Target</h2>
+            </div>
+            <div class="col-xs-6 clearfix" style="text-align: right;">
+
+                <a ng-click="show =2">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="Add Target" ng-click="addTarget()"><span class="ng-scope">Add Target</span></button>
+                </a>
+                <span ng-show="access_permission.addshow">
+                    <input type="file" ngf-select="" ng-model="newtargetexcel" name="profile" ngf-max-size="19MB" style="visibility: hidden;display:inline;width:0px" id="files">
+                    <a style="top: 12px;" class="md-raised btn-sm md-primary md-button md-ink-ripple" href="#" onclick="document.getElementById('files').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple">
+                        <i class="zmdi zmdi-upload"></i>&nbsp; Upload
+                    </a>
+                    <a style="padding-left: 5px;" href="images/sampleexcel/target.xlsx">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple"><span class="ng-scope"><i class="zmdi zmdi-upload"></i>&nbsp; Sample File</span></button>
+                </a>
+                </span>
+                
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchclientText"
+                                     md-selected-item="selectedclient"
+                                                 md-selected-item-change="selectedItemChange(item,'S')"
+                                                 md-items="item in querySearch(searchclientText,'client')"
+                                                 md-item-text="item.companyname"
+                                                 md-min-length="0"
+                                                 md-input-id="client"
+                                                 placeholder="Seacrh Client?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchclientText" md-highlight-flags="^i">{{item.companyname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No State matching "{{searchclientText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchstateText"
+                                     md-selected-item="selectedstate"
+                                                 md-selected-item-change="selectedItemChange(item,'S')"
+                                                 md-items="item in querySearch(searchstateText,'state')"
+                                                 md-item-text="item.statename"
+                                                 md-min-length="0"
+                                                 md-input-id="state"
+                                                 placeholder="Seacrh State?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchstateText" md-highlight-flags="^i">{{item.statename}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No State matching "{{searchstateText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchcityText"
+                                     md-selected-item="selectedcity"
+                                                 md-selected-item-change="selectedItemChange(item,'C')"
+                                                 md-items="item in querySearch(searchcityText,'city')"
+                                                 md-item-text="item.cityname"
+                                                 md-min-length="0"
+                                                 md-input-id="city"
+                                                 placeholder="Seacrh City?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchcityText" md-highlight-flags="^i">{{item.cityname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No City matching "{{searchcityText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchareaText"
+                                     md-selected-item="selectedarea"
+                                                 md-selected-item-change="selectedItemChange(item,'A')"
+                                                 md-items="item in querySearch(searchareaText,'area')"
+                                                 md-item-text="item.areaname"
+                                                 md-min-length="0"
+                                                 md-input-id="target"
+                                                 placeholder="Seacrh Area?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchareaText" md-highlight-flags="^i">{{item.areaname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Area matching "{{searchareaText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search Target"
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-change="selectedItemChange()" style="border-radius: 29px;">
+                            </form>
+                        </div>
+
+                        </div>
+                    <div class="row">
+                        <div class="col-sm-6 page-num-info">
+                            <span>
+                                Show
+                                <select class="pageno" data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                            <md-button type="submit" data-ng-disabled="selected.length==0"  ng-click="deletebulkitem(selected)" class="md-raised btn-w-md md-warn" style="top:5px;">Delete</md-button>
+                    </div>
+                </div>
+                <div class="table-responsive table-bordered">                  
+                                  
+                                 <table class="table table-bordered table-striped table-responsive">
+                                        <tr>
+
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                           
+                                <th>
+                                  <md-checkbox aria-label="Select All" ng-checked="isChecked()" md-indeterminate="isIndeterminate()" ng-click="toggleAll()"></md-checkbox>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Target
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Client
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        State
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        City
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Area
+                                    </div>
+                                </th>
+                                            <th>
+                                                <div class="th">
+                                                    Action
+                                                </div>
+                                            </th>
+                               
+                              
+                            </tr>
+                                  <tr  data-ng-repeat="target  in currentPageresultData track by $index" >
+                                <td class="text-center">{{startIndex + $index+1}}</td>
+                                <td>
+                                    <md-checkbox aria-label="ch{{startIndex + $index+1}}" ng-checked="exists(target.id, selected)" ng-click="toggle(target.id, selected)"> </md-checkbox>
+                                </td>
+                                <td>{{target.targetname}}</td>
+                                <td>{{target.companyname}}</td>
+                                <td>{{target.statename}}</td>
+                                <td>{{target.cityname}}</td>
+                                <td>{{target.areaname}}</td>
+                               <td style="padding: 0px">
+                                    <div class="action" style="width: 100px">
+                                        <button ng-show="access_permission.editshow" ng-click="editTarget(target)" class="md-icon-button md-primary md-button md-ink-ripple"><span title="Edit" class="zmdi zmdi-edit ng-scope"></span></button>
+
+                                        <button ng-show="access_permission.deleteshow" ng-click="deleteTarget(target)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>
+                                    </div>
+                                </td>
+                            </tr>
+                                    </table>
+                               
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>
+                                Showing {{resultData.length}}/{{filteredresultData}} entries
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredresultData"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2">
+
+
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">New Target</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 1">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="Cancel"><span class="fa fa-caret-right ng-scope"></span></button>
+                    </a>
+                </span>
+                <a ng-click="show =1" class="hideon">
+                    <button  style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Target"  ng-click="removeval()"><span class="ng-scope">View Target</span></button>
+                </a>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="material_login_form" class="form-horizontal form-validation" >
+                                <fieldset>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">                                                                              
+                                        <md-input-container flex="" class="col-md-3">
+                                            <label><span style="color: red"> *</span>Target </label>
+                                            <md-icon class="zmdi zmdi-flag"></md-icon>
+                                            <input required
+                                                   type="text"
+                                                   name="targetname"
+                                                   ng-model="target.targetname"
+                                                ng-maxlength="100" />
+                                            <div ng-messages="material_login_form.targetname.$error" multiple ng-if='material_login_form.targetname.$dirty'> 
+											        <div ng-message="required">Target is required.</div>
+											        <div ng-message="maxlength">Target up to 100 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                       <md-input-container flex="" class="col-md-3 ">
+                                              <md-icon class="zmdi zmdi-nature"></md-icon>
+                                            <label>State</label>
+                                            <md-select ng-model="target.stateid"  class="mandatoryselect" required ng-change="loadChilds(target.stateid,'stateid')">
+                                                <md-option ng-value="state.id" data-ng-repeat="state in liststate">
+                                                    {{state.statename}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex="" class="col-md-3">
+
+                                            <label>City</label>
+                                             <md-icon class="zmdi zmdi-city"></md-icon>
+                                            <md-select ng-model="target.cityid"  class="mandatoryselect" required ng-change="loadChilds(target.cityid,'cityid')">
+                                                <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                    {{city.cityname}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                         <md-input-container flex="" class="flex " ng-if="target.cityid"  >
+                                            <label>Area</label>
+                                             <md-icon class="zmdi zmdi-pin-drop"></md-icon>
+                                             <md-select ng-model="target.areaid"  class="mandatoryselect" required  data-ng-disabled="!target.cityid">
+                                                <md-option ng-value="area.id" data-ng-repeat="area in listarea">
+                                                    {{area.areaname}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    
+                                    
+                                 
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Client</label>
+                                             <md-icon class="zmdi zmdi-pin-drop"></md-icon>
+                                             <md-select ng-model="target.clientid"  class="mandatoryselect" required>
+                                                <md-option ng-value="client.id" data-ng-repeat="client in listclient">
+                                                    {{client.companyname}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container flex="" class="col-md-4">
+                                            <label>Street</label>
+                                            <md-icon class="zmdi zmdi-pin-assistant"></md-icon>
+                                            <input type="text"
+                                                   name="street"
+                                                   ng-model="target.street"
+                                                 ng-maxlength="45"  />
+                                             <div ng-messages="material_login_form.street.$error" multiple ng-if='material_login_form.street.$dirty'> 
+											        <div ng-message="maxlength">Street up to 45 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                         <md-input-container flex="" class="col-md-4">
+                                            <label><span style="color: red"> *</span>Address</label>
+                                            <md-icon class="zmdi zmdi-pin"></md-icon>
+                                            <input type="text"
+                                                required
+                                                   name="address"
+                                                   ng-model="target.address"
+                                                 ng-maxlength="200"  />
+                                              <div ng-messages="material_login_form.address.$error" multiple ng-if='material_login_form.address.$dirty'> 
+											        <div ng-message="required">Address is required.</div>
+											        <div ng-message="maxlength">Address up to 200 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                        <md-input-container flex="" class="col-md-4">
+                                            <label>Landmark</label>
+                                            <md-icon class="zmdi zmdi-nature-people"></md-icon>
+                                            <input type="text"
+                                                   name="landmark"
+                                                   ng-model="target.landmark"
+                                                 ng-maxlength="100"  />
+                                             <div ng-messages="material_login_form.landmark.$error" multiple ng-if='material_login_form.landmark.$dirty'> 
+											        <div ng-message="maxlength">Landmark up to 100 characters</div>
+											    </div>  
+                                        </md-input-container>                                        
+                                    </div>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="col-md-4">
+                                            <label>Pickup loction</label>
+                                            <md-icon class="zmdi zmdi-gps-dot"></md-icon>
+                                            <input type="text"
+                                                   name="pickuploc"
+                                                   ng-model="target.pickuplocation"
+                                                 ng-maxlength="200"  />
+                                             <div ng-messages="material_login_form.pickuploc.$error" multiple ng-if='material_login_form.pickuploc.$dirty'> 
+											        <div ng-message="maxlength">Pickup loction up to 200 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                    <md-input-container flex="" class="flex ">
+                                             <label>Latitude</label>
+                                        <md-icon class="zmdi zmdi-navigation"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="lat" 
+                                               ng-model="target.lat"
+                                               ng-maxlength="20"
+                                               allow-decimal-numbers
+                                               max="20"
+                                               ng-pattern="/^[0-9]+([,.][0-9]+)?$/"/>
+                                        <div ng-messages="material_login_form.lat.$error" multiple ng-if='material_login_form.lat.$dirty'> 
+											        <div ng-message="pattern">Enter a valid latitude.</div>
+                                                    <div ng-message="maxlength">Latitude up to 20 characters</div>
+											    </div> 
+                                   </md-input-container>
+									<md-input-container flex="" class="col-md-6">
+                                        <label>Longitude</label>
+                                        <md-icon class="zmdi zmdi-navigation"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="lng" 
+                                               ng-model="target.lng"
+                                               allow-decimal-numbers                                               
+                                               ng-maxlength="20"  />
+                                        <div ng-messages="material_login_form.lng.$error" multiple ng-if='material_login_form.lng.$dirty'> 
+											        <div ng-message="pattern">Enter a valid longitude.</div>
+                                                    <div ng-message="maxlength">Longitude up to 20 characters</div>
+											    </div> 
+                                    </md-input-container>
+                                         <md-input-container flex="" class="col-md-6">
+                                            <label><span style="color: red"> *</span>Contact No</label>
+                                            <md-icon class="zmdi zmdi-phone-end"></md-icon>
+                                            <input type="text"
+                                                   required
+                                                   numbers-only                                                   
+                                                   name="phoneno"
+                                                   ng-model="target.phoneno"
+                                                 maxlength="10"  />
+                                             <div ng-messages="material_login_form.phoneno.$error" multiple ng-if='material_login_form.phoneno.$dirty'> 
+											        <div ng-message="required">Contact No is required.</div>
+                                                   <div ng-message="pattern">Enter a valid Numbers.</div>
+											        <div ng-message="maxlength">Contact No up to 10 characters</div>
+											    </div>  
+                                        </md-input-container>
+								  </div>
+
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label><span style="color: red"> *</span>Distributor/Vendor</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <input type="text"
+                                                required
+                                                   name="distributor"
+                                                   ng-model="target.distributor"
+                                                 ng-maxlength="100"  />
+                                             <div ng-messages="material_login_form.distributor.$error" multiple ng-if='material_login_form.distributor.$dirty'> 
+											        <div ng-message="required">Distributor/Vendor is required.</div>
+											        <div ng-message="maxlength">Distributor/Vendor up to 100 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                            <label><span style="color: red"> *</span>Distributor Contact No</label>
+                                            <md-icon class="zmdi zmdi-account-box-phone"></md-icon>
+                                            <input type="text"
+                                                required
+                                                   name="districontact"
+                                                   ng-pattern="/^-?\d+\.?\d*$/"
+                                                   onKeyPress="if(this.value.length==10) return false;"
+                                                   ng-model="target.districontact" 
+                                                 ng-maxlength="10" />
+                                             <div ng-messages="material_login_form.districontact.$error" multiple ng-if='material_login_form.districontact.$dirty'> 
+											        <div ng-message="required">Distributor Contact is required.</div>
+                                                   <div ng-message="pattern">Enter a valid Numbers.</div>
+											        <div ng-message="maxlength">Distributor Contact up to 10 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                   
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label>Support Contact	</label>
+                                            <md-icon class="zmdi zmdi-account"></md-icon>
+                                            <input type="text"
+                                                   name="supportcontact"
+                                                   ng-model="target.supportcontact"
+                                                   ng-maxlength="45"  />
+                                             <div ng-messages="material_login_form.supportcontact.$error" multiple ng-if='material_login_form.supportcontact.$dirty'> 
+											        <div ng-message="required">Support Contact is required.</div>
+											        <div ng-message="maxlength">Support Contact up to 45 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Support Number 	</label>
+                                            <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                            <input type="text"
+                                                   name="supportnumber"
+                                                   ng-model="target.supportnumber"
+                                                   ng-pattern="/^[0-9]*$/"
+                                                   ng-maxlength="10"  />
+                                             <div ng-messages="material_login_form.supportnumber.$error" multiple ng-if='material_login_form.supportnumber.$dirty'> 
+											        <div ng-message="required">Support Number is required.</div>
+                                                   <div ng-message="pattern">Enter a valid Numbers.</div>
+											        <div ng-message="maxlength">Support Number up to 10 characters</div>
+											    </div>  
+                                        </md-input-container>
+                                    </div>
+                                     <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                         <md-checkbox aria-label="lockedd" id="Md-checkbox2" ng-model="target.islocked">Is Deactive</md-checkbox>
+                                     </div>
+                                    <div>
+                                        <md-button type="submit" ng-click="saveTarget()"
+                                                   class="md-raised btn-w-md md-primary"
+                                                   data-ng-disabled="!canSubmit()">Save</md-button>
+                                        <md-button class="btn-w-md"
+                                                   data-ng-disabled="!canRevert()"
+                                                   data-ng-click="revert()">Revert</md-button>
+
+                                        <div class="divider"></div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="taskexcellist.html">
+
+        <div class="modal-header">
+            <h5 style="text-align: center;">
+                Target Excel Upload</h5>
+                <div>
+                    <!--<div class="col-sm-4 ">
+                        <form>
+                            <md-autocomplete flex class="someeee"
+                                             md-input-name="autocompleteField"
+                                             md-no-cache="noCache"
+                                             md-search-text="searchitem"
+                                             md-selected-item="selecteditem"
+                                             md-selected-item-change="selectedItemChange()"
+                                             md-items="item in querySearch(searchitem,'task')"
+                                             md-item-text="item.tasktitle"
+                                             md-min-length="0"
+                                             md-autoselect="true"
+                                             placeholder="Search Task">
+                                <md-item-template>
+                                    <span md-highlight-text="searchitem" md-highlight-flags="^i">{{item.tasktitle}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No Clients matching "{{searchitem}}" were found.
+                                </md-not-found>
+                            </md-autocomplete>
+                        </form>
+                    </div>-->
+
+                    <div class="col-sm-4 ">
+                        <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()">Cancel</button>
+                        <button ui-wave class="btn btn-flat btn-primary" style="background: #0c3344; color: white" 
+                         data-ng-disabled="!(listbinddata.length > 0)" ng-click="uploadNewTarget()">Save</button>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+
+                <ng-form name="target_form">
+               
+                <table class="storetable table">
+                    <tr class="showonlyonce" id="Tr1">
+                        <th>S#</th>
+                        <th>Target </th>
+                        <th>State </th>
+                        <th>City </th>
+                        <th>Area </th>
+                        <th>Client </th>
+                        <th>Street </th>
+                        <th>Address </th>
+                        <th>Land Mark </th>
+                        <th>Contact </th>
+                        <th>Distributor </th>
+                        <th>Distributor Contact </th>
+                        <th>Pickup Location </th>
+                        <th>Support Contact</th>
+                        <th>Support Number </th>
+                        <th>Latitude</th>
+                        <th>Longitude </th>
+                    </tr>
+                    <tr ng-repeat="target in listbinddata" class="totalcl" ng-if="listbinddata !=0">
+
+                        <td>{{startIndex+$index+1}}</td>
+
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required
+                                   name="targetname{{$index}}"
+                                   ng-model="target.targetname"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['targetname' + $index].$error" multiple ng-show="target_form['targetname' + $index].$invalid">
+                               <div ng-message="required">Target is required.</div>
+                                <div ng-message="maxlength">Target up to 100 characters</div>
+                            </div>
+                        </td>
+                         <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="state{{$index}}"
+                                   ng-model="target.state"
+                                   ng-maxlength="45"  readonly/>
+                            <div  ng-messages="target_form['state' + $index].$error" multiple ng-show="target_form['state' + $index].$invalid">
+                                <div ng-message="maxlength">State up to 45 characters</div>
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="city{{$index}}"
+                                   ng-model="target.city"
+                                   ng-maxlength="45"  readonly/>
+                            <div  ng-messages="target_form['city' + $index].$error" multiple ng-show="target_form['city' + $index].$invalid">
+                                <div ng-message="maxlength">City up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="area{{$index}}"
+                                   ng-model="target.area"
+                                   ng-maxlength="45"  readonly/>
+                            <div  ng-messages="target_form['area' + $index].$error" multiple ng-show="target_form['area' + $index].$invalid">
+                                <div ng-message="maxlength">Area up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   required name="client{{$index}}"
+                                   ng-model="target.client"
+                                   ng-maxlength="45"  readonly/>
+                            <div  ng-messages="target_form['area' + $index].$error" multiple ng-show="target_form['area' + $index].$invalid">
+                                <div ng-message="maxlength">Area up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                   name="street{{$index}}"
+                                   ng-model="target.street"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['street' + $index].$error" multiple ng-show="target_form['street' + $index].$invalid">
+                                <div ng-message="maxlength">Street up to 45 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="address{{$index}}"
+                                   ng-model="target.address"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['address' + $index].$error" multiple ng-show="target_form['address' + $index].$invalid">
+                                <div ng-message="maxlength">Address up to 200 characters</div>
+                            </div>
+                        </td>
+                        
+                       <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="landmark{{$index}}"
+                                   ng-model="target.landmark"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['landmark' + $index].$error" multiple ng-show="target_form['landmark' + $index].$invalid">
+                                <div ng-message="maxlength">Land mark up to 200 characters</div>
+                            </div>
+                        </td>
+                      <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="phoneno{{$index}}"
+                                   ng-model="target.phoneno"
+                                   ng-pattern="/^-?\d+\.?\d*$/"
+                                   onKeyPress="if(this.value.length==10) return false;"
+                                   ng-maxlength="10"  />
+                            <div  ng-messages="target_form['phoneno' + $index].$error" multiple ng-show="target_form['phoneno' + $index].$invalid">
+                                <div ng-message="maxlength">Phone no up to 10 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="distributor{{$index}}"
+                                   ng-model="target.distributor"
+                                   ng-maxlength="100"  />
+                            <div  ng-messages="target_form['distributor' + $index].$error" multiple ng-show="target_form['distributor' + $index].$invalid">
+                                <div ng-message="maxlength">Distributor up to 100 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="districontact{{$index}}"
+                                   ng-model="target.districontact"
+                                   ng-pattern="/^-?\d+\.?\d*$/"
+                                    onKeyPress="if(this.value.length==10) return false;"
+                                   ng-maxlength="10"  />
+                            <div  ng-messages="target_form['districontact' + $index].$error" multiple ng-show="target_form['districontact' + $index].$invalid">
+                                <div ng-message="maxlength">Distributor Contact up to 10 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="pickuplocation{{$index}}"
+                                   ng-model="target.pickuplocation"
+                                   ng-maxlength="200"  />
+                            <div  ng-messages="target_form['pickuplocation' + $index].$error" multiple ng-show="target_form['pickuplocation' + $index].$invalid">
+                                <div ng-message="maxlength">Pickup Location up to 200 characters</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="supportcontact{{$index}}"
+                                   ng-model="target.supportcontact"
+                                   ng-maxlength="45"  />
+                            <div  ng-messages="target_form['supportcontact' + $index].$error" multiple ng-show="target_form['supportcontact' + $index].$invalid">
+                                <div ng-message="maxlength">Support Contact Person up to 45 characters</div>
+                            </div>
+                        </td>
+                       <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="supportnumber{{$index}}"
+                                   ng-model="target.supportnumber"
+                                   ng-pattern="/^[0-9]*$/"
+                                   onKeyPress="if(this.value.length==10) return false;"
+                                   ng-maxlength="10"  />
+                            <div  ng-messages="target_form['supportnumber' + $index].$error" multiple ng-show="target_form['supportnumber' + $index].$invalid">
+                                <div ng-message="maxlength">Support Contact  up to 10 characters</div>
+                            </div>
+                        </td>
+                       <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="lat{{$index}}"
+                                   ng-model="target.lat"
+                                    ng-pattern="/^[0-9]+(\.[0-9]{1,10})?$/" 
+                                   ng-maxlength="20"  />
+                            <div  ng-messages="target_form['lat' + $index].$error" multiple ng-show="target_form['lat' + $index].$invalid">
+                                <div ng-message="maxlength">Latitude up to 20 characters</div>
+                                <div ng-message="pattern">Enter a valid Latitude.</div>
+                            </div>
+                        </td>
+                        <td>
+                            <input style="border: none;"
+                                   type="text"
+                                    name="lng{{$index}}"
+                                   ng-model="target.lng"
+                                    ng-pattern="/^[0-9]+(\.[0-9]{1,10})?$/" 
+                                   ng-maxlength="20"  />
+                            <div  ng-messages="target_form['lng' + $index].$error" multiple ng-show="target_form['lng' + $index].$invalid">
+                                <div ng-message="maxlength">Longitude  up to 20 characters</div>
+                                <div ng-message="pattern">Enter a valid Longitude.</div>
+                            </div>
+                        </td>
+                        <td>
+                            <md-button class="md-fab md-warn md-fab-xs" aria-label="saveTarget" data-ng-click="removerow(listbinddata,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                        </td>
+                    </tr>
+                    <tr ng-if="listbinddata == 0">
+                        <td colspan="17" class="text-center" style="color:red">Error! Please Check with master data </td>
+                    </tr>
+                </table>
+        <div class="col-md-6 text-right pagination-container">
+                <uib-pagination class="pagination-sm"
+                    ng-model="currentPage"
+                    total-items="listuploadtarget.length"
+                    max-size="4"
+                    ng-change="select(currentPage)"
+                    items-per-page="numPerPages"
+                    rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    boundary-links="true"></uib-pagination>
+            </div>
+                     </ng-form>
+            </div>
+        </div>
+
+    </script>
+
+</div>
+
+
+
+
+
+<style>
+    .table-filters md-autocomplete {
+    margin-bottom: 10px;
+}
+</style>
+

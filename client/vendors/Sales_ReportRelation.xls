@@ -1,0 +1,187 @@
+Sales_ReportID	Status	CreatedDate	Target_count	RegionID	Sku_Name
+6	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Aloe 30ml|MRP 75
+6	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Aloe 30ml|MRP 75
+6	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Aloe 30ml|MRP 75
+7	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Aloe 60ml|MRP 140
+7	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Aloe 60ml|MRP 140
+7	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Aloe 60ml|MRP 140
+8	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Aloe 120ml|MRP 240
+8	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Aloe 120ml|MRP 240
+8	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Aloe 120ml|MRP 240
+9	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Oily Skin 30ml|MRP 75
+9	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Oily Skin 30ml|MRP 75
+9	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Oily Skin 30ml|MRP 75
+10	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Oily Skin 60ml|MRP 140
+10	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Oily Skin 60ml|MRP 140
+10	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Oily Skin 60ml|MRP 140
+11	True	1/2/2024 11:21:34 AM		3	LC Face Lotion Oily Skin 120ml|MRP 240
+11	True	1/2/2024 11:21:34 AM		2	LC Face Lotion Oily Skin 120ml|MRP 240
+11	True	1/2/2024 11:21:34 AM		1	LC Face Lotion Oily Skin 120ml|MRP 240
+12	True	1/2/2024 11:21:34 AM		1	Lacto Calamine Vitamin C Face Wash  100 ml|MRP 199
+12	True	1/2/2024 11:21:34 AM		2	Lacto Calamine Vitamin C Face Wash  100 ml|MRP 199
+12	True	1/2/2024 11:21:34 AM		3	Lacto Calamine Vitamin C Face Wash  100 ml|MRP 199
+13	True	1/2/2024 11:21:34 AM		3	Lacto Calamine Daily Cleansing Face Wipes 25s|MRP 150
+13	True	1/2/2024 11:21:34 AM		2	Lacto Calamine Daily Cleansing Face Wipes 25s|MRP 150
+13	True	1/2/2024 11:21:34 AM		1	Lacto Calamine Daily Cleansing Face Wipes 25s|MRP 150
+14	True	1/2/2024 11:21:34 AM		1	Lacto Calamine Daily Cleansing Face Wipes 30s|MRP 99
+14	True	1/2/2024 11:21:34 AM		2	Lacto Calamine Daily Cleansing Face Wipes 30s|MRP 99
+14	True	1/2/2024 11:21:34 AM		3	Lacto Calamine Daily Cleansing Face Wipes 30s|MRP 99
+15	True	1/2/2024 11:21:34 AM		3	Lacto Calamine Face Wash with Kaolin Clay for Oily Skin 100 ml|MRP 120
+15	True	1/2/2024 11:21:34 AM		2	Lacto Calamine Face Wash with Kaolin Clay for Oily Skin 100 ml|MRP 120
+15	True	1/2/2024 11:21:34 AM		1	Lacto Calamine Face Wash with Kaolin Clay for Oily Skin 100 ml|MRP 120
+16	True	1/2/2024 11:21:34 AM		1	Lactocalamine Cucumber toner - 120 ML|MRP 149
+16	True	1/2/2024 11:21:34 AM		2	Lactocalamine Cucumber toner - 120 ML|MRP 149
+16	True	1/2/2024 11:21:34 AM		3	Lactocalamine Cucumber toner - 120 ML|MRP 149
+17	True	1/2/2024 11:21:34 AM		3	Lactocalamine Aloevera Gel 150gm|MRP 249
+17	True	1/2/2024 11:21:34 AM		2	Lactocalamine Aloevera Gel 150gm|MRP 249
+17	True	1/2/2024 11:21:34 AM		1	Lactocalamine Aloevera Gel 150gm|MRP 249
+18	True	1/2/2024 11:21:34 AM		1	LC Charcoal Mask 60g|MRP 249
+18	True	1/2/2024 11:21:34 AM		2	LC Charcoal Mask 60g|MRP 249
+18	True	1/2/2024 11:21:34 AM		3	LC Charcoal Mask 60g|MRP 249
+19	True	1/2/2024 11:21:34 AM		3	Lactocalamine Daily Sunshield 50gm|MRP 349
+19	True	1/2/2024 11:21:34 AM		2	Lactocalamine Daily Sunshield 50gm|MRP 349
+19	True	1/2/2024 11:21:34 AM		1	Lactocalamine Daily Sunshield 50gm|MRP 349
+20	True	1/2/2024 11:21:34 AM		1	Lacto Calamine Activated Charcoal Face Wash  100 ml|MRP 199
+20	True	1/2/2024 11:21:34 AM		2	Lacto Calamine Activated Charcoal Face Wash  100 ml|MRP 199
+20	True	1/2/2024 11:21:34 AM		3	Lacto Calamine Activated Charcoal Face Wash  100 ml|MRP 199
+21	True	1/2/2024 11:21:34 AM		3	LC HYALURONIC ACID SERUM 2|MRP 549
+21	True	1/2/2024 11:21:34 AM		2	LC HYALURONIC ACID SERUM 2|MRP 549
+21	True	1/2/2024 11:21:34 AM		1	LC HYALURONIC ACID SERUM 2|MRP 549
+22	True	1/2/2024 11:21:34 AM		1	LC GREEN TEA NIGHT GEL 50G|MRP 499
+22	True	1/2/2024 11:21:34 AM		2	LC GREEN TEA NIGHT GEL 50G|MRP 499
+22	True	1/2/2024 11:21:34 AM		3	LC GREEN TEA NIGHT GEL 50G|MRP 499
+23	True	1/2/2024 11:21:34 AM		3	Littles Baby Wipes Lid Pack Of 2|MRP 220
+23	True	1/2/2024 11:21:34 AM		2	Littles Baby Wipes Lid Pack Of 2|MRP 220
+23	True	1/2/2024 11:21:34 AM		1	Littles Baby Wipes Lid Pack Of 2|MRP 220
+24	True	1/2/2024 11:21:34 AM		1	Littles Baby Wipes 72s|MRP 99
+24	True	1/2/2024 11:21:34 AM		2	Littles Baby Wipes 72s|MRP 99
+24	True	1/2/2024 11:21:34 AM		3	Littles Baby Wipes 72s|MRP 99
+25	True	1/2/2024 11:21:34 AM		3	Littles Baby Wipes 30s|MRP 49
+25	True	1/2/2024 11:21:34 AM		2	Littles Baby Wipes 30s|MRP 49
+25	True	1/2/2024 11:21:34 AM		1	Littles Baby Wipes 30s|MRP 49
+26	True	1/2/2024 11:21:34 AM		1	LITTLES COMFY PANTS XXL |MRP 449
+26	True	1/2/2024 11:21:34 AM		2	LITTLES COMFY PANTS XXL |MRP 449
+26	True	1/2/2024 11:21:34 AM		3	LITTLES COMFY PANTS XXL |MRP 449
+27	True	1/2/2024 11:21:34 AM		3	Littles Diapers XL|MRP 449
+27	True	1/2/2024 11:21:34 AM		2	Littles Diapers XL|MRP 449
+27	True	1/2/2024 11:21:34 AM		1	Littles Diapers XL|MRP 449
+28	True	1/2/2024 11:21:34 AM		1	Littles Diapers L|MRP 449
+28	True	1/2/2024 11:21:34 AM		2	Littles Diapers L|MRP 449
+28	True	1/2/2024 11:21:34 AM		3	Littles Diapers L|MRP 449
+29	True	1/2/2024 11:21:34 AM		3	Littles Diapers M|MRP 449
+29	True	1/2/2024 11:21:34 AM		2	Littles Diapers M|MRP 449
+29	True	1/2/2024 11:21:34 AM		1	Littles Diapers M|MRP 449
+30	True	1/2/2024 11:21:34 AM		1	Littles Diapers S|MRP 449
+30	True	1/2/2024 11:21:34 AM		2	Littles Diapers S|MRP 449
+30	True	1/2/2024 11:21:34 AM		3	Littles Diapers S|MRP 449
+31	True	1/2/2024 11:21:34 AM		3	Littles Diapers NB|MRP 449
+31	True	1/2/2024 11:21:34 AM		2	Littles Diapers NB|MRP 449
+31	True	1/2/2024 11:21:34 AM		1	Littles Diapers NB|MRP 449
+32	True	1/2/2024 11:21:34 AM		1	Littles Diapers XL|MRP 1149
+32	True	1/2/2024 11:21:34 AM		2	Littles Diapers XL|MRP 1149
+32	True	1/2/2024 11:21:34 AM		3	Littles Diapers XL|MRP 1149
+33	True	1/2/2024 11:21:34 AM		3	Littles Diapers L|MRP 1149
+33	True	1/2/2024 11:21:34 AM		2	Littles Diapers L|MRP 1149
+33	True	1/2/2024 11:21:34 AM		1	Littles Diapers L|MRP 1149
+34	True	1/2/2024 11:21:34 AM		1	Littles Diapers M|MRP 1149
+34	True	1/2/2024 11:21:34 AM		2	Littles Diapers M|MRP 1149
+34	True	1/2/2024 11:21:34 AM		3	Littles Diapers M|MRP 1149
+35	True	1/2/2024 11:21:34 AM		3	Littles Diapers s|MRP 1149
+35	True	1/2/2024 11:21:34 AM		2	Littles Diapers s|MRP 1149
+35	True	1/2/2024 11:21:34 AM		1	Littles Diapers s|MRP 1149
+36	True	1/2/2024 11:21:34 AM		1	Littles Classic Mini Feeding Btl|MRP 195
+36	True	1/2/2024 11:21:34 AM		2	Littles Classic Mini Feeding Btl|MRP 195
+36	True	1/2/2024 11:21:34 AM		3	Littles Classic Mini Feeding Btl|MRP 195
+37	True	1/2/2024 11:21:34 AM		3	Littles Classic Maxi Feeding Btl|MRP 205
+37	True	1/2/2024 11:21:34 AM		2	Littles Classic Maxi Feeding Btl|MRP 205
+37	True	1/2/2024 11:21:34 AM		1	Littles Classic Maxi Feeding Btl|MRP 205
+38	True	1/2/2024 11:21:34 AM		1	Littles Poly Mini Feeding Bottle-New|MRP 95
+38	True	1/2/2024 11:21:34 AM		2	Littles Poly Mini Feeding Bottle-New|MRP 95
+38	True	1/2/2024 11:21:34 AM		3	Littles Poly Mini Feeding Bottle-New|MRP 95
+39	True	1/2/2024 11:21:34 AM		3	Littles Poly Maxi Feeding Bottle-New|MRP 105
+39	True	1/2/2024 11:21:34 AM		2	Littles Poly Maxi Feeding Bottle-New|MRP 105
+39	True	1/2/2024 11:21:34 AM		1	Littles Poly Maxi Feeding Bottle-New|MRP 105
+40	True	1/2/2024 11:21:34 AM		1	Littles Big Hug Silicone Nipple-New|MRP 30
+40	True	1/2/2024 11:21:34 AM		2	Littles Big Hug Silicone Nipple-New|MRP 30
+40	True	1/2/2024 11:21:34 AM		3	Littles Big Hug Silicone Nipple-New|MRP 30
+41	True	1/2/2024 11:21:34 AM		3	Littles Comfy Pants GT Pack L|MRP 95
+41	True	1/2/2024 11:21:34 AM		2	Littles Comfy Pants GT Pack L|MRP 95
+41	True	1/2/2024 11:21:34 AM		1	Littles Comfy Pants GT Pack L|MRP 95
+42	True	1/2/2024 11:21:34 AM		1	Littles Comfy Pants GT Pack M|MRP 95
+42	True	1/2/2024 11:21:34 AM		2	Littles Comfy Pants GT Pack M|MRP 95
+42	True	1/2/2024 11:21:34 AM		3	Littles Comfy Pants GT Pack M|MRP 95
+43	True	1/2/2024 11:21:34 AM		3	Littles Comfy Pants GT Pack S|MRP 95
+43	True	1/2/2024 11:21:34 AM		2	Littles Comfy Pants GT Pack S|MRP 95
+43	True	1/2/2024 11:21:34 AM		1	Littles Comfy Pants GT Pack S|MRP 95
+44	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Mid Premium M4|MRP 50
+44	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Mid Premium M4|MRP 50
+44	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Mid Premium M4|MRP 50
+45	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Mid Premium L4|MRP 60
+45	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Mid Premium L4|MRP 60
+45	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Mid Premium L4|MRP 60
+46	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Mid Premium XL4|MRP 65
+46	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Mid Premium XL4|MRP 65
+46	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Mid Premium XL4|MRP 65
+47	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Mid Premium S4|MRP 45
+47	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Mid Premium S4|MRP 45
+47	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Mid Premium S4|MRP 45
+48	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Jumbo Standard L30|MRP 399
+48	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Jumbo Standard L30|MRP 399
+48	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Jumbo Standard L30|MRP 399
+49	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Jumbo Standard M34|MRP 399
+49	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Jumbo Standard M34|MRP 399
+49	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Jumbo Standard M34|MRP 399
+50	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Jumbo Standard S40|MRP 399
+50	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Jumbo Standard S40|MRP 399
+50	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Jumbo Standard S40|MRP 399
+51	True	1/2/2024 11:21:34 AM		3	Littles Comfy pant Jumbo Standard XL26|MRP 399
+51	True	1/2/2024 11:21:34 AM		2	Littles Comfy pant Jumbo Standard XL26|MRP 399
+51	True	1/2/2024 11:21:34 AM		1	Littles Comfy pant Jumbo Standard XL26|MRP 399
+52	True	1/2/2024 11:21:34 AM		1	CIR ADULT DIAPER PANTS L10|MRP 549
+52	True	1/2/2024 11:21:34 AM		2	CIR ADULT DIAPER PANTS L10|MRP 549
+52	True	1/2/2024 11:21:34 AM		3	CIR ADULT DIAPER PANTS L10|MRP 549
+53	True	1/2/2024 11:21:34 AM		3	CIR ADULT DIAPER PANTS M10|MRP 499
+53	True	1/2/2024 11:21:34 AM		2	CIR ADULT DIAPER PANTS M10|MRP 499
+53	True	1/2/2024 11:21:34 AM		1	CIR ADULT DIAPER PANTS M10|MRP 499
+54	True	1/2/2024 11:21:34 AM		1	CIR ADULT DIAPER PANTS XL10|MRP 599
+54	True	1/2/2024 11:21:34 AM		2	CIR ADULT DIAPER PANTS XL10|MRP 599
+54	True	1/2/2024 11:21:34 AM		3	CIR ADULT DIAPER PANTS XL10|MRP 599
+55	True	1/2/2024 11:21:34 AM		3	CIR Premium Adult Diapers L10 N|MRP 549
+55	True	1/2/2024 11:21:34 AM		2	CIR Premium Adult Diapers L10 N|MRP 549
+55	True	1/2/2024 11:21:34 AM		1	CIR Premium Adult Diapers L10 N|MRP 549
+56	True	1/2/2024 11:21:34 AM		1	CIR Premium Adult Diapers M10 N|MRP 499
+56	True	1/2/2024 11:21:34 AM		2	CIR Premium Adult Diapers M10 N|MRP 499
+56	True	1/2/2024 11:21:34 AM		3	CIR Premium Adult Diapers M10 N|MRP 499
+57	True	1/2/2024 11:21:34 AM		3	CIR Premium Adult Diapers XL10 N|MRP 599
+57	True	1/2/2024 11:21:34 AM		2	CIR Premium Adult Diapers XL10 N|MRP 599
+57	True	1/2/2024 11:21:34 AM		1	CIR Premium Adult Diapers XL10 N|MRP 599
+58	True	1/2/2024 11:21:34 AM		1	Neko Daily Hygiene Soap 100g|MRP 70
+58	True	1/2/2024 11:21:34 AM		2	Neko Daily Hygiene Soap 100g|MRP 70
+58	True	1/2/2024 11:21:34 AM		3	Neko Daily Hygiene Soap 100g|MRP 70
+60	True	1/2/2024 11:21:34 AM		3	Littles Comfy Pants GT Pack L
+60	True	1/2/2024 11:21:34 AM		2	Littles Comfy Pants GT Pack L
+60	True	1/2/2024 11:21:34 AM		1	Littles Comfy Pants GT Pack L
+61	True	1/2/2024 11:21:34 AM		1	Littles Diapers GT Pack M
+61	True	1/2/2024 11:21:34 AM		2	Littles Diapers GT Pack M
+61	True	1/2/2024 11:21:34 AM		3	Littles Diapers GT Pack M
+62	True	1/2/2024 11:21:34 AM		3	Littles Diapers GT Pack S
+62	True	1/2/2024 11:21:34 AM		2	Littles Diapers GT Pack S
+62	True	1/2/2024 11:21:34 AM		1	Littles Diapers GT Pack S
+63	True	1/2/2024 11:21:34 AM		1	Littles Comfy Pants GT Pack NB
+63	True	1/2/2024 11:21:34 AM		2	Littles Comfy Pants GT Pack NB
+63	True	1/2/2024 11:21:34 AM		3	Littles Comfy Pants GT Pack NB
+64	True	1/2/2024 11:21:34 AM		3	Lacto Cal Light Moisturiser 150 g
+64	True	1/2/2024 11:21:34 AM		2	Lacto Cal Light Moisturiser 150 g
+64	True	1/2/2024 11:21:34 AM		1	Lacto Cal Light Moisturiser 150 g
+65	True	1/2/2024 11:21:34 AM		1	Lacto Calamine 2% Salicylic acid face serum
+65	True	1/2/2024 11:21:34 AM		2	Lacto Calamine 2% Salicylic acid face serum
+65	True	1/2/2024 11:21:34 AM		3	Lacto Calamine 2% Salicylic acid face serum
+66	True	1/2/2024 11:21:34 AM		3	Lacto Calamine 10% Niacinamide face serum
+66	True	1/2/2024 11:21:34 AM		2	Lacto Calamine 10% Niacinamide face serum
+66	True	1/2/2024 11:21:34 AM		1	Lacto Calamine 10% Niacinamide face serum
+67	True	1/2/2024 11:21:34 AM		1	LC Neem Aloe foaming face wash
+67	True	1/2/2024 11:21:34 AM		2	LC Neem Aloe foaming face wash
+67	True	1/2/2024 11:21:34 AM		3	LC Neem Aloe foaming face wash
+68	True	1/2/2024 11:21:34 AM		3	LC vitamin C foaming face wash
+68	True	1/2/2024 11:21:34 AM		2	LC vitamin C foaming face wash
+68	True	1/2/2024 11:21:34 AM		1	LC vitamin C foaming face wash

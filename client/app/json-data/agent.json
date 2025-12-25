@@ -1,0 +1,40 @@
+[
+	{
+	"name":"Tasks",
+	"iconclass":"zmdi zmdi-group",
+	"anchorlinks" : "#/form/newtask",
+	"pageid":"28"
+	},
+	{
+	"name":"My Tasks",
+	"iconclass":"zmdi zmdi-assignment",
+	"anchorlinks" : "#/form/taskbucket",
+	"pageid":"29"
+	},{
+        "name": "Progress",
+        "iconclass": "zmdi zmdi-filter-list",
+        "anchorlinks": "#/form/taskprogressfilter",
+		"pageid":"30"
+    },
+	{
+	"name":"Audit",
+	"iconclass":"zmdi zmdi-assignment-check",
+	"anchorlinks" : "#/form/agencyaudit",
+	"pageid":"31"
+	},
+	{
+	"name":"Generate Invoice",
+	"iconclass":"zmdi zmdi-balance-wallet",
+	"anchorlinks" : "#/form/agencyinvoice",
+	"pageid":"32"
+	},
+	{
+	"name":"Terms & Conditions",
+	"iconclass":"zmdi zmdi-assignment",
+	"anchorlinks" : "#/form/agencyterms",
+	"pageid":"49"
+	}
+
+
+	
+]

@@ -1,0 +1,191 @@
+// Dependency: Angular UI Bootstrap
+
+.ui-tab {
+    .nav-tabs {
+        margin-bottom: 15px;
+        &.nav-justified {
+            > li {
+                &.active {
+                    > a {
+                        border-bottom-color: transparent;
+                    }
+                }
+            }
+        }
+
+        > li {
+            &.active {
+                > a {
+                    background-color: $reverse;
+                    // &:focus,
+                    // &:hover,
+                    // &:active {
+                    //     border: 0;
+                    // }
+                }
+            }
+        }
+        a {
+            color: $text-color;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.ui-tab-container {
+    .nav-tabs {
+        margin-bottom: 0;
+        &.nav-justified {
+            > li {
+                &:last-child {
+                    border-right: 0;
+                }
+                &:hover,
+                &:active,
+                &:focus {
+                    > a {
+                        border-width: 0 0 1px 0;
+                        border-style: solid;
+                        border-color: $nav-tabs-border-color;
+                    }
+                }
+
+                > a {
+                    border-width: 0 0 1px 0;
+                    border-style: solid;
+                    border-color: $nav-tabs-border-color;
+                }
+            }
+        }
+
+        > li {
+            &.active {
+                > a {
+                    color: $link-color;
+                }                
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                > a {
+                    border: 0;
+                    background-color: transparent;
+                }
+            }
+            > a {
+                margin: 0;
+                border: 0;
+                padding: 10px 15px;
+                font-weight: bold;
+                border-radius: 0;
+				
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 15px 15px;
+		margin-top:-25px;
+    }
+}
+
+.ui-tab-horizontal {
+    border: 1px solid $nav-tabs-border-color;
+    border-radius: $border-radius-base;
+    .nav-tabs {
+        background-color: $state-default-bg;
+
+        > li {
+            border-right: 1px solid $nav-tabs-border-color;
+            &.active {
+                &:hover,
+                &:active,
+                &:focus {
+                    > a {
+                        border: 0;
+                        background-color: #fff;
+                    }
+                }
+
+                > a {
+                    &:focus,
+                    &:hover,
+                    &:active {
+                        border: 0;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.ui-tab-vertical {
+    position: relative;
+    padding: 0 0 0 12%;
+    .nav-tabs {
+        position: absolute;
+        left: 0;
+        top: 0;
+        
+    
+     
+        > li {
+            width: 100%;
+            float: none;
+           
+            margin: 0;
+            &:last-child {
+                border-bottom: 0;
+            }
+            &.active {
+                &:hover,
+                &:active,
+                &:focus {
+                    > a {
+                        border: 0;
+                        background-color: #fff;
+                    }
+                }
+
+                > a {
+                    margin-right: -1px;
+                    &:focus,
+                    &:hover,
+                    &:active {
+                        border: 0;
+                    }
+                }
+            }
+            > a {
+                display: block;
+            }
+        }        
+    }
+
+    .tab-content {
+      
+
+    }
+
+}
+
+.ui-tab-vertical .nav-tabs > li.active > a {
+    margin-right: -1px;
+    background: #00935f;
+    box-shadow: 0px 2px 3px #b0b0b1;
+    border-radius: 5px;
+    color: white;
+    width: auto!important;
+}
+.ui-tab-vertical .nav-tabs >  li{margin-bottom:10px;}
+
+.ui-tab .nav-tabs {
+    border-bottom: none;
+}
+.ui-tab .nav.nav-tabs{margin-top:30px;}
+.ui-tab-vertical .nav-tabs > li.active:hover > a{background:#00935f;
+cursor:pointer}

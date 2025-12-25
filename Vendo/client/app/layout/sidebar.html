@@ -1,0 +1,25 @@
+<div class="nav-wrapper" ng-controller="sidebarCtrl" style="border-right:1px solid #e4e1e1;padding-bottom: 35px;">
+    <br />
+    <ul id="nav"
+        class="nav"
+        data-slim-scroll
+        data-collapse-nav
+        data-highlight-active ng-show="sideMenuLoaded" ng-cloak>
+        <li>
+            <a style="background: rgb(255 255 255 / 16%); color: white!important;"
+               md-button aria-label="meanu" href="#/page/mainhome"><i class="zmdi zmdi-arrow-left" style="color: white"></i><span data-translate="Back to home"></span></a>
+        </li>
+        <!--<li ng-repeat="menu in sidebarmenu track by $index" data-highlight-active ng-class="">
+            <a style="padding:5px 10px;margin:5px 10px;" data-highlight-active md-button aria-label="meanu" ng-click="nevigate(menu)">
+                <i class="{{menu.iconclass}}"></i>
+                <span data-translate="{{menu.name}}"></span>
+            </a>
+        </li>-->
+        <li ng-repeat="menu in sidebarmenu track by $index" data-highlight-active ng-class="">
+            <a style="padding:5px 10px;margin:5px 10px;" data-highlight-active md-button aria-label="meanu" href="{{menu.anchorlinks}}">
+                <i class="{{menu.iconclass}}"></i>
+                <span href="#" data-translate="{{menu.name}}"></span>
+            </a>
+        </li>
+    </ul>
+</div>

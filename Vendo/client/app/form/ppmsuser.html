@@ -1,0 +1,407 @@
+
+<div class="page page-table" data-ng-controller="ppmsuserCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display:inline-block">User</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align:right">
+                <span class="showon" style="float:right;margin-top: 10px;" clearfix">
+                    <a ng-click="show = 2"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="Add Ppmsuser"><span class="fa fa-plus ng-scope"></span></button></a>
+                </span>
+                <span ng-show="access_permission.addshow">
+                    <a ng-click="show =2"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="Add Ppmsuser<" ng-click="addPpmsuser()"><span class="ng-scope">Add User</span></button></a>
+                </span>
+                
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-4 ">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search..."
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()" style="border-radius:29px;">
+                            </form>
+                        </div>
+
+                        <div class="col-sm-6 page-num-info">
+                            <span>
+                                Show
+                                <select class="pageno" data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="table-responsive table-bordered">
+
+
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div  class="th text-center">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                         First Name
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('firstname') "
+                                              data-ng-class="{active: row == 'firstname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-firstname') "
+                                              data-ng-class="{active: row == '-firstname'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Last Name
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('genderid') "
+                                              data-ng-class="{active: row == 'genderid'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-genderid') "
+                                              data-ng-class="{active: row == '-genderid'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Contact No
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('contactno') "
+                                              data-ng-class="{active: row == 'contactno'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-contactno') "
+                                              data-ng-class="{active: row == '-contactno'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Email Address
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('email') "
+                                              data-ng-class="{active: row == 'email'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-email') "
+                                              data-ng-class="{active: row == '-email'}"></span>
+                                    </div>
+                                </th>
+                               <th>
+                                    <div class="th">
+                                        Role
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('rolename') "
+                                              data-ng-class="{active: row == 'rolename'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-rolename') "
+                                              data-ng-class="{active: row == '-rolename'}"></span>
+                                    </div>
+                                </th>
+                             <!--    <th>
+                                    <div class="th">
+                                        Branch
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('branch') "
+                                              data-ng-class="{active: row == 'branch'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-branch') "
+                                              data-ng-class="{active: row == '-branch'}"></span>
+                                    </div>
+                                </th>-->
+                                <th>
+                                    <div class="th">
+                                        Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="rowData in currentPageresultData">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{rowData.firstname}} </td>
+                                <!--<td>{{rowData.lastname}}</td>-->
+                                <td>{{rowData.lastname}}</td>
+                                <td>{{rowData.contactno}}</td>
+                                <td>{{rowData.email}}</td>
+                               <td>{{rowData.rolename}}</td>
+                              <!--   <td>{{rowData.branch}}</td>-->
+                                <td style="padding:0px">
+                                    <div class="action">
+                                        <button ng-show="access_permission.editshow" ng-click="editPpmsuser(rowData)" class="md-icon-button md-primary md-button md-ink-ripple"><span class="zmdi zmdi-edit ng-scope"></span></button>
+
+                                        <!--<button ng-click="viewPpmsuser(rowData)" class="md-icon-button md-button md-ink-ripple"><span class="zmdi zmdi-eye ng-scope"></span></button>-->
+                                        <button ng-show="access_permission.deleteshow" ng-click="deletePpmsuser(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>
+                                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredresultData.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2">
+
+
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display:inline-block">New User</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align:right">
+                <span class="showon" style="float:right;margin-top: 10px;" clearfix">
+                    <a ng-click="show = 1"><button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view Ppmsuser"><span class="fa fa-caret-right ng-scope"></span></button></a>
+                </span>
+                <a ng-click="show =1" class="hideon"><button style="margin-top:8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Ppmsuser"><span class="ng-scope">View User</span></button></a>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <form name="material_login_form" class="form-horizontal form-validation" >
+                                <fieldset>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label  class="mandatory">First Name</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <input type="text"
+                                                   name="firstname"
+                                                   ng-model="ppmsuser.firstname"
+                                                   ng-maxlength="45" />
+                                            <div ng-messages="material_login_form.firstname.$error" multiple ng-if='material_login_form.firstname.$dirty'> 
+                                                <div ng-message="maxlength">First Name up to 45 characters</div>
+                                                <div ng-message="required">First Name is required.</div>
+                                            </div> 
+                                        </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Last Name</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <input type="text"
+                                                   name="lastname"
+                                                   ng-model="ppmsuser.lastname" 
+                                                   ng-maxlength="45"/>
+                                        </md-input-container>
+                                        <div ng-messages="material_login_form.lastname.$error" multiple ng-if='material_login_form.lastname.$dirty'> 
+                                            <div ng-message="maxlength">Last Name up to 45 characters</div>
+                                        </div>
+                                    </div>
+                                    <!--<div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label>Division</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <input type="text"
+                                                   name="firstname"
+                                                   ng-model="ppmsuser.division" />
+
+                                        </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Branch</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <input type="text"
+                                                   name="lastname"
+                                                   ng-model="ppmsuser.branch" />
+
+                                        </md-input-container>
+                                    </div>-->
+                                    <!--<div layout='' layout-sm="column" class="layout-sm-column layout-row">-->
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <!--<md-input-container flex="" class="col-md-6">
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <label>Gender</label>
+                                                <md-select ng-model="ppmsuser.genderid">
+                                                    <md-option ng-value="gender.id" data-ng-repeat="gender in listgender">
+                                                        {{gender.gendername}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>-->
+                                             <md-input-container  flex="">
+                                                <label >Contact Type</label>
+                                                <md-icon class="zmdi zmdi-smartphone-setting"></md-icon>
+                                                 <md-select class="mandatoryselect" ng-model="contact.contacttypeid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="contacttype.id" data-ng-repeat="contacttype in listcontacttype">
+                                                        {{contacttype.contacttypename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label  class="mandatory">Contact No</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <input type="text"
+                                                       name="contactno"
+                                                       ng-model="contact.mobileno"
+                                                    ng-maxlength="10"
+                                                    ng-pattern="/^[0-9]*$/" />
+                                                <div ng-messages="material_login_form.contactno.$error" multiple ng-if='material_login_form.contactno.$dirty'> 
+                                                    <div ng-message="maxlength">Contact No up to 15 characters</div>
+                                                    <div ng-message="required">Contact No is required.</div>
+                                                    <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                </div>
+                                            </md-input-container>
+
+                                            
+                                        </div>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label> Email Address</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <input type="text"
+                                                       name="email"
+                                                       ng-model="contact.email"
+                                                       ng-maxlength="100"
+                                                    ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/"  />
+                                                <div ng-messages="material_login_form.email.$error" multiple ng-if='material_login_form.email.$dirty'> 
+                                                    <div ng-message="pattern">Enter a valid email.</div>
+                                                     <div ng-message="required">Email is required.</div>
+                                                     <div ng-message="maxlength">Email up to 100 characters</div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label>Role</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <md-select ng-model="ppmsuser.roleid"  class="mandatoryselect" required>
+                                                    <md-option ng-value="role.id" data-ng-repeat="role in listrole">
+                                                        {{role.roletype}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        <!--<md-input-container flex="" class="col-md-6">
+
+                                                      <label>User Type</label>
+                                                      <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                      <md-select ng-model="ppmsuser.usertypeid"  class="mandatoryselect" required>
+                                                          <md-option ng-value="usertype.id" data-ng-repeat="usertype in listusertype">
+                                                              {{usertype.usertypename}}
+                                                          </md-option>
+                                                      </md-select>
+                                                  </md-input-container>-->
+                                        </div>
+                                   
+                                     <div>
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex=""  class="col-md-6">
+                                                <label class="mandatory">User Name</label>
+                                                <md-icon class="zmdi zmdi-face"></md-icon>
+                                                <input type="text"
+                                                       name="username"
+                                                       ng-model="userlogin.username"
+                                                       required
+                                                    ng-minlength="6"
+                                                     ng-maxlength="50"/>
+
+                                                <div ng-messages="material_login_form.username.$error" multiple ng-if='material_login_form.username.$dirty'> 
+                                                     <div ng-message="required">User Name is required.</div>
+                                                     <div ng-message="maxlength">User Name up to 50 characters</div>
+                                                    <div ng-message="minlength">User Name must be atleast 6 characters long</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                             <label class="mandatory">Password</label>
+                                             <md-icon class="zmdi zmdi-lock-outline"></md-icon>
+                                        <input required 
+                                              id="password-field" 
+                                              type="{{hidepassword}}"
+                                               name="password" 
+                                               ng-model="userlogin.password"
+                                               ng-minlength="6"
+                                               ng-maxlength="20"  />
+                                                <div class="showic" style="position: absolute;    right: 0px;">
+
+                                               
+                                                <md-icon style="display: inline-block!important;" ng-if="ispasswordview" ng-click="changepasswordtype('P')" class="zmdi zmdi-eye"></md-icon>
+                                                <md-icon style="display: inline-block!important;" ng-if="!ispasswordview" ng-click="changetypepassword('P')" class="zmdi zmdi-eye-off"></md-icon>
+                                                 </div>
+											   <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'> 
+                                                     <div ng-message="required">Password is required.</div>
+                                                      <div ng-message="maxlength">Password up to 20 characters</div>
+                                                    <div ng-message="minlength">Password must be atleast 6 characters long</div>
+											    </div>  
+                                                 </md-input-container>
+                                          
+                                               
+                                        </div>
+                                       <div>
+                                            <md-input-container flex="" class="">
+                                          <md-checkbox aria-label="Finished?" id="Md-checkbox2" ng-model="userlogin.islocked">  Is Locked?</md-checkbox>
+                                    </md-input-container>
+                                       </div>
+                                       
+                                       </div>
+
+
+
+
+
+
+
+
+
+
+
+                                        <div>
+                                            <md-button type="submit" ng-click="savePpmsuser()"
+                                                       class="md-raised btn-w-md md-primary"
+                                                       data-ng-disabled="!canSubmit()">Save</md-button>
+                                            <md-button class="btn-w-md"
+                                                       data-ng-disabled="!canRevert()"
+                                                       data-ng-click="revert()">Revert</md-button>
+
+                                            <div class="divider"></div>
+                                        </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

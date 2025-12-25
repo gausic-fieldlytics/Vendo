@@ -1,0 +1,1424 @@
+<div class="page page-table" data-ng-controller="UserCtrl" ng-init="show = 1" style="min-height: 550px;">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">
+                    <span style="font-size: 12px; margin-left: 30px;">
+                        <md-radio-group class="ui-md-radio-group-inline" ng-click="FilerGrid(gridview)" ng-model="gridview">
+                        <md-radio-button style="margin:0px;margin-right: 10px;"   ng-value="2" >Agency</md-radio-button>
+                        <md-radio-button style="margin:0px"  ng-value="3">ISP </md-radio-button>      
+                    </md-radio-group>
+                    </span></h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 2">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="Add User"><span class="fa fa-plus ng-scope"></span></button>
+                    </a>
+                </span>
+
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-3 ">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-selected-item="selectedstateItem"
+                                                 md-search-text="searchstate"
+                                                 md-selected-item-change="selectedItemChange(item,'User~department')"
+                                                 md-items="item in querySearch(searchstate,'state')"
+                                                 md-item-text="item.statename"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh State?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.statename}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No State matching "{{searchstate}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                         <div class="col-sm-3 ">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-selected-item="selectedcityItem"
+                                                 md-search-text="searchcity"
+                                                 md-selected-item-change="selectedItemChange(item,'User~department')"
+                                                 md-items="item in querySearch(searchcity,'city')"
+                                                 md-item-text="item.cityname"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh City?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.cityname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No City matching "{{searchcity}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+ 
+                        <div class="col-sm-3 ">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search..."
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()" style="border-radius: 29px;">
+                            </form>
+                        </div>
+
+                        <div class="col-sm-6 page-num-info">
+                            <span>
+                                Show
+                                <select class="pageno" data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="table-responsive table-bordered">
+
+
+                    <table class="table table-bordered table-striped table-responsive tabtable">
+                        <thead>
+                            <tr>
+                               
+                               <th>
+                                    <div class="th text-center">
+                                       S.No
+                
+                                    </div>
+                                </th>
+                                 <th ng-show="gridview==2">
+                                    <div class="th">
+                                        <span >Agency Name</span>
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('firstname') "
+                                              data-ng-class="{active: row == 'firstname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-firstname') "
+                                              data-ng-class="{active: row == '-firstname'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span ng-show="gridview==2">Name</span><span ng-show="gridview==3">ISP</span>
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('firstname') "
+                                              data-ng-class="{active: row == 'firstname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-firstname') "
+                                              data-ng-class="{active: row == '-firstname'}"></span>
+                                    </div>
+                                </th>
+                               
+                               
+                                <th>
+                                    <div class="th">
+                                        Email Address
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('email') "
+                                              data-ng-class="{active: row == 'email'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-email') "
+                                              data-ng-class="{active: row == '-email'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                         Contact No
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('contactno') "
+                                              data-ng-class="{active: row == 'contactno'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-contactno') "
+                                              data-ng-class="{active: row == '-contactno'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('userstatusname') "
+                                              data-ng-class="{active: row == 'userstatusname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-userstatusname') "
+                                              data-ng-class="{active: row == '-userstatusname'}"></span>
+                                    </div>
+                                </th>
+                               
+                                
+                                <th style="width: 100px">
+                                    <div class="th">
+                                        Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="rowData in currentPageresultData">
+                               
+                                <td class="text-center">{{startIndex + $index + 1}}</td>
+                                <td  ng-show="gridview==2">{{rowData.agencyname}}</td>
+                                <td>{{rowData.firstname}}  <span ng-if="rowData.lastname!=null">{{rowData.lastname}}</span></td>
+                                <td>{{rowData.email}}</td>
+                                <td>{{rowData.contactno}}</td>
+                                <td>{{rowData.userstatusname}}</td>
+                                 <td style="padding: 0px">
+                                    <div class="action " style="width: 100px">
+                                        <button ng-show="access_permission.editshow" ng-click="editUser(rowData)" class="md-icon-button md-primary md-button md-ink-ripple"><span title="Edit" class="zmdi zmdi-edit ng-scope"></span></button>
+                                        <button ng-click="deleteUser(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>
+                                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredresultData.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2">
+
+
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">
+
+                    <span>{{isptxt}}</span>
+                </h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 1">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view User"><span class="fa fa-caret-right ng-scope"></span></button>
+                    </a>
+                </span>
+                <a ng-click="show =1" class="hideon">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View User"><span class="ng-scope">Back  </span></button>
+                </a>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+            <div class="panel panel-default">
+                <div class="panel-body  form-validation" ng-cloak>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <md-content>
+                            <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
+                                <md-tab  >
+                                    <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.det_isreupload==1}">{{isptxt}}</span>
+                                           
+                                            <span ng-show="user.isdetailaccept" style="color: green;">
+                                               (<i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                            <span ng-show="user.isdetailaccept==0&&rejectreason.det_isreupload!=1" style="color: red;">
+                                               (<i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+
+                                    <md-content class="md-padding">
+                                      <form name="material_login_form" class="form-horizontal form-validation">
+                                         
+                                              
+                                      <div class="col-lg-6" style="margin-top: 28px; border-right: 1px solid #eee;">
+                                           <fieldset ng-disabled="true">
+                                           <div layout='' layout-sm="column" class="layout-sm-column layout-row" ng-if="user.usertypeid==2">
+                                            <md-input-container flex="" class="flex ">
+                                                <label class="mandatory">Agency Name</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input ng-required="user.usertypeid==2"
+                                                    type="text"
+                                                       name="companyname"
+                                                       ng-model="user.companyname"
+                                                    ng-maxlength="100"/>
+                                                <div ng-messages="material_login_form.companyname.$error" multiple ng-if='material_login_form.companyname.$dirty'> 
+											        <div ng-message="maxlength">Agency Name up to 100 characters</div>
+                                                    <div ng-message="required">Agency Name is required.</div>
+											    </div> 
+                                                
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                            <md-input-container flex="" class="col-md-6 ">
+                                                <label class="mandatory">First Name</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="firstname"
+                                                       ng-model="user.firstname"
+                                                    ng-maxlength="45"/>
+
+                                                <div ng-messages="material_login_form.firstname.$error" multiple ng-if='material_login_form.firstname.$dirty'> 
+											        <div ng-message="maxlength">First Name up to 45 characters</div>
+                                                    <div ng-message="required">First Name is required.</div>
+											    </div>   
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label >Last Name</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                       name="lastname"
+                                                       ng-model="user.lastname"
+                                                    ng-maxlength="45"/>
+                                                <div ng-messages="material_login_form.lastname.$error" multiple ng-if='material_login_form.lastname.$dirty'> 
+											        <div ng-message="maxlength">Last Name up to 45 characters</div>
+											    </div> 
+                                                
+                                            </md-input-container>
+                                        </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row" ng-if="user.usertypeid!=2">
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label>Gender</label>
+                                                <md-icon class="zmdi zmdi-male"></md-icon>
+                                                <md-select style="color:black!IMPORTANT" ng-disabled="true" class="mandatoryselect" ng-model="user.genderid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="gender.id" data-ng-repeat="gender in listgender">
+                                                        {{gender.gendername}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                                <md-input-container flex="" class="col-md-6">
+                                                <label>  DOB</label>
+                                                <md-icon class="zmdi zmdi-calendar-check"></md-icon>
+                                                <div flex="" class="flex ">
+                                                     <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                                        <div class="input-group ui-datepicker" style="width: 100%">
+                                                            <input type="text"
+                                                                class="form-control"
+                                                                name="dob"
+                                                                uib-datepicker-popup="dd/MM/yyyy"
+                                                                ng-model="user.dob"
+                                                                is-open="popup1.opened"
+                                                                datepicker-options="dateOptions2"
+                                                                max-date="today_max"
+                                                                close-text="Close"
+                                                                alt-input-formats="altInputFormats"
+                                                                date-disabled="disabled(date, mode)"
+                                                                alt-input-formats="dd/MM/yyyy"
+                                                                close-text="Close"
+                                                                ng-click="open1()" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                            
+                                        </div>
+
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label>  Register Date</label>
+                                                <md-icon class="zmdi zmdi-calendar-check"></md-icon>
+                                                <div flex="" class="flex ">
+                                                    <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                                        <div class="input-group ui-datepicker" style="width: 100%">
+                                                            <input type="text"
+                                                                class="form-control"
+                                                                name="Fromdate"
+                                                                uib-datepicker-popup="dd/MM/yyyy"
+                                                                ng-model="user.joindate"
+                                                                is-open="popup1.opened"
+                                                                datepicker-options="dateOptions2"
+                                       
+                                                                max-date="today_max"
+                                                                close-text="Close"
+                                                                alt-input-formats="altInputFormats"
+                                                                date-disabled="disabled(date, mode)"
+                                                                alt-input-formats="dd/MM/yyyy"
+                                                                close-text="Close"
+                                                                ng-click="open1()" />
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6"  ng-if="user.usertypeid==2">
+                                                <label >Constitution</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select ng-disabled="true"  ng-model="contact.constitutionid"   style="margin-bottom: 15px;">
+                                                    <md-option ng-value="constitution.id" data-ng-repeat="constitution in listconstitution">
+                                                        {{constitution.name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                          
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                            
+                                             <md-input-container flex="" class="flex ">
+                                                <label >GST No</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                       name="gstno"
+                                                       ng-model="user.gstno"
+                                                    ng-maxlength="15"/>
+                                                <div ng-messages="material_login_form.gstno.$error" multiple ng-if='material_login_form.gstno.$dirty'> 
+											        <div ng-message="maxlength">GST No up to 15 characters</div>
+											    </div> 
+                                                
+                                            </md-input-container>
+                                            <div class=" col-md-6" style="margin-right: 15px;padding-left: 0px;margin-bottom:20px">
+                                                <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Remarks</label>
+                                                <textarea style="margin-top: 3px; "  name="remarks"  rows="2"  ng-maxlength="300" ng-model="user.remarks" class="form-control"></textarea>
+                                            </div>
+                                            <div ng-messages="material_login_form.remarks.$error" multiple ng-if='material_login_form.remarks.$dirty'> 
+                                                <div ng-message="maxlength">Remarks up to 300 characters</div>
+                                            </div> 
+                                            <!--<md-input-container flex="" class="flex ">
+                                                <label>User Status</label>
+                                                <md-icon class="zmdi zmdi-label"></md-icon>
+                                                <md-select ng-model="user.userstatusid" class="mandatoryselect" required>
+                                                    <md-option ng-value="userstatus.id" data-ng-repeat="userstatus in listuserstatus">
+                                                        {{userstatus.userstatusname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>-->
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div>
+                                                <label style="color: #adadad;font-size: 12px;" >Profile</label>
+                                                <div class="col-md-12"  style="padding:0px">  
+                                                <img ng-click="downloadimg(filePath+user.profileimages)" ng-if="isDefined(user.profileimages)" src="{{filePath}}{{user.profileimages}}" style="max-width: 150px;max-height: 70px;" />                      
+                                               </div>
+                                                 
+                                            </div>  
+
+                                              </div>
+                                   </fieldset>
+
+                                       <div  class="row">
+                                            <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                  <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                   <textarea style="margin-top: 3px;"name="userdetail"  rows="5"  maxlength="2500" ng-model="rejectreason.userdetail" class="form-control"></textarea>
+                                               </div>
+                                             <div ng-messages="material_login_form.userdetail.$error" multiple ng-if='material_login_form.userdetail.$dirty'> 
+                                                   <div ng-message="maxlength">Reject Reason up to 2500 characters</div>
+                                               </div> 
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-6" style="margin-top: 28px;">
+                                        <fieldset ng-disabled="true" >
+                                            <div>
+                                             <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container  class="col-md-6" flex="" >
+                                                <label>Email Address</label>
+                                                <md-icon class="zmdi zmdi-email"></md-icon>
+                                                <input type="text"
+                                                       name="email"
+                                                    
+                                                       ng-model="contact.email"
+                                                    ng-maxlength="100"
+                                                       ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" />
+                                                 <div ng-messages="material_login_form.email.$error" multiple ng-if='material_login_form.email.$dirty'> 
+											        <div ng-message="pattern">Enter a valid email.</div>
+                                                     <div ng-message="required">Email is required.</div>
+                                                     <div ng-message="maxlength">Email up to 100 characters</div>
+											    </div> 
+
+                                                
+                                            </md-input-container>
+                                            <md-input-container  flex="">
+                                                <label >Contact Type</label>
+                                                <md-icon class="zmdi zmdi-smartphone-setting"></md-icon>
+                                                 <md-select ng-disabled="true" class="mandatoryselect" ng-model="contact.contacttypeid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="contacttype.id" data-ng-repeat="contacttype in listcontacttype">
+                                                        {{contacttype.contacttypename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                       
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-6 ">
+                                                <label class="mandatory"> Contact No</label>
+                                                <md-icon class="zmdi zmdi-phone"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="contactno"
+                                                       ng-model="contact.mobileno"
+                                                       ng-maxlength="10"
+                                                    ng-minlength="10"
+                                                       ng-pattern="/^[0-9]*$/" />
+                                                <div ng-messages="material_login_form.contactno.$error" multiple ng-if='material_login_form.contactno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                    <div ng-message="required">Contact No is required.</div>
+                                                     <div ng-message="maxlength">Contact No up to 10 characters</div>
+                                                    <div ng-message="minlength">Contact No must be atleast 10 characters long</div>
+											    </div>
+                                               
+                                            </md-input-container>
+                                            <md-input-container  flex="">
+                                                <label >Landline </label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                                <input 
+                                                       type="text"
+                                                       name="telephoneno"
+                                                       ng-model="contact.telephoneno"
+                                                       ng-maxlength="10"
+                                                    ng-minlength="10"
+                                                       ng-pattern="/^[0-9]*$/" />
+
+                                               <div ng-messages="material_login_form.telephoneno.$error" multiple ng-if='material_login_form.telephoneno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">Landline up to 10 characters</div>
+                                                   <div ng-message="minlength">Landline must be atleast 10 characters long</div>
+											    </div>
+                                            </md-input-container>
+                                        </div>
+                                        
+                                             <div layout='' layout-sm="column" class="layout-sm-column layout-row" >
+									
+                                        <md-input-container flex="" class="flex ">
+                                             <label>Alternative contact person </label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactperson" 
+                                               ng-model="contact.contactperson" 
+                                              ng-maxlength="50" />
+                                             <div ng-messages="material_login_form.contactperson.$error" multiple ng-if='material_login_form.contactperson.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact person up to 100 characters</div>
+											    </div> 
+                                   </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                        <label>Alternative contact mobile number</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactpersonno" 
+                                               ng-model="contact.contactpersonmobile" 
+                                             ng-maxlength="10"
+                                             ng-minlength="10"
+                                            ng-pattern="/^[0-9]*$/"   />
+                                             <div ng-messages="material_login_form.contactpersonno.$error" multiple ng-if='material_login_form.contactpersonno.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact mobile number up to 10 characters</div>
+                                                  <div ng-message="minlength">Alternative contact mobile number must be atleast 10 characters long</div>
+                                                 <div ng-message="pattern">Enter a valid Numbers.</div>
+											    </div> 
+                                   </md-input-container>
+                                   
+                                     </div>
+                                      <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                            <md-input-container flex="" >
+                                                <label >Nationality</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select ng-disabled="true" class="mandatoryselect" ng-model="contact.nationalityid"  style="margin-bottom: 15px;">
+                                                    <md-option ng-value="nationality.id" data-ng-repeat="nationality in listnationality">
+                                                        {{nationality.nationalityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >Country</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select ng-disabled="true" class="mandatoryselect" ng-model="contact.countryid" required ng-change="loadChilds(contact.countryid,'countryid')"  style="margin-bottom: 15px;">
+                                                    <md-option ng-value="country.id" data-ng-repeat="country in listcountry">
+                                                        {{country.countryname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                     </div>
+                                       
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                            <md-input-container flex="" >
+                                                <label >State</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select ng-disabled="true" class="mandatoryselect" ng-model="contact.stateid" required ng-change="loadChilds(contact.stateid,'stateid')" style="margin-bottom: 15px;">
+                                                    <md-option ng-value="state.id" data-ng-repeat="state in liststate">
+                                                        {{state.statename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >City</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select ng-disabled="true" class="mandatoryselect" ng-model="contact.cityid" required ng-change="loadarea(contact.stateid,contact.cityid)" style="margin-bottom: 15px;">
+                                                    <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                        {{city.cityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >Area</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select ng-disabled="true" class="select" ng-model="contact.areaid" style="margin-bottom: 15px;">
+                                                    <md-option ng-value="area.id" data-ng-repeat="area in listallarea">
+                                                        {{area.areaname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                             
+                                         
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label ng-class="{'mandatory': user.usertypeid==2}" >Pin Code</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input 
+                                                    ng-required="user.usertypeid==2"
+                                                       type="text"
+                                                       name="zipcode"
+                                                       ng-model="contact.zipcode"
+                                                       ng-maxlength="7"
+                                                       ng-pattern="/^[0-9]*$/" />
+                                               <div ng-messages="material_login_form.zipcode.$error" multiple ng-if='material_login_form.zipcode.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                      <div ng-message="maxlength">Pin Code up to 7 characters</div>
+                                                      <div ng-message="required">Pin Code is required.</div>
+											    </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                         <div flex="" class="col-md-12" style="margin-right: 15px;padding-left: 0px;margin-bottom:20px">
+                                               <label class="mandatory" style="FONT-SIZE: 12PX;COLOR: #949494;">Address</label>
+                                                    
+                                                    <textarea style="margin-top: 3px; "  required  name="address"  rows="3"  ng-maxlength="1000" ng-model="contact.address" class="form-control"></textarea>
+                                                 <div style="color:red" ng-messages="material_login_form.address.$error" multiple ng-if='material_login_form.address.$dirty'> 
+                                                     <div ng-message="required">Address is required.</div>
+                                                     <div ng-message="maxlength">Address up to 1000 characters</div>
+											    </div>
+                                            </div>
+                                     </div>
+                                         </div>   
+                                       <div>
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex=""  class="col-md-6">
+                                                <label class="mandatory">User Name</label>
+                                                <md-icon class="zmdi zmdi-face"></md-icon>
+                                                <input type="text"
+                                                       name="username"
+                                                       ng-model="userlogin.username"
+                                                       ng-pattern="user.usertypeid==2? '^[a-zA-Z0-9]*$'  :'^[0-9]*$'"
+                                                       required
+                                                     ng-maxlength="50"/>
+
+                                                <div ng-messages="material_login_form.username.$error" multiple ng-if='material_login_form.username.$dirty'> 
+                                                     <div ng-message="required">User Name is required.</div>
+                                                    <div  ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">User Name up to 50 characters</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                             <label class="mandatory">Password</label>
+                                             <md-icon class="zmdi zmdi-lock-outline"></md-icon>
+                                        <input required 
+                                              id="password-field" 
+                                              type="password"
+                                               name="password" 
+                                               ng-model="userlogin.password"
+                                               ng-maxlength="20"
+                                                       ng-minlength="6"
+                                                      />
+                                                <div class="showic" style="position: absolute;    right: 0px;">
+
+                                               
+                                                <!--<md-icon style="display: inline-block!important;" ng-if="ispasswordview" ng-click="changepasswordtype('P')" class="zmdi zmdi-eye"></md-icon>
+                                                <md-icon style="display: inline-block!important;" ng-if="!ispasswordview" ng-click="changetypepassword('P')" class="zmdi zmdi-eye-off"></md-icon>-->
+                                                 </div>
+											   <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'> 
+                                                     <div ng-message="required">Password is required.</div>
+                                                     <div ng-message="maxlength">Password up to 20 characters</div>
+                                                   <div ng-message="minlength">Password must be atleast 6 characters long</div>
+											    </div>  
+                                                 </md-input-container>
+                                           <!-- <md-input-container flex="" >
+                                                <label class="mandatory">Password</label>
+                                                <md-icon class="zmdi zmdi-lock-outline"></md-icon>
+                                                <input type="password"
+                                                       name="password"
+                                                       ng-model="userlogin.password"
+                                                       required
+                                                     ng-maxlength="50"
+                                                       />
+
+                                               <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'> 
+                                                     <div ng-message="required">Password is required.</div>
+                                                     <div ng-message="maxlength">Password up to 50 characters</div>
+											    </div>
+                                            </md-input-container>-->
+                                               
+                                        </div>
+                                      
+                                       
+                                       </div>
+                                        </fieldset>
+                                        
+                                    
+                                        </div>
+                                    <div class="col-md-12" style="text-align:center; display: inline-block; border-top: 1px solid #f1f1f1; padding: 15px;">
+                                       
+                                      
+                                        <div class="col-md-6" style="text-align: left;padding-top:15px;">
+                                            <!--<button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button"  data-ng-click="updateuser(1)" 
+                                                 data-ng-disabled="!canSubmit()"><span class="ng-scope">Update</span></button>-->
+                                             
+                                             <!--<button ng-show="user.isdetailaccept==null"   style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('DE',rejectreason.userdetail)"><span class="ng-scope">Reject</span></button>-->
+                                             <button ng-show="!user.isdetailaccept" style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button"  ng-click="upload_accept('D',user)"
+                                                 data-ng-disabled="!canSubmit()"><span class="ng-scope">Accept</span></button>
+
+                                            <!--<md-button ng-show="!user.isskillaccept" type="submit"  ng-click="upload_accept('S',user)" data-ng-disabled="!(canSubmit_childform(skill_form)&&listuserskil.length>0)"
+                                                   class="md-raised btn-w-md md-primary">Accept</md-button>-->
+                                          
+                                        </div>
+                                    </div>
+
+                                      </form>
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                <md-tab  ng-disabled="!user.id" >
+                                    <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.skill_isreupload==1}">{{user.usertypeid==2 ? "Technical Skills": "Skills"}}</span>
+                                            <span ng-show="user.isskillaccept" style="color: green;">
+                                               (  <i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                            <span ng-show="user.isskillaccept==0&&rejectreason.skill_isreupload!=1" style="color: red;">
+                                               (  <i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                        <ng-form name="skill_form">
+                                            <fieldset ng-disabled="true">
+                                                <table class="table table-bordered table-striped table-responsive tabtable">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th><span style="color: red"> *</span>Skill</th>
+                                                <th><span style="color: red"> *</span>Experience in Years</th>
+                                                <!--<th>Remarks</th>-->
+                                                <th></th>
+                                                <!--<th>Is Verified</th>-->
+                                            </tr>
+                                            <tr data-ng-repeat="userskil in listuserskil">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <md-autocomplete style="margin-bottom:0px;padding:0px"  flex 
+                                                        
+                                                        md-input-name="autocomplete_di"
+                                                        required
+                                                        md-no-cache="noCache"
+                                                        class="autocomplete_width"
+                                                        md-search-text="userskil.searchitem"
+                                                        md-selected-item="userskil.selecteditem"
+                                                        md-search-text-change="searchTextChange(item,$index,1,listuserskil)"
+                                                        md-selected-item-change="selectedlistItemChange(item,$index,1,listuserskil)"
+                                       
+                                                        md-items="item in querySearch(userskil.searchitem,'skill')"
+                                                        md-item-text="item.skillname"
+                                                        md-min-length="0"
+                                                        md-autoselect="true"
+                                                        placeholder="Search Item">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="userskil.searchitem" md-highlight-flags="^i">{{item.skillname}}</span>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                    <p style="color:red" ng-show="!userskil.skillid">Invalid Skill</p>
+                                                </td>
+                                                <td>
+                                                    <md-input-container class="no-error-space">
+                                                        <input  style="text-align:right" type="text" required name="experience{{$index}}" ng-model="userskil.experience" ng-maxlength="3"  allow-decimal-numbers  />
+                                                        
+                                                         <div  ng-messages="skill_form['experience' + $index].$error" multiple ng-show="skill_form['experience' + $index].$dirty">
+                                                            <div ng-message="maxlength">Experience up to 3 characters</div>
+                                                        </div>
+                                                        
+                                                    </md-input-container>
+                                                </td>
+                                                 <!-- <td>
+                                                    <div>
+                                                         <textarea name="remarks{{$index}}"   rows="1"  ng-maxlength="200" ng-model="userskil.remarks" class="form-control"></textarea>
+                                                        <div  ng-messages="skill_form['remarks' + $index].$error" multiple ng-show="skill_form['remarks' + $index].$dirty">
+                                                            <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>-->
+                                                <!--<td>
+                                                     <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserskil,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                </td>-->
+                                                  <!--<td>
+                                                    <md-input-container class="no-error-space">
+                                                       <md-checkbox style="margin-top:20px" aria-label="Finished?" id="{{$index}}isverified" ng-model="userskil.isverified">  </md-checkbox>
+                                                    </md-input-container>
+                                                </td>-->
+                                            </tr>
+                                        </table>
+                                            </fieldset>
+                                       
+                                       <!-- <div class="col-md-12" style="padding: 1px 10px 0px;float: right;text-align: right;" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserskil)" data-ng-disabled="!childParamdis(skill_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserskil)" data-ng-disabled="listuserskil.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>-->
+                                      
+                                        <div class="col-md-6" style="text-align: left;padding-top:15px;">
+                                            <p style="color:red" ng-show="amenitycount>0">Select Valid Amenity</p>
+                                            <div  class="row">
+                                             <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                   <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                    <textarea style="margin-top: 3px; "  name="skillreason"  rows="5" maxlength="2500" ng-model="rejectreason.skillreason" class="form-control"></textarea>
+                                                </div>
+                                              <div ng-messages="material_login_form.skillreason.$error" multiple ng-if='material_login_form.skillreason.$dirty'> 
+											        <div ng-message="maxlength">Reject Reason up to 300 characters</div>
+											    </div> 
+                                        </div>
+                                            <!--<button ng-show="user.isskillaccept==null || user.isskillaccept==0" style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('SKILL',rejectreason.skillreason)"><span class="ng-scope">Reject</span></button>-->
+                                             <!--<button ng-show="user.isskillaccept==null" style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('SKILL',rejectreason.skillreason)"><span class="ng-scope">Reject</span></button>-->
+                                             <md-button ng-show="!user.isskillaccept" type="submit"  ng-click="upload_accept('S',user)" data-ng-disabled="!(canSubmit_childform(skill_form)&&listuserskil.length>0)"
+                                                   class="md-raised btn-w-md md-primary">Accept</md-button>
+                                         
+
+                                        </div>
+                                        </ng-form>
+                                    </md-content>
+                                          </md-tab-body>
+                                </md-tab>
+                                <md-tab ng-disabled="!user.id">
+                                     <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.work_isreupload==1}">{{user.usertypeid==2 ? "Experience": "Work Experience"}}</span>
+                                           
+                                            <span ng-show="user.isworkaccept" style="color: green;">
+                                               (<i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                            <span ng-show="user.isworkaccept==0&&rejectreason.work_isreupload!=1" style="color: red;">
+                                               (<i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                       <ng-form name="workexp_form">
+                                           <fieldset ng-disabled="true">
+                                                <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>Company</th>
+                                                   <!-- <th>Address</th>-->
+                                                    <th><span style="color: red"> *</span>City</th>
+                                                    <th><span style="color: red"> *</span>From</th>
+                                                    <th><span style="color: red"> *</span>To</th>
+                                                   <!-- <th>Remarks</th>-->
+                                                    <th></th>
+                                                </tr>
+                                                <tr data-ng-repeat="userexp in listuserexp">
+                                                   <td>{{$index+1}}</td>
+                                                    <td>
+                                                         <input type="text" required name="companyname{{$index}}"  ng-model="userexp.companyname"  ng-maxlength="45" />
+                                                        <div  ng-messages="workexp_form['companyname' + $index].$error" multiple ng-show="workexp_form['companyname' + $index].$dirty">
+                                                            <div ng-message="maxlength">Company up to 45 characters</div>
+                                                            <div ng-message="required">Company is required.</div>
+                                                        </div>
+                                                    </td>
+                                                   <!-- <td>
+                                                         <textarea name="address{{$index}}"   rows="1"  ng-maxlength="200" ng-model="userexp.address" class="form-control"></textarea>
+                                                        <div  ng-messages="workexp_form['address' + $index].$error" multiple ng-show="workexp_form['address' + $index].$dirty">
+                                                            <div ng-message="maxlength">Address up to 200 characters</div>
+                                                        </div>
+                                                        
+                                                    </td>-->
+                                                 
+                                                    <td>
+                                                        <md-select ng-disabled="true" style="margin:0px" ng-model="userexp.cityid" required>
+                                                            <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                                {{city.cityname}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>
+                                                    <td>
+                                                        <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                            <input type="text"
+                                                            class="form-control"
+                                                            name="date"
+                                                            uib-datepicker-popup="dd/MM/yyyy"
+                                                            ng-model="userexp.fromdate"
+                                                            is-open="popup1.opened"
+                                                            datepicker-options=""
+                                                            max-date="today_max"
+                                                            close-text="Close"
+                                                            alt-input-formats="altInputFormats"
+                                                            ng-change="chagetodate(userexp)"
+                                                            alt-input-formats="dd/MM/yyyy"
+                                                            close-text="Close"
+                                                            ng-click="open1()" style="background-color: transparent;" readonly="readonly" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                         <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                                <input type="text"
+                                                                class="form-control"
+                                                                name="date"
+                                                                uib-datepicker-popup="dd/MM/yyyy"
+                                                                ng-model="userexp.todate"
+                                                                is-open="popup1.opened"
+                                                                datepicker-options=""
+                                                                max-date="today_max"
+                                                                min-date="userexp.fromdate_max"
+                                                                ng-disabled="!userexp.fromdate"
+                                                                close-text="Close"
+                                                                alt-input-formats="altInputFormats"
+                                                                alt-input-formats="dd/MM/yyyy"
+                                                                close-text="Close"
+                                                                ng-click="open1()" style="background-color: transparent;" readonly="readonly" />
+                                                            </div>
+                                                         </div>
+                                                        
+                                                    </td>
+                                                   <!-- <td>
+                                                        <div>
+                                                         <textarea  name="remarks{{$index}}"  name=""  rows="1"  ng-maxlength="200" ng-model="userexp.remarks" class="form-control"></textarea>
+                                                            <div  ng-messages="workexp_form['remarks' + $index].$error" multiple ng-show="workexp_form['remarks' + $index].$dirty">
+                                                            <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                        </div>
+                                                    </div>
+                                                         
+                                                    </td>
+                                                    <td>
+                                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserexp,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                    </td>-->
+                                                </tr>
+                                            </table>
+                                           </fieldset>
+                                          
+                                       </ng-form>
+                                        <!--<div class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserexp)" data-ng-disabled="!childParamdis(workexp_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserexp)" data-ng-disabled="listuserexp.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>-->
+                                         <div class="col-md-6" style="text-align: left;padding-top:15px;">
+                                            <div  class="row">
+                                                <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                      <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                   <textarea style="margin-top: 3px;"name="workreason"  rows="5"  maxlength="2500" ng-model="rejectreason.workreason" class="form-control"></textarea>
+                                             </div>
+                                              <div ng-messages="material_login_form.workreason.$error" multiple ng-if='material_login_form.workreason.$dirty'> 
+											        <div ng-message="maxlength">Reject Reason up to 2500 characters</div>
+											    </div> 
+                                        </div>
+                                             <!--<button ng-show="user.isworkaccept==null || user.isworkaccept==0" style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('WORK',rejectreason.workreason)"><span class="ng-scope">Reject</span></button>-->
+                                             <md-button ng-show="!user.isworkaccept" type="submit" ng-click="upload_accept('W',user)" data-ng-disabled="!(canSubmit_childform(workexp_form)&&listuserexp.length>0)"
+                                                   class="md-raised btn-w-md md-primary">Accept
+                                            </md-button>
+                                          
+                                        </div>
+                                        
+                                    </md-content>
+                                          </md-tab-body>
+                                </md-tab>
+                                <md-tab  ng-disabled="!user.id">
+                                     <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.loc_isreupload==1}">Preferred Locations</span>
+                                            
+                                            <span ng-show="user.islocaccept" style="color: green;">
+                                               (<i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                            <span ng-show="user.islocaccept==0&&rejectreason.loc_isreupload!=1" style="color: red;">
+                                               (<i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                       <ng-form name="loc_form">
+                                           <fieldset ng-disabled="true">
+                                                <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>City</th>
+                                                    <th><span style="color: red"> *</span>Area</th>
+                                                </tr>
+                                                <tr data-ng-repeat="location in listuserprelocation">
+                                                    <td>{{$index+1}}</td>
+                                                     <td>{{location.searchitem}}</td>
+                                                  <td style="white-space: break-spaces">{{location.selectedtext}}</td>
+                                                  <!--  <td>
+                                                        <md-select ng-disabled="true" ng-model="location.cityid" required style="margin:0px" ng-change="location.areaid=[]">
+                                                            <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                                {{city.cityname}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>
+                                                    <td>
+                                                    <md-select  ng-model="location.areaid" required style="margin: 0px;" md-selected-text="location.selectedtext" data-ng-disabled="!location.cityid" multiple ng-change="getselecteditemcount(location)" >
+                                                            <md-option ng-disabled="true" ng-value="area.id" data-ng-repeat="area in listarea" ng-show="area.cityid==location.cityid">
+                                                              <span >{{area.areaname}}</span>  
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>-->
+                                                   
+                                                </tr>
+                                            </table>
+                                           </fieldset>
+                                          
+                                       </ng-form>
+                                           
+                                        <div class="col-md-6" style="text-align: left;padding-top:15px;">
+                                            <div  class="row">
+                                                <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                      <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                    <textarea style="margin-top: 3px;"name="locationreason"  rows="5"  maxlength="2500" ng-model="rejectreason.locationreason" class="form-control"></textarea>
+                                                </div>
+                                              <div ng-messages="material_login_form.locationreason.$error" multiple ng-if='material_login_form.locationreason.$dirty'> 
+											        <div ng-message="maxlength">Reject Reason up to 2500 characters</div>
+											    </div> 
+                                        </div>
+                                        <!--<button ng-show="user.islocaccept==null|| user.islocaccept==0 "  style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('LOC',rejectreason.locationreason)"><span class="ng-scope">Reject</span></button>-->
+                                        <md-button ng-show="!user.islocaccept" type="submit" ng-click="upload_accept('L',user)" data-ng-disabled="!(canSubmit_childform(loc_form)&&listuserprelocation.length>0)"
+                                                   class="md-raised btn-w-md md-primary">Accept
+                                            </md-button>
+                                           
+                                        </div>
+                                         
+                                    </md-content>
+                                          </md-tab-body>
+                                </md-tab>
+                                <md-tab  ng-disabled="!user.id">
+                                     <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.proof_isreupload==1}">Proofs </span>
+                                            
+                                            <span ng-show="user.isproofaccept" style="color: green;">
+                                               (<i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                             <span ng-show="user.isproofaccept==0&&rejectreason.proof_isreupload!=1" style="color: red;">
+                                               (<i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                        <ng-form name="proof_form">
+                                            <fieldset ng-disabled="true">
+                                                <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>Proof Type</th>
+                                                    <th><span style="color: red"> *</span>Proof No</th>
+                                                    <th><span style="color: red"> *</span>Proof</th>
+                                                    <!--<th></th>-->
+                                                </tr>
+                                                <tr data-ng-repeat="proof in listuserproof">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>
+                                                        <md-select ng-disabled="true" ng-model="proof.prooftypeid" style="margin:0px;" required>
+                                                            <md-option ng-value="prooftype.id" data-ng-repeat="prooftype in listprooftype">
+                                                                {{prooftype.prooftypename}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>
+                                                     <td>
+                                                    <md-input-container class="no-error-space">
+                                                       <input type="text" required 
+                                                           ng-disabled="!proof.prooftypeid"
+                                                           name="proof{{$index}}"  
+                                                           ng-pattern="proof.pattern"
+                                                           ng-model="proof.proofno"  ng-maxlength="20" />
+                                                        <div  ng-messages="proof_form['proof' + $index].$error" multiple ng-show="(proof_form['proof' + $index].$invalid || proof_form['proof' + $index].$invalid)&&proof.pattern">
+                                                            <div ng-message="maxlength">Proof No up to 20 characters</div>
+                                                            <div ng-message="required">Proof No is required.</div>
+                                                            <div ng-message="pattern">Enter a valid Proof No.</div>
+                                                        </div>
+                                                    </md-input-container>
+                                                </td>
+                                                    <td style="width:47%;position: relative;">
+                                                         <div   style="padding:0px;display:inline-block">  
+                                                        <img  ng-click="downloadimg(proof.docfile)"  ngf-src="!proof.docfile.$error && proof.docfile" class="thumb" style="max-height: 70px;margin:4px;">
+                                                        <i ng-show="ickupimg.docfile.docfile.$error.maxSize">File too large {{proof.docfile.size / 1000000|number:1}}MB: max 20MB  </i>
+                                                       
+                                                        <!--<a id="proof{{$index+1}}" style="line-height: 34px;display:inherit;top: 20px;background:#eee;
+                                                        left: 20px;" class="uppic md-primary md-button md-ink-ripple sdfasdf" onclick="nextbutton(this.id); ">
+                                                            Choose <i class="zmdi zmdi-upload"></i>
+                                                        </a>-->
+
+                                                      
+                                                      </div>
+                                                           <div   style="padding:0px;display:inline-block;    padding-top: 20px;  vertical-align: top;">  
+                                                                 <!--<a   ng-click="downloadimg(proof.docfile)"   ng-if="proof.docfile!=null && proof.docfile!=''&&  isDefined(proof.docfile)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                    <i class=" zmdi zmdi-download"></i>  
+                                                </a>  -->
+                                                                 <input type="file" required id="proodin{{$index+1}}"  ngf-select ng-model="proof.docfile"  style="visibility: hidden;min-height: 0px;"  name="file" accept="image/*" ngf-max-size="20MB">
+                                                               </div>
+                                                        <!-- <a   ng-click="removeimg(proof,'P')"    ng-if="proof.docfile!=null && proof.docfile!=''&&  isDefined(proof.docfile)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                    <i class=" zmdi zmdi-delete"></i>  
+                                                </a>   -->
+                                                    </td>
+                                                     <!--<td>
+                                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserproof,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                    </td>-->
+                                                </tr>
+                                            </table>
+                                            </fieldset>
+                                           
+                                       </ng-form>
+                                      <!-- <div class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserproof)" data-ng-disabled="!childParamdis(proof_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserproof)" data-ng-disabled="listuserproof.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>-->
+                                        <div class="col-md-6" style="text-align: left;padding-top:15px;">
+                                            <div  class="row">
+                                                <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                      <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                       
+                                                    
+                                                    <textarea style="margin-top: 3px;"name="proofreason"  rows="5"  maxlength="2500" ng-model="rejectreason.proofreason" class="form-control"></textarea>
+                                                </div>
+                                              <div ng-messages="material_login_form.proofreason.$error" multiple ng-if='material_login_form.proofreason.$dirty'> 
+											        <div ng-message="maxlength">Reject Reason up to 300 characters</div>
+											    </div> 
+                                        </div>
+                                            <!--<button ng-show="user.isproofaccept==null || user.isproofaccept==0" style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('PROOF',rejectreason.proofreason)"><span class="ng-scope">Reject</span></button>-->
+
+                                            <md-button ng-show="!user.isproofaccept" type="submit" ng-click="upload_accept('P',user)"  data-ng-disabled="!(canSubmit_childform(proof_form)&&listuserproof.length>0)"
+                                                   class="md-raised btn-w-md md-primary">Accept
+                                            </md-button>
+                                        </div>
+                                         
+                                    </md-content>
+                                          </md-tab-body>
+                                </md-tab>
+                                <md-tab ng-disabled="!user.id">
+                                     <md-tab-label >
+                                        <span >
+                                            <span ng-class="{'isactiveuploadclsss': rejectreason.bank_isreupload==1}"> Bank Details </span>
+                                           
+                                            <span ng-show="user.isbankaccept"  style="color: green;">
+                                               (  <i class="zmdi zmdi-check"></i>)
+                                            </span>
+                                             <span ng-show="user.isbankaccept==0&&rejectreason.bank_isreupload!=1 " style="color: red;">
+                                               (  <i class="zmdi zmdi-close"></i>)
+                                            </span>
+                                        </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                     
+                                    
+                                    <md-content class="md-padding" style="padding-top:40px">
+                                      <ng-form name="bank_form">
+                                          <fieldset ng-disabled="true">
+                                          
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <div class="col-md-4 ">
+                                                <md-input-container >
+                                                    <label><span style="color: red"> *</span>Account holder name</label>
+                                                    <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                    <input required 
+                                                    type="text"
+                                                    name="accholdername" 
+                                                ng-model="userbankdet.accholdername" ng-maxlength="70"  />
+                                                <div ng-messages="bank_form.accholdername.$error" multiple ng-if='bank_form.accholdername.$dirty'> 
+											        <div ng-message="required">Account holder name is required.</div>
+                                                    <div ng-message="maxlength">Account holder name up to 70 characters</div>
+                                                    </div>                                       
+                                                </md-input-container>
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <md-input-container  style="margin-top:5px!important">
+                                                    <label><span style="color: red"> *</span>Bank Name</label>
+                                                    <md-autocomplete md-no-cache="noCache" class="nobrd"
+                                                        md-search-text="searchbanktxt"
+                                                        md-selected-item="userbankdet.bankname"
+                                                        required
+                                                        md-items="item in searchBank(searchbanktxt,'bank')"
+                                                        md-item-text="item"
+                                                        
+                                                        md-min-length="0">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="searchbanktxt" md-highlight-flags="^i">{{item}}</span>
+                                                        </md-item-template>
+                                                        <md-not-found>
+                                                            No Bank matching "{{searchbanktxt}}" were found.
+                                                        </md-not-found>
+                                                    </md-autocomplete>
+                                                   
+                                                  <!--  <div ng-messages="bank_form.bankname.$error" multiple ng-if='bank_form.bankname.$dirty'> 
+                                                        <div ng-message="required">Bank Name is required.</div>
+                                                         <div ng-message="maxlength">Bank Name up to 100 characters</div>
+                                                    </div> -->
+                                                </md-input-container>
+                                                    <!--<md-input-container >
+                                                        <label><span style="color: red"> *</span>Bank Name</label>
+                                                        <md-icon class="zmdi zmdi-balance"></md-icon>
+                                                        <input required 
+                                                        type="text"
+                                                        name="bankname" 
+                                                    ng-model="userbankdet.bankname" ng-maxlength="100"  />
+                                                    <div ng-messages="bank_form.bankname.$error" multiple ng-if='bank_form.bankname.$dirty'> 
+                                                        <div ng-message="required">Bank Name is required.</div>
+                                                         <div ng-message="maxlength">Bank Name up to 100 characters</div>
+                                                        </div>                                       
+                                                    </md-input-container>-->
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <md-input-container >
+                                                        <label><span style="color: red"> *</span>Account Number</label>
+                                                        <md-icon class="zmdi zmdi-pin-account"></md-icon>
+                                                        <input required 
+                                                             ng-minlength="9"
+                                                       ng-maxlength="18"
+                                                     ng-pattern="/^[0-9]*$/"
+                                                        type="text"
+                                                        name="accnumber" 
+                                                ng-model="userbankdet.accnumber" ng-maxlength="20"  />
+                                                <div ng-messages="bank_form.accnumber.$error" multiple ng-if='bank_form.accnumber.$dirty'> 
+                                                    <div ng-message="required">Account Number is required.</div>
+                                                    <div ng-message="maxlength">Account Number up to 18 characters</div>
+                                                    <div ng-message="minlength">Account Number must be atleast 9 characters long</div>
+                                                    <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                        </div>                                       
+                                                    </md-input-container>
+                                                </div>
+                                          
+                                            
+                                           
+                                            
+                                      </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <div class="col-md-4 ">
+                                            <md-input-container >
+                                                <label>Branch</label>
+                                                <md-icon class="zmdi zmdi-pin-drop"></md-icon>
+                                                <input  
+                                                type="text"
+                                                name="branch" 
+                                                    ng-model="userbankdet.branch" ng-maxlength="70"    />
+                                                    <div ng-messages="bank_form.branch.$error" multiple ng-if='bank_form.branch.$dirty'> 
+                                                       <div ng-message="maxlength">Branch up to 70 characters</div>
+											    </div>                                       
+                                            </md-input-container>
+                                        </div>
+                                            <div class="col-md-4 " >
+                                            <md-input-container >
+                                                <label><span style="color: red"> *</span>IFSC Code</label>
+                                                <md-icon class="zmdi zmdi-code"></md-icon>
+                                                <input required 
+                                                type="text"
+                                                name="ifsc" 
+                                                  ng-pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" 
+                                                    ng-minlength="11"
+                                                    ng-maxlength="11"
+                                                ng-model="userbankdet.ifsc"  />
+                                                <!-- ng-pattern="/^[A-Za-z]{4}\d{7}$/"-->
+                                                <div ng-messages="bank_form.ifsc.$error" multiple ng-if='bank_form.ifsc.$dirty'> 
+											        <div ng-message="required">IFSC is required.</div>
+                                                       <div ng-message="maxlength">IFSC Code up to 11 characters</div>
+                                                        <div ng-message="minlength">IFSC Code must be atleast 9 characters long</div>
+                                                        <div ng-message="pattern">Enter a valid IFSC Code.</div>
+											    </div>                                       
+                                            </md-input-container>
+                                        </div>
+                                          
+                                            
+                                      </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <div class="col-md-4 " >
+                                                 <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Address</label>
+                                                   
+                                                   <textarea style="margin-top: 3px; "  name="address"  rows="2"  ng-maxlength="200" ng-model="userbankdet.address" class="form-control"></textarea>
+                                                <div ng-messages="bank_form.address.$error" multiple ng-if='bank_form.address.$dirty'> 
+                                                        <div ng-message="maxlength">Address up to 200 characters</div>
+                                                    </div> 
+                                            </div>
+                                            <div class="col-md-4">
+                                              <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Remarks</label>
+                                                   
+                                                    <textarea style="margin-top: 3px; " name="remarks"  rows="2"  ng-maxlength="200" ng-model="userbankdet.remarks" class="form-control"></textarea>
+                                                 <div ng-messages="bank_form.remarks.$error" multiple ng-if='bank_form.remarks.$dirty'> 
+                                                        <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                    </div> 
+                                            </div>
+                                           <div class="col-md-4">
+                                            <div>
+                                                <label style="color: #adadad;font-size: 12px;" >Cheque Leaf</label>
+                                                <div class="col-md-12"  style="padding:0px">  
+                                                <img ng-click="downloadimg(filePath+userbankdet.image)" ng-if="isDefined(userbankdet.image)" src="{{filePath}}{{userbankdet.image}}" style="max-width: 150px;max-height: 70px;" />                      
+                                                <img ng-click="downloadimg(filePath+userbankdet.image)" ng-if="isObject(userbankdet.image)" ngf-src="userbankdet.image" style="max-width: 150px;max-height: 70px;" />
+                                               </div>
+                                                 <div class="col-md-12" style="padding:0px"> 
+                                                   <!-- <a href="#" onclick="document.getElementById('icon').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background:#eee">
+                                                        <i class="zmdi zmdi-upload"></i>  
+                                                    </a>-->
+                                                    <input type="file" ngf-select="" ng-model="userbankdet.image" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="icon">
+                                                  <!--  <a   ng-click="downloadimg(filePath+userbankdet.image)"   ng-if="userbankdet.image!=null && userbankdet.image!=''&&  isDefined(userbankdet.image)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                        <i class=" zmdi zmdi-download"></i>  
+                                                    </a> -->
+                                                    <!-- <a   ng-click="removeimg(userbankdet,'B')"    ng-if="userbankdet.image!=null && userbankdet.image!=''&&  isDefined(userbankdet.image)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                        <i class=" zmdi zmdi-delete"></i>  
+                                                    </a>  -->  
+                                                </div>
+                                            </div>  </div>
+                                           
+            
+                                      </div>
+                                                </fieldset>
+                                          <br />
+                                          <div class="col-md-12" style="padding:0px">
+
+                                       
+                                          <div class="col-md-8" style="text-align: left;padding-top:15px;">
+                                            <div  class="row">
+                                                <div class=" col-md-12" style="text-align: left;margin-bottom: 20px;">
+                                                      <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Reject Reason</label>
+                                                       
+                                                    
+                                                    <textarea style="margin-top: 3px;"name="bankdetails"  rows="5" maxlength="2500" ng-model="rejectreason.bankdetails" class="form-control"></textarea>
+                                                </div>
+                                              <div ng-messages="material_login_form.bankdetails.$error" multiple ng-if='material_login_form.bankdetails.$dirty'> 
+											        <div ng-message="maxlength">Reject Reason up to 2500 characters</div>
+											    </div> 
+                                        </div>
+                                              
+                                          </div>
+                                        </div>
+                                            
+                                         <div style="text-align: left;">
+                                            <!--<button ng-show="user.isbankaccept==null || user.isbankaccept==0"  style="margin-top: 8px" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updatereject('BANK',rejectreason.bankdetails)"><span class="ng-scope">Reject</span></button>-->
+
+                                            <md-button  ng-show="!user.isbankaccept"  type="submit" ng-click="upload_accept('B',user)" data-ng-disabled="!canSubmit_childform(bank_form)&&!userbankdet.image"
+                                                     class="md-raised btn-w-md md-primary">Accept
+                                              </md-button>
+                                         </div>
+                                       </ng-form>
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                
+                            </md-tabs>
+                      </md-content>
+                            <hr style="margin:5PX" />
+                            <div class="col-md-12 " style="text-align:right">
+                                 <button   style="margin-top: 8px; background: #f44336; color: white; FONT-SIZE: 14PX; PADDING: 10PX 37PX;BORDER-RADIUS: 5PX;" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="updateuserreject(ddluserid)"><span class="ng-scope">Reject</span></button>
+                                <!--<button   style="margin-top: 8px; background: #f44336; color: white; FONT-SIZE: 14PX; PADDING: 10PX 37PX;BORDER-RADIUS: 5PX;" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="sendrejectmsg(ddluserid)"><span class="ng-scope">Refuse</span></button>-->
+                                 <button   style="margin-top: 8px; background: #48b748; color: white; FONT-SIZE: 14PX; PADDING: 10PX 37PX;BORDER-RADIUS: 5PX;" class="md-raised btn-sm md-warn md-button md-ink-ripple" type="button" data-ng-click="update_approve(ddluserid)"
+                                     data-ng-disabled="!(user.isskillaccept && user.isbankaccept && user.isproofaccept)"
+                                     ><span class="ng-scope">APPROVE</span></button>
+                          
+                                  </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    input.inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .inputfile + label {
+        font-size: 12px;
+        color: rgb(23, 70, 103);
+        background-color: #f1f1f1;
+        display: inline-block;
+        padding: 3px 7px;
+        border-radius: 3px;
+        /* box-shadow: 0px 10px 10px #ddd; */
+        border: 1px solid #ddd;
+    }
+
+    .table-filters md-autocomplete {
+        margin-bottom: 9px;
+    }
+
+    .profilecrcle {
+        width: 31px;
+        height: 31px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+    }
+
+    .th {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    md-select md-select-value {
+        color: black!important;
+    }
+
+    fieldset[disabled], input[disabled], select[disbled], textarea[disabled], .form-control {
+        background: none!important;
+    }
+
+    [disabled] md-input-container .md-input, md-input-container .md-input[disabled] {
+        cursor: not-allowed;
+    }
+</style>
+<script>
+    function nextbutton(a) {
+        debugger
+        var b = document.getElementById(a).nextElementSibling.click();
+    }
+</script>
+
+<script type="text/ng-template" id="proofimg.html">
+        <div class="modal-header">
+            <div  class="col-md-8">
+                <h5 style="text-align: center;">Upload Proof</h5>
+            </div>
+            <div  class="col-md-4" style="text-align: right;}">
+                <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()"><i class="zmdi zmdi-close"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <img style="border-radius: 3px; margin-left: 20%;max-height: 500px!important" src="{{upimag}}" />
+            </div>
+        </div>
+</script>

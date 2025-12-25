@@ -1,0 +1,1074 @@
+<div class="page page-profile" data-ng-controller="profileCtrl"  style="min-height: 550px;">
+    <div class="row ui-section">
+        <div class="col-xs-8 clearfix">
+            <h2 class="section-header" style="display: inline-block"><span ng-show="gridview==2">Agency</span><span ng-show="gridview==3">ISP</span> Detail</h2>
+        </div>
+        <div class="col-xs-4 clearfix" style="text-align: right">
+            <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                <a ng-click="show = 1">
+                    <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view User"><span class="fa fa-caret-right ng-scope"></span></button>
+                </a>
+            </span>
+            <a ng-click="show =1" class="hideon">
+                <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View User"><span class="ng-scope">View </span></button>
+            </a>
+        </div>
+
+    </div>
+    <div class="row ui-section">
+        <div class="panel panel-default">
+            <div class="panel-body  form-validation" ng-cloak>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div >
+                            <h5 ng-show="isapproved" style="color:red"> You have registered successfully on Vendo. Please upload other information and documents for approval.</h5>
+                            <h5 ng-show="isupdate && !isapproved && !isrejected" style="color:red"> You have updated your profile successfully. Please wait for approval.</h5>
+                            <h5 ng-show="isrejected && !isapproved && !isupdate" style="color:red"> Your profile has been rejected. Please resubmit for approval.</h5>
+                            
+                            <table  ng-show="isrejected" class="table table-bordered table-striped table-responsive">
+                                <tr data-ng-repeat="rowData in rejectreason">
+                                    <th>
+                                        <span ng-show="rowData.code=='DE'">Detail</span>
+                                         <span ng-show="rowData.code=='SKILL'">Technical Skills</span>
+                                        <span ng-show="rowData.code=='WORK'">Experience</span>
+                                        <span ng-show="rowData.code=='LOC'">Preferred Locations</span>
+                                        <span ng-show="rowData.code=='PROOF'">Proofs</span>
+                                        <span ng-show="rowData.code=='BANK'">Bank Details</span>
+                                       
+                                    </th>
+                                    <td style="color:red;font-size: 15px;">{{rowData.remarks}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                       
+
+                        <md-content style="overflow: visible;">
+                            <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex" style="overflow: visible;" class="overcontent">
+                                <md-tab label=" AGENCY DETAIL"  >
+                                   
+                                    <md-content class="md-padding">
+                                      <form name="material_login_form" class="form-horizontal form-validation" >
+                                        <div ng-if="!isEditing && user.isdetailaccept" style="text-align: right; margin-bottom: -30px;">
+                                            <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('agency')">
+                                                <md-icon class="zmdi zmdi-edit"></md-icon> Edit 
+                                            </md-button>
+                                            <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                            </md-button> -->
+                                        </div>
+                                    <div class="col-lg-6" style="border-right:1px solid #eee;margin-top: 28px;">
+                                           <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="flex ">
+                                                <label class="mandatory">Agency Name </label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input required
+                                                    type="text"
+                                                       name="companyname"
+                                                       ng-model="user.companyname"
+                                                    ng-change="listerrormsg.responsedata=0"
+                                                    ng-maxlength="100"
+                                                    class="text-black"
+                                                    ng-disabled="!isEditing"/>
+                                                <div ng-messages="material_login_form.companyname.$error" multiple ng-if='material_login_form.companyname.$dirty'> 
+											        <div ng-message="maxlength">Agency Name up to 100 characters</div>
+                                                    <div ng-message="required">Agency Name is required.</div>
+											    </div> 
+                                                <p style="color:red" ng-show="listerrormsg.responsedata==-1">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label class="mandatory">First Name</label>
+                                                <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="firstname"
+                                                       class="text-black"
+                                                       ng-model="user.firstname"
+                                                    ng-change="listerrormsg.responsedata=0"
+                                                    ng-maxlength="45"
+                                                    ng-disabled="!isEditing"/>
+
+                                                <div ng-messages="material_login_form.firstname.$error" multiple ng-if='material_login_form.firstname.$dirty'> 
+											        <div ng-message="maxlength">First Name up to 45 characters</div>
+                                                    <div ng-message="required">First Name is required.</div>
+											    </div>   
+                                                <p style="color:red" ng-show="listerrormsg.responsedata==-2">{{listerrormsg.msg}} </p>  
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label >Last Name</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                       name="lastname"
+                                                       class="text-black"
+                                                       ng-model="user.lastname"
+                                                    ng-maxlength="45"
+                                                    ng-disabled="!isEditing"/>
+                                                <div ng-messages="material_login_form.lastname.$error" multiple ng-if='material_login_form.lastname.$dirty'> 
+											        <div ng-message="maxlength">Last Name up to 45 characters</div>
+											    </div> 
+                                                
+                                            </md-input-container>
+                                        </div>
+                                         
+                                       <!-- <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label>Gender</label>
+                                                <md-icon class="zmdi zmdi-male"></md-icon>
+                                                <md-select class="mandatoryselect" ng-model="user.genderid" required style="margin-bottom: 15px;">
+                                                    <md-option ng-value="gender.id" data-ng-repeat="gender in listgender">
+                                                        {{gender.gendername}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="flex ">
+                                                <label>Department</label>
+                                               <md-icon class="zmdi zmdi-view-list-alt"></md-icon>
+                                                <md-select ng-model="user.departmentid">
+                                                    <md-option ng-value="department.id" data-ng-repeat="department in listdepartment">
+                                                        {{department.departmentname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>-->
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <!--<md-input-container flex="" class="flex ">
+                                                <label >GST No</label>
+                                                <md-icon class="zmdi zmdi-account"></md-icon>
+                                                <input type="text"
+                                                       name="gstno"
+                                                       ng-model="user.gstno"
+                                                    ng-maxlength="15"/>
+                                                <div ng-messages="material_login_form.gstno.$error" multiple ng-if='material_login_form.gstno.$dirty'> 
+											        <div ng-message="maxlength">GST No up to 15 characters</div>
+											    </div> 
+                                                
+                                            </md-input-container>
+                                             <div class=" col-md-6" style="padding:0px">
+                                                   <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Comments</label>
+                                                    <textarea style="margin-top: 3px; "  name="remarks"  rows="2"  ng-maxlength="300" ng-model="user.remarks" class="form-control"></textarea>
+                                                </div>
+                                              <div ng-messages="material_login_form.remarks.$error" multiple ng-if='material_login_form.remarks.$dirty'> 
+											        <div ng-message="maxlength">Comments up to 300 characters</div>
+											    </div> -->
+                                        </div>
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                               <md-input-container flex="" class="col-md-6">
+                                                <label >Constitution</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select  ng-model="contact.constitutionid" class="text-black" style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="constitution.id" data-ng-repeat="constitution in listconstitution">
+                                                        {{constitution.name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" >
+                                                <label class="mandatory">Email Address</label>
+                                                <md-icon class="zmdi zmdi-email"></md-icon>
+                                                <input type="text" class="text-black"
+                                                       name="email"
+                                                    required
+                                                    data-ng-disabled="!isEditing"
+                                                       ng-model="contact.email"
+                                                    ng-change="listerrormsg.responsedata=0"
+                                                    ng-maxlength="100"
+                                                       ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/" />
+                                                 <div ng-messages="material_login_form.email.$error" multiple ng-if='material_login_form.email.$dirty'> 
+											        <div ng-message="pattern">Enter a valid email.</div>
+                                                     <div ng-message="required">Email is required.</div>
+                                                     <div ng-message="maxlength">Email up to 100 characters</div>
+											    </div> 
+                                                 <p style="color:red" ng-show="listerrormsg.responsedata==-4">{{listerrormsg.msg}} </p>
+                                                
+                                            </md-input-container>
+                                            
+                                        </div>
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                              <md-input-container flex="" >
+                                                <label >Contact Type</label>
+                                                <md-icon class="zmdi zmdi-smartphone-setting"></md-icon>
+                                                 <md-select class="mandatoryselect text-black" ng-model="contact.contacttypeid" required style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="contacttype.id" data-ng-repeat="contacttype in listcontacttype">
+                                                        {{contacttype.contacttypename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label class="mandatory"> Contact No</label>
+                                                <md-icon class="zmdi zmdi-phone"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="contactno"
+                                                       class="text-black"
+                                                       ng-model="contact.mobileno"
+                                                       ng-maxlength="10"
+                                                    ng-minlength="10"
+                                                    ng-change="listerrormsg.responsedata=0"
+                                                       ng-pattern="/^[0-9]*$/"
+                                                       ng-disabled="!isEditing" />
+                                                <div ng-messages="material_login_form.contactno.$error" multiple ng-if='material_login_form.contactno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                    <div ng-message="required">Contact No is required.</div>
+                                                     <div ng-message="maxlength">Contact No up to 10 characters</div>
+                                                    <div ng-message="minlength">Contact No must be atleast 10 characters long</div>
+											    </div>
+                                                <p style="color:red" ng-show="listerrormsg.responsedata==-3">{{listerrormsg.msg}} </p>
+                                            </md-input-container>
+                                           
+                                        </div>
+                                          <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                               <md-input-container  class="col-md-6">
+                                                <label >Landline </label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                                <input 
+                                                       type="text"
+                                                       name="telephoneno"
+                                                       class="text-black"
+                                                       ng-model="contact.telephoneno"
+                                                       ng-maxlength="10"
+                                                       ng-minlength="10"
+                                                       ng-pattern="/^[0-9]*$/"
+                                                       ng-disabled="!isEditing" />
+
+                                               <div ng-messages="material_login_form.telephoneno.$error" multiple ng-if='material_login_form.telephoneno.$dirty'> 
+											        <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">Landline up to 10 characters</div>
+                                                   <div ng-message="minlength">Landline must be atleast 10 characters long</div>
+											    </div>
+                                            </md-input-container>
+                                          </div>
+                                    </div>
+                                    <div class="col-lg-6" style="border-right:1px solid #eee;margin-top: 28px;">                                       
+                                        <div>                                                                                                                                                       
+                                             <div layout='' layout-sm="column" class="layout-sm-column layout-row" ng-show="user.usertypeid==2">
+									
+                                        <md-input-container flex="" class="flex ">
+                                             <label>Alternative contact person</label>
+                                                <md-icon class="zmdi zmdi-phone-ring"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactperson" 
+                                               class="text-black"
+                                               ng-model="contact.contactperson" 
+                                              ng-maxlength="50"
+                                              ng-disabled="!isEditing" />
+                                             <div ng-messages="material_login_form.contactperson.$error" multiple ng-if='material_login_form.contactperson.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact person up to 100 characters</div>
+
+											    </div> 
+                                   </md-input-container>
+                                        <md-input-container flex="" class="flex ">
+                                        <label>Contact Person mobile</label>
+                                        <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                        <input  
+                                               type="text"
+                                               name="contactpersonno" 
+                                               class="text-black"
+                                               ng-model="contact.contactpersonmobile" 
+                                             ng-maxlength="10"
+                                             ng-minlength="10"
+                                           ng-pattern="/^[0-9]*$/"
+                                           ng-disabled="!isEditing"/>
+                                             <div ng-messages="material_login_form.contactpersonno.$error" multiple ng-if='material_login_form.contactpersonno.$dirty'> 
+                                                     <div ng-message="maxlength">Alternative contact mobile up to 10 characters</div>
+                                                  <div ng-message="minlength">Alternative contact mobile must be atleast 10 characters long</div>
+                                                 <div ng-message="pattern">Enter a valid Numbers.</div>
+											    </div> 
+                                   </md-input-container>
+                                   
+                                     </div>
+                                     <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                            <md-input-container flex="" >
+                                                <label >Nationality</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select class="mandatoryselect text-black" ng-model="contact.nationalityid" style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="nationality.id" class="text-red" data-ng-repeat="nationality in listnationality" style="color: red;">
+                                                        {{nationality.nationalityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >Country</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select class="mandatoryselect text-black" ng-model="contact.countryid" required ng-change="loadChilds(contact.countryid,'countryid')" style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="country.id" class="text-black" data-ng-repeat="country in listcountry">
+                                                        {{country.countryname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                     </div>
+                                       
+                                           
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           
+                                         
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >State</label>
+                                                <md-icon class="zmdi zmdi-nature"></md-icon>
+                                                <md-select  class="mandatoryselect text-black" ng-model="contact.stateid" required ng-change="loadChilds(contact.stateid,'stateid')" style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="state.id" class="text-black" data-ng-repeat="state in liststate">
+                                                        {{state.statename}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container flex="" class="col-md-6">
+                                                <label >City</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select  class="mandatoryselect text-black" ng-model="contact.cityid" required  ng-change="loadarea(contact.stateid,contact.cityid)" style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="city.id" class="text-black" data-ng-repeat="city in listcity">
+                                                        {{city.cityname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                             
+                                             <md-input-container flex="" class="col-md-6">
+                                                <label >Pincode</label>
+                                                <md-icon class="zmdi zmdi-city"></md-icon>
+                                                 <md-select class="mandatoryselect text-black" ng-model="contact.areaid" required style="margin-bottom: 15px;" ng-disabled="!isEditing">
+                                                    <md-option ng-value="area.id" class="text-black" data-ng-repeat="area in listallarea">
+                                                        {{area.areaname}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <!-- <md-input-container flex="" class="col-md-6">
+                                                <label  class="mandatory">Pin Code</label>
+                                                <md-icon class="zmdi zmdi-code-setting"></md-icon>
+                                                <input required
+                                                       type="text"
+                                                       name="zipcode"
+                                                       ng-model="contact.zipcode"
+                                                       ng-maxlength="6"
+                                                       ng-pattern="/^[0-9]*$/" />
+
+                                               <div ng-messages="material_login_form.zipcode.$error" multiple ng-if='material_login_form.zipcode.$dirty'> 
+                                                      <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                     <div ng-message="maxlength">Pin Code up to 6 characters</div>
+                                                   <div ng-message="required">Pin Code is required.</div>
+											    </div>
+                                            </md-input-container> -->
+                                        </div>
+                                             <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                                <div class="col-md-12" style="padding-left:0px;text-align:left;margin-bottom: 20px;">
+                                               <label  class="mandatory" style="    FONT-SIZE: 12PX;    COLOR: #949494;">Address</label>
+                                                    <textarea style="margin-top: 3px; "  required  name="address"  rows="3"  ng-maxlength="1000" ng-model="contact.address" class="form-control text-black" ng-disabled="!isEditing"></textarea>
+                                                 <div ng-messages="material_login_form.address.$error" multiple ng-if='material_login_form.address.$dirty'> 
+                                                     <div ng-message="required">Address is required.</div>
+                                                     <div ng-message="maxlength">Address up to 1000 characters</div>
+											    </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                       
+                                      <!-- <div>
+                                            <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <md-input-container flex="" >
+                                                <label class="mandatory">User Name</label>
+                                                <md-icon class="zmdi zmdi-face"></md-icon>
+                                                <input type="text"
+                                                       name="username"
+                                                       ng-model="userlogin.username"
+                                                       required
+                                                     ng-maxlength="50"/>
+
+                                                <div ng-messages="material_login_form.username.$error" multiple ng-if='material_login_form.username.$dirty'> 
+                                                     <div ng-message="required">User Name is required.</div>
+                                                     <div ng-message="maxlength">User Name up to 50 characters</div>
+											    </div>
+                                            </md-input-container>
+                                            <md-input-container flex="">
+                                                <label class="mandatory">Password</label>
+                                                <md-icon class="zmdi zmdi-lock-outline"></md-icon>
+                                                <input  id="password-field" 
+                                              type="{{hidepassword}}"
+                                                       name="password"
+                                                       ng-model="userlogin.password"
+                                                       required
+                                                     ng-maxlength="50"
+                                                       />
+                                                  <div class="showic" style="position: absolute;    right: 0px;">
+
+                                               
+                                                <md-icon style="display: inline-block!important;" ng-if="ispasswordview" ng-click="changepasswordtype('P')" class="zmdi zmdi-eye"></md-icon>
+                                                <md-icon style="display: inline-block!important;" ng-if="!ispasswordview" ng-click="changetypepassword('P')" class="zmdi zmdi-eye-off"></md-icon>
+                                                 </div>
+                                               <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'> 
+                                                     <div ng-message="required">Password is required.</div>
+                                                     <div ng-message="maxlength">Password up to 50 characters</div>
+											    </div>
+                                            </md-input-container>
+                                               
+                                        </div>
+                                       <div>
+                                            <md-input-container flex="" class="col-md-6" style="padding: 0px;">
+                                          <md-checkbox aria-label="Finished?" id="Md-checkbox2" ng-model="userlogin.islocked">  Is Locked?</md-checkbox>
+                                    </md-input-container>
+                                       </div>
+                                       
+                                       </div>-->
+                                    </div>
+                                    <div ng-show="isEditing" class="col-md-12" style="display: inline-block; border-top: 1px solid #f1f1f1; padding: 15px;">
+                                        <div style="text-align: right">
+                                            <md-button type="submit" data-ng-disabled="!canSubmit()" class="md-raised btn-w-md md-primary" data-ng-click="saveUser()">Save</md-button>
+                                            <md-button ng-if="isEditing && user.isdetailaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('agency')">Cancel</md-button>
+                                        </div>
+                                    </div>
+
+                                      </form>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab  >
+                                     <md-tab-label >
+                                        <span class="accept{{user.isskillaccept}}">Technical Skills </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                         <md-content class="md-padding">
+                                            <div ng-if="!isSkillEditing && user.isskillaccept" style="text-align: right; margin-bottom: 10px;">
+                                                <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('skill')">
+                                                    <md-icon class="zmdi zmdi-edit"></md-icon> Edit
+                                                </md-button>
+                                                <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                    <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                                </md-button> -->
+                                            </div>
+                                        <ng-form name="skill_form">
+                                         <table class="table table-bordered table-striped table-responsive tabtable">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th><span style="color: red"> *</span>Skill</th>
+                                                <th><span style="color: red"> *</span>Experience in Years</th>
+                                                <th>Remarks</th>
+                                                <td></td>
+                                            </tr>
+                                            <tr data-ng-repeat="userskil in listuserskil">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <md-autocomplete style="margin-bottom:0px;padding:0px"  flex 
+                                                        md-input-name="autocomplete_di"
+                                                        ng-disabled="!isSkillEditing"
+                                                        required
+                                                        md-no-cache="noCache"
+                                                        class="autocomplete_width"
+                                                        md-search-text="userskil.searchitem"
+                                                        md-selected-item="userskil.selecteditem"
+                                                        md-search-text-change="searchTextChange(item,$index,1,listuserskil)"
+                                                        md-selected-item-change="selectedlistItemChange(item,$index,1,listuserskil)"
+                                                        md-items="item in querySearch(userskil.searchitem,'skill')"
+                                                        md-item-text="item.skillname"
+                                                        md-min-length="0"
+                                                        md-autoselect="true"
+                                                        placeholder="Search Item">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="userskil.searchitem" md-highlight-flags="^i">{{item.skillname}}</span>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                    <p style="color:red" ng-show="!userskil.skillid&& userskil.searchitem">Invalid Skill</p>
+                                                </td>
+                                                <td>
+                                                    <md-input-container class="no-error-space">
+                                                        <input class="text-black" style="text-align:right" type="text" ng-disabled="!isSkillEditing" required name="experience{{$index}}" ng-model="userskil.experience" ng-maxlength="3"  allow-decimal-numbers  />
+                                                        
+                                                         <div  ng-messages="skill_form['experience' + $index].$error" multiple ng-show="skill_form['experience' + $index].$dirty">
+                                                            <div ng-message="maxlength">Experience up to 3 characters</div>
+                                                        </div>
+                                                        
+                                                    </md-input-container>
+                                                </td>
+                                                  <td>
+                                                    <div>
+                                                         <textarea name="remarks{{$index}}"  ng-disabled="!isSkillEditing" rows="1"  ng-maxlength="200" ng-model="userskil.remarks" class="form-control text-black"></textarea>
+                                                        <div  ng-messages="skill_form['remarks' + $index].$error" multiple ng-show="skill_form['remarks' + $index].$dirty">
+                                                            <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                                <td ng-show="isapproved || isSkillEditing">
+                                                     <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserskil,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                </td>
+                                                 <!-- <td>  
+                                                    <md-input-container class="no-error-space">
+                                                       <md-checkbox style="margin-top:20px" aria-label="Finished?" id="{{$index}}isverified" ng-model="userskil.isverified">  </md-checkbox>
+                                                    </md-input-container>
+                                                </td>-->
+                                            </tr>
+                                        </table>
+                                        <div ng-if="isSkillEditing" class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserskil)" data-ng-disabled="!childParamdis(skill_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserskil)" data-ng-disabled="listuserskil.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>
+                                        <div ng-if="isSkillEditing" class="col-md-12" style="text-align: right;padding-top: 10px;">
+                                            <p style="color:red" ng-show="amenitycount>0">Select Valid Amenity</p>
+                                        <md-button type="submit" ng-click="save_Us_Skill(listuserskil)" data-ng-disabled="!canSubmit_childform(skill_form)"
+                                                   class="md-raised btn-w-md md-primary"
+                                                   >Save</md-button>
+                                            <md-button ng-if="isSkillEditing && user.isskillaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('skill')">Cancel</md-button>
+                                     
+
+                                        <div class="divider"></div>
+                                        </div>
+                                        </ng-form>
+                                    </md-content>
+                                        </md-tab-body>
+                                    
+                                </md-tab>
+                                <md-tab  style="overflow: visible;">
+                                    <md-tab-label >
+                                        <span class="accept{{user.isworkaccept}}">Experience </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding" style="overflow: visible;">                                        
+                                        <div ng-if="!isExperienceEditing && user.isworkaccept" style="text-align: right; margin-bottom: 10px;">
+                                            <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('experience')">
+                                                <md-icon class="zmdi zmdi-edit"></md-icon> Edit
+                                            </md-button>
+                                            <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                            </md-button> -->
+                                        </div>
+                                       <ng-form name="workexp_form">
+                                          <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>Company</th>
+                                                    <!--<th>Address</th>-->
+                                                    <th><span style="color: red"> *</span>City</th>
+                                                    <th><span style="color: red"> *</span>From</th>
+                                                    <th><span style="color: red"> *</span>To</th>
+                                                   <!-- <th>Remarks</th>-->
+                                                    <th></th>
+                                                </tr>
+                                                <tr data-ng-repeat="userexp in listuserexp">
+                                                   <td>{{$index+1}}</td>
+                                                    <td>
+                                                         <input type="text" style="width: 100%" ng-disabled="!isExperienceEditing" required name="companyname{{$index}}"  ng-model="userexp.companyname"  ng-maxlength="45" />
+                                                        <div  ng-messages="workexp_form['companyname' + $index].$error" multiple ng-show="workexp_form['companyname' + $index].$dirty">
+                                                            <div ng-message="maxlength">Company up to 45 characters</div>
+                                                            <div ng-message="required">Company is required.</div>
+                                                        </div>
+                                                    </td>
+                                                    <!--<td>
+                                                         <textarea name="address{{$index}}"   rows="1"  ng-maxlength="200" ng-model="userexp.address" class="form-control"></textarea>
+                                                        <div  ng-messages="workexp_form['address' + $index].$error" multiple ng-show="workexp_form['address' + $index].$dirty">
+                                                            <div ng-message="maxlength">Address up to 200 characters</div>
+                                                        </div>
+                                                    </td>-->
+                                                  
+                                                    <td>
+                                                        <md-autocomplete style="margin-bottom:0px;padding:0px"  flex 
+                                                        md-input-name="autocomplete_di"
+                                                        required
+                                                        md-no-cache="noCache"
+                                                        class="autocomplete_width"
+                                                        md-search-text="userexp.searchitem"
+                                                        md-selected-item="userexp.selecteditem"
+                                                        md-search-text-change="searchTextChange(item,$index,1,listuserexp)"
+                                                        md-selected-item-change="selectedlistItemChange(item,$index,3,listuserexp)"
+                                                        md-items="item in querySearch(userexp.searchitem,'city')"
+                                                        md-item-text="item.cityname"
+                                                        md-min-length="0"
+                                                        md-autoselect="true">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="userexp.searchitem" md-highlight-flags="^i">{{item.cityname}}</span>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                        <p style="color:red" ng-show="!userexp.cityid&& userexp.searchitem">Invalid City</p>
+                                                        <!--<md-select style="margin:0px" ng-model="userexp.cityid" required>
+                                                            <md-option ng-value="city.id" data-ng-repeat="city in listcity">
+                                                                {{city.cityname}}
+                                                            </md-option>
+                                                        </md-select>-->
+                                                    </td>
+                                                    <td>
+                                                        <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                                <input type="text"
+                                                                class="form-control text-black"
+                                                                name="date"
+                                                                    required
+                                                                uib-datepicker-popup="dd/MM/yyyy"
+                                                                ng-disabled="!isExperienceEditing"
+                                                                ng-model="userexp.fromdate"
+                                                                is-open="popup1.opened"
+                                                                datepicker-options=""
+                                                                max-date="today_max"
+                                                                close-text="Close"
+                                                                alt-input-formats="altInputFormats"
+                                                                alt-input-formats="dd/MM/yyyy"
+                                                                close-text="Close"
+                                                                ng-change="chagetodate(userexp)"
+                                                                ng-click="open1()" 
+                                                                style="background-color: transparent;" readonly="readonly" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                         <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                                <input type="text"
+                                                                class="form-control text-black"
+                                                                name="date"
+                                                                    required
+                                                                uib-datepicker-popup="dd/MM/yyyy"
+                                                                ng-model="userexp.todate"
+                                                                is-open="popup1.opened"
+                                                                ng-disabled="!isExperienceEditing"
+                                                                datepicker-options=""
+                                                                max-date="today_max"
+                                                                min-date="userexp.fromdate_max"
+                                                                ng-disabled="!userexp.fromdate"
+                                                                close-text="Close"
+                                                                alt-input-formats="altInputFormats"
+                                                                alt-input-formats="dd/MM/yyyy"
+                                                                close-text="Close"
+                                                                ng-click="open1()" style="background-color: transparent;" readonly="readonly" />
+                                                            </div>
+                                                         </div>
+                                                    </td>
+                                                   <!-- <td>
+                                                        <div>
+                                                         <textarea  name="remarks{{$index}}"  name=""  rows="1"  ng-maxlength="200" ng-model="userexp.remarks" class="form-control"></textarea>
+                                                            <div  ng-messages="workexp_form['remarks' + $index].$error" multiple ng-show="workexp_form['remarks' + $index].$dirty">
+                                                            <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                        </div>
+                                                    </div>
+                                                         
+                                                    </td>-->
+                                                    <td ng-show="isExperienceEditing">
+                                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserexp,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                       </ng-form>
+                                        <div ng-if="isExperienceEditing" class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserexp)" data-ng-disabled="!childParamdis(workexp_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserexp)" data-ng-disabled="listuserexp.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>
+                                        <div  ng-show="isExperienceEditing" class="col-md-12" style="text-align: right;padding-top: 10px;">
+                                         <md-button type="submit" ng-click="saveworkexp()" data-ng-disabled="!canSubmit_childform(workexp_form)"
+                                                   class="md-raised btn-w-md md-primary">Save
+                                            </md-button>
+                                            <md-button ng-if="isExperienceEditing && user.isworkaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('experience')">Cancel</md-button>
+                                        </div>
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                <md-tab  >
+                                    <md-tab-label >
+                                        <span class="accept{{user.islocaccept}}">Preferred Locations </span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                        <div ng-if="!isLocationEditing && user.islocaccept" style="text-align: right; margin-bottom: 10px;">
+                                            <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('location')">
+                                                <md-icon class="zmdi zmdi-edit"></md-icon> Edit
+                                            </md-button>
+                                            <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                            </md-button> -->
+                                        </div>
+                                       <ng-form name="loc_form">
+                                           <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>City</th>
+                                                    <th><span style="color: red"> *</span>Area</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr data-ng-repeat="location in listuserprelocation">
+                                                    <td>{{$index+1}}</td>
+                                                     <td ng-if="location.disbaleedit">{{location.searchitem}}</td>
+                                                  <td style="white-space: break-spaces"  ng-if="location.disbaleedit">{{location.selectedtext}}</td>
+                                                    <td ng-if="!location.disbaleedit">
+                                                        <md-autocomplete style="margin-bottom:0px;padding:0px"  flex 
+                                                        md-input-name="autocomplete_di"
+                                                        ng-disabled="!isLocationEditing"
+                                                        required
+                                                        md-no-cache="noCache"
+                                                        class="autocomplete_width text-black"
+                                                        md-search-text="location.searchitem"
+                                                        md-selected-item="location.selecteditem"
+                                                        md-search-text-change="searchTextChange(item,$index,4,listuserprelocation)"
+                                                        md-selected-item-change="selectedlistItemChange(item,$index,4,listuserprelocation)"
+                                                        md-items="item in querySearch(location.searchitem,'city')"
+                                                        md-item-text="item.cityname"
+                                                        md-min-length="0"
+                                                        md-autoselect="true">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="location.searchitem" md-highlight-flags="^i">{{item.cityname}}</span>
+                                                        </md-item-template>
+                                                    </md-autocomplete>
+                                                        <p style="color:red" ng-show="!location.cityid&& location.searchitem">Invalid City</p>
+                                                       
+                                                    </td>
+                                                    <td >
+                                                    <md-select class="text-black" ng-model="location.areaid" ng-disabled="!isLocationEditing" required style="margin: 0px;" md-selected-text="location.selectedtext"  ng-change="getselecteditemcount(location)" multiple ng-click="getarealist(location.cityid,$index,location.selectedtext,listuserprelocation)">
+                                                       <md-checkbox style="padding: 0px;margin: 10px 0px 10px 10px;" aria-label="Finished?" id="selectcheck" ng-model="location.islocall" ng-change="selectallarea(location,location.islocall)" ></md-checkbox> <span ng-class="{'selectallchk': location.islocall==true}" >Select All</span> 
+                                                        <md-option ng-value="area.id" data-ng-repeat="area in location.listarea" >
+                                                              <span >{{area.areaname}}</span>  
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>
+                                                    <td ng-show="isLocationEditing">
+                                                        <md-button ng-if="isLocationEditing" class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserprelocation,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                       </ng-form>
+                                          <div ng-if="isLocationEditing" class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserprelocation)" data-ng-disabled="!childParamdis(loc_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserprelocation)" data-ng-disabled="listuserprelocation.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>
+                                        <div ng-if="isLocationEditing" class="col-md-12" style="text-align: right;padding-top: 10px;">
+                                         <md-button type="submit" ng-click="saveLoction()" data-ng-disabled="!canSubmit_childform(loc_form)"
+                                                   class="md-raised btn-w-md md-primary">Save
+                                            </md-button>
+                                            <md-button ng-if="isLocationEditing && user.islocaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('location')">Cancel</md-button>
+                                            </div>
+
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                <md-tab >
+                                    <md-tab-label >
+                                        <span class="accept{{user.isproofaccept}}">Proofs</span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                        <div ng-if="!isProofEditing && user.isproofaccept" style="text-align: right; margin-bottom: 10px;">
+                                            <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('proof')">
+                                                <md-icon class="zmdi zmdi-edit"></md-icon> Edit
+                                            </md-button>
+                                            <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                            </md-button> -->
+                                        </div>
+                                        <ng-form name="proof_form">
+                                            <table class="table table-bordered table-striped table-responsive tabtable">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th><span style="color: red"> *</span>Proof Type</th>
+                                                    <th><span style="color: red"> *</span>Proof No</th>
+                                                    <th><span style="color: red"> *</span>Proof</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr data-ng-repeat="proof in listuserproof">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>
+                                                        <md-select class="text-black"  ng-model="proof.prooftypeid" ng-disabled="!isProofEditing" style="margin:0px;" required ng-change="getproofpattern(proof)" >
+                                                            <md-option ng-value="prooftype.id" data-ng-repeat="prooftype in listprooftype">
+                                                                {{prooftype.prooftypename}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </td>
+                                                    <td>
+                                                    <md-input-container class="no-error-space">
+                                                       <input class="text-black" type="text" required 
+                                                           ng-disabled="!isProofEditing || !proof.prooftypeid"
+                                                           name="proof{{$index}}"  
+                                                           ng-pattern="proof.pattern"
+                                                           ng-model="proof.proofno"  ng-maxlength="20" />
+                                                        <div  ng-messages="proof_form['proof' + $index].$error" multiple ng-show="(proof_form['proof' + $index].$invalid || proof_form['proof' + $index].$invalid)&&proof.pattern">
+                                                            <div ng-message="maxlength">Proof No up to 20 characters</div>
+                                                            <div ng-message="required">Proof No is required.</div>
+                                                            <div ng-message="pattern">Enter a valid Proof No.</div>
+                                                        </div>
+                                                    </md-input-container>
+                                                </td>
+                                                    <td style="width:47%;position: relative;">
+                                                        <div   style="padding:0px;display:inline-block">  
+                                                            <img  ng-click="downloadimg(proof.docfile)"  ngf-src="!proof.docfile.$error && proof.docfile" class="thumb"style="max-height: 70px;margin:4px;">
+                                                            <i ng-show="ickupimg.docfile.docfile.$error.maxSize">File too large {{proof.docfile.size / 1000000|number:1}}MB: max 20MB  </i>
+                                                        </div>
+                                                        <div   ng-if="isProofEditing || !isapproved" style="padding:0px;display:inline-block;    padding-top: 20px;  vertical-align: top;">  
+                                                             <a id="proof{{$index+1}}" style="line-height: 34px;display:inherit;top: 20px;background:#eee;
+                                                        left: 20px;" class="uppic md-primary md-button md-ink-ripple sdfasdf" onclick="nextbutton(this.id); ">
+                                                            Choose <i class="zmdi zmdi-upload"></i>
+                                                        </a>
+                                                        <input type="file" required id="proodin{{$index+1}}"  ngf-select ng-model="proof.docfile"  style="visibility: hidden;"  name="file" accept="image/*" ngf-max-size="20MB">
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="isProofEditing">
+                                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removerow(listuserproof,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                       </ng-form>
+                                        <div ng-if="isProofEditing" class="col-md-12" style="padding: 1px 10px 0px;text-align:right" >
+                                            <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addField(listuserproof)" data-ng-disabled="!childParamdis(proof_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                            <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeField(listuserproof)" data-ng-disabled="listuserproof.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                        </div>
+                                        <div ng-if="isProofEditing" class="col-md-12" style="text-align: right;padding-top: 10px;">
+                                         <md-button  type="submit" ng-click="uploadproof()" data-ng-disabled="!canSubmit_childform(proof_form)"
+                                                   class="md-raised btn-w-md md-primary">Save
+                                            </md-button>
+                                            <md-button ng-if="isProofEditing && user.isproofaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('proof')">Cancel</md-button>
+                                            </div>
+
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                <md-tab  >
+                                    <md-tab-label >
+                                        <span class="accept{{user.isbankaccept}}">Bank Details</span>
+                                    </md-tab-label>
+                                     <md-tab-body>
+                                    <md-content class="md-padding">
+                                        <div ng-if="!isBankEditing && user.isbankaccept" style="text-align: right; margin-bottom: 10px;">
+                                            <md-button  class="md-raised btn-sm md-primary" ng-click="enableEdit('bank')">
+                                                <md-icon class="zmdi zmdi-edit"></md-icon> Edit
+                                            </md-button>
+                                            <!-- <md-button ng-if="isEditing" class="md-raised btn-sm md-accent" ng-click="cancelEdit()">
+                                                <md-icon class="zmdi zmdi-close"></md-icon> Cancel
+                                            </md-button> -->
+                                        </div>
+                                      <ng-form name="bank_form">
+                                         <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                         <div class="col-md-4">
+                                            <md-input-container style="margin-top:5px!important" >
+                                                <label><span style="color: red"> *</span>Account holder name</label>
+
+                                                <input class="text-black" required 
+                                                ng-disabled="!isBankEditing"
+                                                type="text"
+                                                name="accholdername" 
+                                                ng-model="userbankdet.accholdername" ng-maxlength="70"  />
+                                                <div ng-messages="bank_form.accholdername.$error" multiple ng-if='bank_form.accholdername.$dirty'> 
+											        <div ng-message="required">Account holder name is required.</div>
+                                                    <div ng-message="maxlength">Account holder name up to 70 characters</div>
+											    </div>                                       
+                                            </md-input-container>
+                                          
+                                         </div>
+                                            <div class="col-md-4">
+                                                <md-input-container  style="margin-top:5px!important">
+                                                    <label><span style="color: red"> *</span>Bank Name</label>
+                                                    <md-autocomplete md-no-cache="noCache" class="nobrd text-black"
+                                                        ng-disabled="!isBankEditing"
+                                                        md-search-text="searchbanktxt"
+                                                        md-selected-item="userbankdet.bankname"
+                                                        required
+                                                        md-items="item in searchBank(searchbanktxt,'bank')"
+                                                        md-item-text="item"
+                                                        md-min-length="0">
+                                                        <md-item-template>
+                                                            <span md-highlight-text="searchbanktxt" md-highlight-flags="^i">{{item}}</span>
+                                                        </md-item-template>
+                                                        <md-not-found>
+                                                            No Bank matching "{{searchbanktxt}}" were found.
+                                                        </md-not-found>
+                                                    </md-autocomplete>
+                                                   
+                                                  <!--  <div ng-messages="bank_form.bankname.$error" multiple ng-if='bank_form.bankname.$dirty'> 
+                                                        <div ng-message="required">Bank Name is required.</div>
+                                                         <div ng-message="maxlength">Bank Name up to 100 characters</div>
+                                                    </div> -->
+                                                </md-input-container>
+                                                 
+
+
+                                              <!--  <md-autocomplete md-no-cache="noCache" class="nobrd"
+                                                 md-search-text="searchbanktxt"
+                                                 md-selected-item="userbankdet.bankname"
+                                                 required
+                                                
+                                                 md-items="item in querySearch(searchbanktxt,'bank')"
+                                                 md-item-text="item.bankname"
+                                                 md-min-length="0" 
+                                                 >
+                                    <md-item-template>
+                                        <span md-highlight-text="searchbanktxt" md-highlight-flags="^i">{{item.bankname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Bank matching "{{searchbanktxt}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>-->
+                                                <!--<md-input-container >
+                                                    <label><span style="color: red"> *</span>Bank Name</label>
+                                                    <md-icon class="zmdi zmdi-balance"></md-icon>
+                                                    <input required 
+                                                    type="text"
+                                                    name="bankname" 
+                                                    ng-model="userbankdet.bankname" ng-maxlength="100"  />
+                                                    <div ng-messages="bank_form.bankname.$error" multiple ng-if='bank_form.bankname.$dirty'> 
+                                                        <div ng-message="required">Bank Name is required.</div>
+                                                         <div ng-message="maxlength">Bank Name up to 100 characters</div>
+                                                    </div>                                       
+                                                </md-input-container>-->
+                                              
+                                         </div>
+                                         <div class="col-md-4">
+                                            <md-input-container >
+                                                <label><span style="color: red"> *</span>Account Number</label>
+                                                <md-icon class="zmdi zmdi-pin-account"></md-icon>
+                                                <input class="text-black" required 
+                                                    ng-disabled="!isBankEditing"
+                                                    ng-minlength="9"
+                                                       ng-maxlength="18"
+                                                     ng-pattern="/^[0-9]*$/"
+                                                type="text"
+                                                name="accnumber" 
+                                                ng-model="userbankdet.accnumber"  />
+                                                <div ng-messages="bank_form.accnumber.$error" multiple ng-if='bank_form.accnumber.$dirty'> 
+                                                    <div ng-message="required">Account Number is required.</div>
+                                                    <div ng-message="maxlength">Account Number up to 18 characters</div>
+                                                    <div ng-message="minlength">Account Number must be atleast 9 characters long</div>
+                                                    <div ng-message="pattern">Enter a valid Numbers.</div>
+                                                </div>                                       
+                                            </md-input-container>
+                                        </div>
+                                            
+                                      </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            
+                                            <div class="col-md-4">
+                                                <md-input-container>
+                                                    <label>Branch</label>
+                                                    <md-icon class="zmdi zmdi-pin-drop"></md-icon>
+                                                    <input class="text-black"  
+                                                    ng-disabled="!isBankEditing"
+                                                    type="text"
+                                                    name="branch" 
+                                                    ng-model="userbankdet.branch" ng-maxlength="70"    />
+                                                    <div ng-messages="bank_form.branch.$error" multiple ng-if='bank_form.branch.$dirty'> 
+                                                       <div ng-message="maxlength">Branch up to 70 characters</div>
+                                                    </div>                                       
+                                                </md-input-container>
+                                               
+                                            </div>
+                                            <div class="col-md-4">
+                                                <md-input-container >
+                                                    <label><span style="color: red"> *</span>IFSC Code</label>
+                                                    <md-icon class="zmdi zmdi-code"></md-icon>
+                                                    <input class="text-black" required 
+                                                    ng-disabled="!isBankEditing"
+                                                    type="text"
+                                                    name="ifsc" 
+                                                        ng-pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" 
+                                                          ng-minlength="11"
+                                                    ng-maxlength="11"
+                                                    ng-model="userbankdet.ifsc"  />
+                                                    <!-- ng-pattern="/^[A-Za-z]{4}\d{7}$/"-->
+                                                    <div ng-messages="bank_form.ifsc.$error" multiple ng-if='bank_form.ifsc.$dirty'> 
+                                                        <div ng-message="required">IFSC is required.</div>
+                                                        <div ng-message="maxlength">IFSC Code up to 11 characters</div>
+                                                        <div ng-message="minlength">IFSC Code must be atleast 9 characters long</div>
+                                                        <div ng-message="pattern">Enter a valid IFSC Code.</div>
+                                                    </div>                                       
+                                                </md-input-container>
+                                            </div>
+                                      </div>
+                                        <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                           <div class="col-md-4">
+                                                 <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Address</label>
+                                                    
+                                                    <textarea class="text-black" ng-disabled="!isBankEditing" style="margin-top: 3px; "  name="address"  rows="2"  ng-maxlength="200" ng-model="userbankdet.address" class="form-control text-black"></textarea>
+                                                <div ng-messages="bank_form.address.$error" multiple ng-if='bank_form.address.$dirty'> 
+                                                        <div ng-message="maxlength">Address up to 200 characters</div>
+                                                    </div> 
+                                            </div>
+                                             <div class="col-md-4">
+                                               <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Remarks</label>
+                                                    
+                                                    <textarea class="text-black" ng-disabled="!isBankEditing" style="margin-top: 3px; "  name="remarks"  rows="2"  ng-maxlength="200" ng-model="userbankdet.remarks" class="form-control text-black"></textarea>
+                                                 <div ng-messages="bank_form.remarks.$error" multiple ng-if='bank_form.remarks.$dirty'> 
+                                                        <div ng-message="maxlength">Remarks up to 200 characters</div>
+                                                    </div> 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div >
+                                                    <label style="color: #9e9e9e;
+                                                    font-size: 12px;">Cheque Leaf</label>
+                                                    <img  ng-if="isDefined(userbankdet.image)" ng-click="downloadimg(filePath+userbankdet.image)" src="{{filePath}}{{userbankdet.image}}" style="max-width: 150px;max-height: 100px;position: absolute;left:120px;" />                      
+                                                    <img ng-if="isObject(userbankdet.image)" ng-click="downloadimg(filePath+userbankdet.image)" ngf-src="userbankdet.image" style="max-width: 150px;max-height: 100px;position: absolute;left:120px;" />
+                                                    <div ng-if="isBankEditing">
+                                                        <a href="#" onclick="document.getElementById('icon').click(); return false;" class="uppic md-icon-button md-primary md-button md-ink-ripple" style="background: #eee;">
+                                                            <i class="zmdi zmdi-upload"></i>  
+                                                        </a>
+                                                        <input  type="file" ngf-select="" ng-model="userbankdet.image" name="profile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="19MB" style="visibility: hidden;" id="icon">
+                                                      <!--  <a   ng-click="downloadimg(filePath+userbankdet.image)"   ng-if="userbankdet.image!=null && userbankdet.image!=''&&  isDefined(userbankdet.image)"  class="downpic md-icon-button md-primary md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-download"></i>  
+                                                        </a> -->
+                                                        <!-- <a   ng-click="removeimg(userbankdet,'B')"    ng-if="userbankdet.image!=null && userbankdet.image!=''&&  isDefined(userbankdet.image)"   class="md-icon-button md-warn md-button md-ink-ripple">
+                                                            <i class=" zmdi zmdi-delete"></i>  
+                                                        </a>   --> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                      </div>
+
+                                           <div ng-if="isBankEditing" class="col-md-12" style="text-align: right;padding-top: 10px;">
+                                          <md-button type="submit" ng-click="upload_bankproof(userbankdet)" data-ng-disabled="!canSubmit_childform(bank_form)&&!userbankdet.image"
+                                                   class="md-raised btn-w-md md-primary">Save
+                                            </md-button>
+                                            <md-button ng-if="isBankEditing && user.isbankaccept" class="md-raised btn-w-md md-accent" ng-click="cancelEdit('bank')">Cancel</md-button>
+                                    </div>
+                                       </ng-form>
+                                    </md-content>
+                                         </md-tab-body>
+                                </md-tab>
+                                
+                            </md-tabs>
+                      </md-content>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template" id="proofimg.html">
+        <div class="modal-header">
+            <div  class="col-md-8">
+                <h5 style="text-align: center;">Upload Image</h5>
+            </div>
+            <div  class="col-md-4" style="text-align: right;}">
+                <button ui-wave class="btn btn-flat btn-default" style="background: #cbc3c3" ng-click="cancel()"><i class="zmdi zmdi-close"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <img style="border-radius: 3px; margin-left: 20%;" src="{{upimag}}" />
+            </div>
+        </div>
+    </script>
+  <script>
+      function nextbutton(a) {
+          debugger
+          var b = document.getElementById(a).nextElementSibling.click();
+      }
+    </script>
+
+
+<style>
+    .overcontent md-tab-content {
+        overflow: visible;
+    }
+    .acceptfalse {
+   color:red
+         }
+   
+    .accepttrue {
+   color:green
+         }
+
+     md-checkbox.md-checked#selectcheck .md-ink-ripple {
+    color:rgb(0,150,136) ;
+       }
+
+      md-checkbox.md-checked#selectcheck .md-icon {
+        background-color: rgb(0,150,136);
+    }
+      .selectallchk {
+   color:rgb(0,150,136)
+         }
+</style>

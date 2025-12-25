@@ -1,0 +1,105 @@
+[
+    {
+        "name": "State",
+        "iconclass": "zmdi zmdi-nature",
+        "anchorlinks": "#/form/state",
+		"pageid":"1"
+    },
+    {
+        "name": "City",
+        "iconclass": "zmdi zmdi-city",
+        "anchorlinks": "#/form/city",
+		"pageid":"2"
+    },  
+	{
+        "name": "Area",
+        "iconclass": "zmdi zmdi-pin-drop",
+        "anchorlinks": "#/form/area",
+		"pageid":"3"
+    },
+    {
+        "name": "Role",
+        "iconclass": "zmdi zmdi-account-box-o",
+        "anchorlinks": "#/form/role",
+		"pageid":"5"
+    },         
+    {
+        "name": "Payment mode",
+        "iconclass": "zmdi zmdi-money",
+        "anchorlinks": "#/form/paymentmode",
+		"pageid":"6"
+    },
+    {
+        "name": "Payment status",
+        "iconclass": "zmdi zmdi-info",
+        "anchorlinks": "#/form/paymentstatus",
+		"pageid":"7"
+    },
+	{
+        "name": "Project status",
+        "iconclass": "zmdi zmdi-info",
+        "anchorlinks": "#/form/projectstatus",
+		"pageid":"8"
+    },
+    {
+        "name": "Task Status",
+        "iconclass": "zmdi zmdi-case-check",
+        "anchorlinks": "#/form/taskstatus",
+		"pageid":"9"
+    },
+    {
+        "name": "Skill",
+        "iconclass": "zmdi zmdi-shield-check",
+        "anchorlinks": "#/form/skill",
+		"pageid":"10"
+    },
+	{
+        "name": "User type",
+        "iconclass": "zmdi zmdi-accounts-list-alt",
+        "anchorlinks": "#/form/usertype",
+		"pageid":"11"
+    },
+    {
+        "name": "User status",
+        "iconclass": "zmdi zmdi-account-circle",
+        "anchorlinks": "#/form/userstatus",
+		"pageid":"12"
+    },
+	{
+        "name": "Contact Type",
+        "iconclass": "zmdi zmdi-account-box-phone",
+        "anchorlinks": "#/form/contacttype",
+		"pageid":"13"
+    },
+	{
+        "name": "Proof Type",
+        "iconclass": "zmdi zmdi-card",
+        "anchorlinks": "#/form/prooftype",
+		"pageid":"14"
+    },
+	{
+        "name": "Tax",
+        "iconclass": "zmdi zmdi-flip",
+        "anchorlinks": "#/form/tax",
+		"pageid":"15"
+    },
+	{
+        "name": "Item",
+        "iconclass": "zmdi zmdi-collection-item",
+        "anchorlinks": "#/form/item",
+		"pageid":"16"
+    }
+	,
+	{
+        "name": "Gender",
+        "iconclass": "zmdi zmdi-male-female",
+        "anchorlinks": "#/form/gender",
+		"pageid":"17"
+    },
+	{
+        "name": "Task Cancel reason",
+        "iconclass": "zmdi zmdi-block",
+        "anchorlinks": "#/form/taskcancelreason",
+		"pageid":"46"
+    }
+]

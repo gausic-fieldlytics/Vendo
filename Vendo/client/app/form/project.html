@@ -1,0 +1,646 @@
+<div class="page page-table" data-ng-controller="ProjectCtrl" ng-init="show = 1">
+
+
+    <div class="animate-fade-up" ng-show="show == 1">
+        <div class="row ui-section topbar">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">Project</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 2">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="Add Project"><span class="fa fa-plus ng-scope"></span></button>
+                    </a>
+                </span>
+                <span ng-show="access_permission.addshow" >
+                    <a ng-click="show =2">
+                        <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="Add Project<" ng-click="addProject()"><span class="ng-scope">Add Project</span></button>
+                    </a>
+                    
+                </span>
+            </div>
+        </div>
+        <div class="row ui-section">
+            <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchclientText"
+                                                 md-selected-item="selectedclient"
+                                                 md-selected-item-change="selectedItemChange(item,'CL')"
+                                                 md-items="item in querySearch(searchclientText,'client')"
+                                                 md-item-text="item.companyname"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh Client?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchclientText" md-highlight-flags="^i">{{item.companyname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Client matching "{{searchclientText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                         <div class="col-sm-3 ">
+                            <form>
+                                <md-autocomplete md-no-cache="noCache"
+                                                 md-search-text="searchstatusText"
+                                                 md-selected-item="selectedstatus"
+                                                 md-selected-item-change="selectedItemChange(item,'Project')"
+                                                 md-items="item in querySearch(searchstatusText,'projectstatus')"
+                                                 md-item-text="item.projectstatusname"
+                                                 md-min-length="0"
+                                                 placeholder="Seacrh Status?">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchstatusText" md-highlight-flags="^i">{{item.projectstatusname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Status matching "{{searchstatusText}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                            </form>
+                        </div>
+                         <div class="col-sm-3" style="padding-top: 5px">
+                            <md-input-container flex="">
+                                 <md-icon class="zmdi zmdi-calendar"></md-icon>
+                                    <div flex="" class="flex ">
+                                        <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="date"
+                                                       uib-datepicker-popup="dd/MM/yyyy"
+                                                        ng-model="grid.fdate"
+                                                       is-open="popup1.opened"
+                                                       datepicker-options=""
+                                                      
+                                                        close-text="Close"
+                                                       alt-input-formats="altInputFormats"
+                                                      
+                                                       alt-input-formats="dd/MM/yyyy"
+                                                       close-text="Close"
+                                                        ng-change="loadgrid()"
+                                                       placeholder="Search From Date" ng-click="open1()" style="background-color: transparent;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </md-input-container>
+                        </div>
+                         <div class="col-sm-3" style="padding-top: 5px">
+                            <md-input-container flex="">
+                                 <md-icon class="zmdi zmdi-calendar"></md-icon>
+                                    <div flex="" class="flex ">
+                                        <div data-ng-controller="DatepickerDemoCtrl"  style="display: inline-block;vertical-align: middle;  width: 100%">
+                                            <div class="input-group ui-datepicker" style="width: 100%">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="date"
+                                                       uib-datepicker-popup="dd/MM/yyyy"
+                                                        ng-model="grid.tdate"
+                                                       is-open="popup1.opened"
+                                                       datepicker-options=""
+                                                      
+                                                        close-text="Close"
+                                                       alt-input-formats="altInputFormats"
+                                                     
+                                                       alt-input-formats="dd/MM/yyyy"
+                                                       close-text="Close"
+                                                        ng-change="loadgrid()"
+                                                       placeholder="Search To Date" ng-click="open1()" style="background-color: transparent;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </md-input-container>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search..."
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()" style="border-radius: 29px;">
+                            </form>
+                        </div>
+
+                        <div class="col-sm-6 page-num-info">
+                            <span>
+                                Show
+                                <select class="pageno" data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="table-responsive table-bordered">
+
+
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Project 
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('projecttitle') "
+                                              data-ng-class="{active: row == 'projecttitle'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-projecttitle') "
+                                              data-ng-class="{active: row == '-projecttitle'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Start Date
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('projectdesc') "
+                                              data-ng-class="{active: row == 'projectdesc'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-projectdesc') "
+                                              data-ng-class="{active: row == '-projectdesc'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        End Date
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('projectdesc') "
+                                              data-ng-class="{active: row == 'projectdesc'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-projectdesc') "
+                                              data-ng-class="{active: row == '-projectdesc'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Client
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('companyname') "
+                                              data-ng-class="{active: row == 'companyname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-companyname') "
+                                              data-ng-class="{active: row == '-companyname'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('projectstatusname') "
+                                              data-ng-class="{active: row == 'projectstatusname'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-projectstatusname') "
+                                              data-ng-class="{active: row == '-projectstatusname'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PO #
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('clientid') "
+                                              data-ng-class="{active: row == 'clientid'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-clientid') "
+                                              data-ng-class="{active: row == '-clientid'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PO Value
+                                        <span class="fa fa-angle-up"
+                                              data-ng-click=" order('clientid') "
+                                              data-ng-class="{active: row == 'clientid'}"></span>
+                                        <span class="fa fa-angle-down"
+                                              data-ng-click=" order('-clientid') "
+                                              data-ng-class="{active: row == '-clientid'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="rowData in currentPageresultData">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{rowData.projecttitle}}</td>
+                                <td>{{rowData.startdate | date : 'MMMM d, y' }}</td>
+                                <td>{{rowData.enddate | date : 'MMMM d, y'}}</td>
+                                <td>{{rowData.companyname}}</td>
+                                <td>{{rowData.projectstatusname}}</td>
+                                <td>{{rowData.pon}}</td>
+                                <td  style="text-align:right">{{rowData.pov}}</td>
+                                <td style="padding: 0px" ng-show="ddlprojectstatusid!=3 && ddlprojectstatusid!=4" >
+                                    <div class="action">
+                                        <button  ng-show="access_permission.editshow" ng-click="editProject(rowData)" class="md-icon-button md-primary md-button md-ink-ripple"><span title="Edit" class="zmdi zmdi-edit ng-scope"></span></button>
+                                        
+                                        <!--<button ng-click="viewProject(rowData)" class="md-icon-button md-button md-ink-ripple"><span title="View" class="zmdi zmdi-eye ng-scope"></span></button>-->
+                                         <button  ng-show="access_permission.deleteshow" ng-click="cancelProject(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-close ng-scope"></span></button>
+                                       
+                                        <!--<button  ng-show="access_permission.deleteshow" ng-click="deleteProject(rowData)" class="md-icon-button md-warn md-button md-ink-ripple" type="button" title="Delete" aria-label="headphones"><span class="zmdi zmdi-delete ng-scope"></span></button>-->
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer">
+                    <div class="row">
+
+                        <div class="col-sm-6 filter-result-info">
+                            <span>
+                                Showing {{filteredresultData.length}}/{{resultData.length}} entries
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredresultData.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="animate-fade-up" id="#IDTITLE#add " ng-show="show == 2">
+
+
+        <div class="row ui-section">
+            <div class="col-xs-8 clearfix">
+                <h2 class="section-header" style="display: inline-block">New Project</h2>
+            </div>
+            <div class="col-xs-4 clearfix" style="text-align: right">
+                <span class="showon" style="float: right; margin-top: 10px;" clearfix>
+                    <a ng-click="show = 1">
+                        <button class="md-fab md-primary md-fab-sm md-button md-ink-ripple" type="button" aria-label="view Project"><span class="fa fa-caret-right ng-scope"></span></button>
+                    </a>
+                </span>
+                <a ng-click="show =1" class="hideon">
+                    <button style="margin-top: 8px" class="md-raised btn-sm md-primary md-button md-ink-ripple" type="button" aria-label="View Project"><span class="ng-scope">View Project</span></button>
+                </a>
+            </div>
+
+        </div>
+        <div class="row ui-section">
+
+            <div class="panel panel-default">
+                <div class="panel-body padding-xl form-validation" ng-cloak>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="material_login_form" class="form-horizontal form-validation" >
+                                <fieldset>
+                                    <div class="col-md-7">
+                                         <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label><span style="color: red"> *</span>Project </label>
+                                            <md-icon class="zmdi zmdi-filter-frames"></md-icon>
+                                            <input required
+                                                   type="text"
+                                                   name="projecttitle"
+                                                   ng-model="project.projecttitle"
+                                                   ng-maxlength="45"   />
+                                            <div ng-messages="material_login_form.projecttitle.$error" multiple ng-if='material_login_form.projecttitle.$dirty'>
+                                                <div ng-message="required">Project is required.</div>
+                                                <div ng-message="maxlength">Project up to 45 characters</div>
+                                            </div>
+                                        </md-input-container>
+                                        <div flex="">
+
+                                       
+                                        <md-input-container  style="margin-top:5px!important">
+                                            <label><span style="color: red"> *</span>Client</label>
+                                            <md-autocomplete md-no-cache="noCache" class="nobrd"
+                                                 md-search-text="searchclienttxt"
+                                                 md-selected-item="project.ddlclient"
+                                                 required
+                                                md-selected-item-change="selectedItemChange(item,'CLIENT')"
+                                                 md-items="item in querySearch(searchclienttxt,'client')"
+                                                 md-item-text="item.companyname"
+                                                 md-min-length="0" 
+                                                 >
+                                    <md-item-template>
+                                        <span md-highlight-text="searchclienttxt" md-highlight-flags="^i">{{item.companyname}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No Client matching "{{searchclienttxt}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                                            <p style="color:red" ng-show="isclientselect">Select valid Client.</p>
+                                            <!--<label>Client</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <md-select ng-model="project.clientid" class="mandatoryselect">
+                                                <md-option ng-value="user.id" data-ng-repeat="user in listclient">
+                                                    {{user.companyname}}
+                                                </md-option>
+                                            </md-select>-->
+                                          
+                                       
+                                        </md-input-container>
+                                             </div>
+                                    </div>
+                                    
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                        <md-input-container flex="" class="flex ">
+                                            <label >  Start Date</label>
+                                            <md-icon class="zmdi zmdi-calendar-check"></md-icon>
+                                            <div flex="" class="flex ">
+                                                <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                                    <div class="input-group ui-datepicker mandatoryselect" style="width:100%">
+                                                        <input type="text" style="background-color: transparent;"
+                                                               class="form-control"
+                                                               name="Fromdate"
+                                                               min-date="today_max"   
+                                                               uib-datepicker-popup="dd/MM/yyyy"
+                                                               ng-model="project.startdate"
+                                                               is-open="popup1.opened"
+                                                               datepicker-options="dateOptionstodayismax"
+                                                               close-text="Close"
+                                                               ng-required="true"
+                                                            ng-change="chagetodate()"
+                                                               ng-click="open1()"
+                                                               ng-focus="open1()" readonly="readonly" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="" class="col-md-6">
+                                            <label>  End Date</label>
+                                            <md-icon class="zmdi zmdi-calendar-close"></md-icon>
+                                            <div flex="" class="flex ">
+                                                <div data-ng-controller="DatepickerDemoCtrl" style="display: inline-block; width: 100%">
+                                                    <div class="input-group ui-datepicker mandatoryselect" style="width:100%">
+                                                        <input type="text" style="background-color: transparent;"
+                                                               class="form-control"
+                                                               name="Fromdate"
+                                                               uib-datepicker-popup="dd/MM/yyyy"
+                                                               ng-model="project.enddate"
+                                                               min-date="project.startdate" 
+                                                               is-open="popup1.opened"
+                                                               datepicker-options="dateOptionstodayismax"
+                                                               close-text="Close"
+                                                               ng-required="true"
+                                                               ng-click="open1()"
+                                                               ng-focus="open1()" readonly="readonly" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </md-input-container>
+                                    </div>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                        
+
+                                        <md-input-container flex="" class="flex ">
+                                            <label>PO Number</label>
+                                            <md-icon class="zmdi zmdi-file"></md-icon>
+                                            <input type="text"
+                                                   name="pon"
+                                                  ng-maxlength="45"
+                                                   ng-model="project.pon" 
+                                                   
+                                                   >
+                                            <div ng-messages="material_login_form.pon.$error" multiple ng-if='material_login_form.pon.$dirty'>
+                                                <div ng-message="maxlength">PO Number up to 45 characters</div>
+                                                <div ng-message="pattern">Enter a valid Numbers.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                         <md-input-container flex="" class="col-md-6">
+                                            <label>PO Value</label>
+                                            <md-icon class="zmdi zmdi-file-plus"></md-icon>
+                                            <input type="text"
+                                                   name="pov"
+                                                   ng-model="project.pov"
+                                                   ng-maxlength="45" 
+                                                   style="text-align:right;color:black"
+                                                   ng-change="addCommas('POV')" 
+                                                   ng-pattern="/^[0-9,]+$/"                                         
+                                                  >
+                                             <div ng-messages="material_login_form.pov.$error" multiple ng-if='material_login_form.pov.$dirty'>
+                                                <div ng-message="maxlength">PO Value up to 45 characters</div>
+                                                 <div ng-message="pattern">Enter a valid Numbers.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Custom 1</label>
+                                            <md-icon class="zmdi zmdi-account-add"></md-icon>
+                                            <input type="text"
+                                                   name="projectcustom1"
+                                                   ng-model="project.custom1"
+                                                 ng-maxlength="45"  />
+                                            <div ng-messages="material_login_form.projectcustom1.$error" multiple ng-if='material_login_form.projectcustom1.$dirty'>
+                                                <div ng-message="maxlength">Custom 1 up to 45 characters</div>
+                                            </div>
+                                        </md-input-container>
+
+
+                                          <md-input-container flex="" class="col-md-6">
+                                            <label>Custom 2</label>
+                                            <md-icon class="zmdi zmdi-accounts-add"></md-icon>
+                                            <input type="text"
+                                                   name="projectcustom2"
+                                                   ng-model="project.custom2"
+                                                 ng-maxlength="45"  />
+                                              <div ng-messages="material_login_form.projectcustom2.$error" multiple ng-if='material_login_form.projectcustom2.$dirty'>
+                                                <div ng-message="maxlength">Custom 2 up to 45 characters</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                    <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+
+                                        <md-input-container flex="" class="flex ">
+                                            <label>Total Revenue </label>
+                                            <md-icon class="zmdi zmdi-account-add"></md-icon>
+                                            <input type="text"
+                                                   name="revenue"
+                                                   ng-model="project.revenue"
+                                                   style="text-align:right;color:black"
+                                                   ng-pattern="/^[0-9,]+$/"  
+                                                   ng-change="addCommas('REV')" 
+                                                     />
+                                            <div ng-messages="material_login_form.revenue.$error" multiple ng-if='material_login_form.revenue.$dirty'>
+                                              <div ng-message="pattern">Enter a valid Numbers.</div>
+                                            </div>
+                                        </md-input-container>
+
+
+                                          <md-input-container flex="" class="col-md-6">
+                                            <label>Total Cost </label>
+                                            <md-icon class="zmdi zmdi-accounts-add"></md-icon>
+                                            <input type="text"
+                                                   name="cost"
+                                                   ng-model="project.cost"
+                                                   style="text-align:right;color:black"
+                                                    ng-pattern="/^[0-9,]+$/"  
+                                                   ng-change="addCommas('COST')"   />
+                                              <div ng-messages="material_login_form.cost.$error" multiple ng-if='material_login_form.cost.$dirty'>
+                                               <div ng-message="pattern">Enter a valid Numbers.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                     <div layout='' layout-sm="column" class="layout-sm-column layout-row">
+                                            <div class=" col-md-6" style="text-align: left;margin-bottom: 20px;padding:0px">
+                                                <label style="    FONT-SIZE: 12PX;    COLOR: #949494;">Description</label>
+                                                <textarea style="margin-top: 3px;"name="projectdesc"  rows="2" 
+                                                      ng-maxlength="250" ng-model="project.projectdesc" class="form-control">
+                                                </textarea>  
+                                                <div ng-messages="material_login_form.projectdesc.$error" multiple ng-if='material_login_form.projectdesc.$dirty'>
+                                                <div ng-message="maxlength">Description up to 250 characters</div>
+                                            </div>                                             
+                                            </div>
+                                            
+                                         <!--<md-input-container flex="" class="flex " ng-show="project.id">
+                                            
+                                            <label>Status</label>
+                                            <md-icon class="zmdi zmdi-account-o"></md-icon>
+                                            <md-select ng-model="project.projectstatusid" class="mandatoryselect">
+                                                <md-option ng-value="projectstatus.id" data-ng-repeat="projectstatus in listprojectstatus">
+                                                    {{projectstatus.projectstatusname}}
+                                                </md-option>
+                                            </md-select>
+                                          
+                                       
+                                        </md-input-container>-->
+                                     </div>
+                                        <br />
+                                        <div>
+                                        <md-button type="submit" ng-click="saveProject()"
+                                                   class="md-raised btn-w-md md-primary"
+                                                   data-ng-disabled="!canSubmit()">Save</md-button>
+                                        <md-button class="btn-w-md"
+                                                   data-ng-disabled="!canRevert()"
+                                                   data-ng-click="revert()">Revert</md-button>
+
+                                        <div class="divider"></div>
+                                    </div>
+                                    </div>
+                                     <div class="col-md-5">
+                                         <h4 style="padding: 15px 15px 10px;">Materials </h4>
+                                                <ng-form name="item_form" style="width:100%">
+                                                    <div class="table-responsive">
+                                                        <table class="alltable table table-bordered sortableTable responsive-table table-hover" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Item</th>
+                                                                    <th>Total Qty</th>
+                                                                    <th>Qty(Per Target)</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="even gradeC" ng-repeat="item in project.listitem">
+                                                                    <td data-ng-bind="$index + 1"></td>
+                                                                    <td>
+                                                                        <md-input-container>
+                                                                             <md-autocomplete class="nobrd " style="margin-bottom:0px;padding:0px"  flex 
+                                                                            md-input-name="autocomplete_di"
+                                                                            required
+                                                                            md-no-cache="noCache"
+                                                                            class="autocomplete_width"
+                                                                            md-search-text="item.searchitem"
+                                                                            md-selected-item="item.selecteditem"
+                                                                            md-search-text-change="searchTextChange(item,$index,1,project.listitem)"
+                                                                            md-selected-item-change="selectedlistItemChange(item,$index,1,project.listitem)"
+                                                                            md-items="item in querySearch(item.searchitem,'item')"
+                                                                            md-item-text="item.itemname"
+                                                                            md-min-length="0"
+                                                                            md-autoselect="true"
+                                                                            >
+                                                                            <md-item-template>
+                                                                                <span md-highlight-text="item.searchitem" md-highlight-flags="^i">{{item.itemname}}</span>
+                                                                            </md-item-template>
+                                                                        </md-autocomplete>
+                                                                        <p style="color:red" ng-show="!item.itemid&& item.searchitem">Invalid Item</p>
+                                                                        </md-input-container>
+                                                                       
+                                                                        <!--<md-select ng-model="item.itemid" required style="margin-top: 0px;"  >
+                                                                            <md-option ng-value="itm.id" data-ng-repeat="itm in listitem">
+                                                                                {{itm.itemname}}
+                                                                            </md-option>
+                                                                        </md-select>-->
+                                                                    </td>
+                                                                    <td>
+                                                                        <md-input-container class="no-error-space">
+                                                                            <input style="text-align:right" type="text" required name="totalqty{{$index}}" ng-model="item.totalqty"  allow-decimal-numbers  />
+                                                                            <div  ng-messages="item_form['totalqty' + $index].$error" multiple ng-show="item_form['totalqty' + $index].$dirty">
+                                                                            </div>
+                                                                        </md-input-container>
+                                                                    </td>
+                                                                    <td>
+                                                                        <md-input-container class="no-error-space">
+                                                                            <input style="text-align:right" type="text" required name="qty{{$index}}" ng-model="item.qty"  allow-decimal-numbers  />
+                                                                            <div  ng-messages="item_form['qty' + $index].$error" multiple ng-show="item_form['qty' + $index].$dirty">
+                                                                            </div>
+                                                                        </md-input-container>
+                                                                    </td>
+                                                                    <td>
+                                                                        <md-button class="md-fab md-warn md-fab-xs" data-ng-click="removeimgField(project.listitem,$index)" ><span class="zmdi zmdi-delete"></span></md-button>
+                                                                    </td>
+                                                                </tr>
+                                                                 <tr data-ng-if="project.listitem.length == 0">
+                                                                    <td colspan="4" style="text-align: center;"><span> No Item found.</span></td>
+                                                                 </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6" style="padding: 10px 10px 0px;">
+                                                        <md-button class="md-fab md-primary md-fab-xs" data-ng-click="addFieldimg(project.listitem)" data-ng-disabled="!validatechild(item_form)"><span class="zmdi zmdi-plus"></span></md-button>
+                                                        <md-button class="md-fab md-primary md-fab-xs" data-ng-click="removeField(project.listitem)" data-ng-disabled="project.listitem.length==0"><span class="zmdi zmdi-minus"></span></md-button>
+                                                    </div> 
+                                                </ng-form>
+                                          
+                                        </div>
+                                   
+                                    
+                                    
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+   
+</div>
+
+
+
+
+
+
+

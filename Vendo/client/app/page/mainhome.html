@@ -1,0 +1,17 @@
+<div class="" ng-controller="homeCtrl">
+
+   <div class="titlebar" style="background:url(images/P4101.png);background-size:cover">
+      
+
+  </div>
+    <ul class="mainhomeli" >
+        <li data-ng-repeat="menu in homemenu |filter :searchtext " style="cursor:pointer" >
+            <a  ng-click="redirect(menu.id,menu.anchorlinks,$index)">
+                <i class="{{menu.iconclass}}"></i>
+                <br />
+                <div>{{menu.name}}</div>
+                <small>{{menu.about}}</small>
+            </a>
+        </li>
+    </ul>
+</div>
