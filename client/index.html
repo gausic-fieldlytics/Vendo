@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -10,9 +11,12 @@
 
     <!-- Needs images, font... therefore can not be part of main.css -->
     <!--<link rel="stylesheet" href="styles/loader.css">-->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,500,700,300,300italic,500italic|Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
+    <link
+        href='https://fonts.googleapis.com/css?family=Roboto:400,100,500,700,300,300italic,500italic|Roboto+Condensed:400,300'
+        rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet"
+        href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <!-- end Needs images -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
@@ -22,20 +26,16 @@
     <link rel="stylesheet" href="styles/ui.css">
     <!-- <link rel="stylesheet" href="styles/font/Robotofont.css">     -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/stylesheet.css"/>
+    <link rel="stylesheet" href="styles/stylesheet.css" />
     <link rel="stylesheet" href="styles/utilities.css" />
     <link rel="stylesheet" href="bower_components/angular-tree-view-master/css/style.css" />
 
-    <link rel="stylesheet" href="bower_components/treeview/treestyle.css"/>
+    <link rel="stylesheet" href="bower_components/treeview/treestyle.css" />
     <!-- endbuild -->
 
 </head>
-<body data-ng-app="app"
-      id="app"
-      class="app"
-      data-custom-page
-      data-ng-controller="AppCtrl"
-      data-ng-class=" { 'layout-boxed': main.layout === 'boxed',
+
+<body data-ng-app="app" id="app" class="app" data-custom-page data-ng-controller="AppCtrl" data-ng-class=" { 'layout-boxed': main.layout === 'boxed',
                             'nav-collapsed-min': main.isMenuCollapsed
           } ">
     <!--[if lt IE 9]>
@@ -47,10 +47,7 @@
 
     <div id="loader-container"></div>
 
-    <header data-ng-include=" 'app/layout/header.html' "
-            id="header"
-            class="header-container "
-            data-ng-class="{ 'header-fixed': main.fixedHeader,
+    <header data-ng-include=" 'app/layout/header.html' " id="header" class="header-container " data-ng-class="{ 'header-fixed': main.fixedHeader,
                                   'bg-white': ['11','12','13','14','15','16','21'].indexOf(main.skin) >= 0,
                                   'bg-dark': main.skin === '31',
                                   'bg-primary': ['22','32'].indexOf(main.skin) >= 0,
@@ -61,11 +58,8 @@
                  }"></header>
 
     <div class="main-container" style="background:url(images/pattern-icons.png)"
-         data-ng-class="{ 'app-nav-horizontal': main.menu === 'horizontal' }">
-        <aside data-ng-include=" 'app/layout/sidebar.html' "
-               id="nav-container"
-               class="nav-container"
-               data-ng-class="{ 'nav-fixed': main.fixedSidebar,
+        data-ng-class="{ 'app-nav-horizontal': main.menu === 'horizontal' }">
+        <aside data-ng-include=" 'app/layout/sidebar.html' " id="nav-container" class="nav-container" data-ng-class="{ 'nav-fixed': main.fixedSidebar,
                                     'nav-horizontal': main.menu === 'horizontal',
                                     'nav-vertical': main.menu === 'vertical',
                                     'bg-white': ['31','32','33','34','35','36'].indexOf(main.skin) >= 0,
@@ -73,20 +67,21 @@
                    }"></aside>
 
         <div id="content" class="content-container">
-            <section data-ui-view
-                     class="view-container {{main.pageTransition.class}}"></section>
+            <section data-ui-view class="view-container {{main.pageTransition.class}}"></section>
         </div>
-        <footer style="background: #858585;position: fixed;bottom: 0px;width: 100%; padding: 5px; color: white; text-align: center; font-size:12PX;">
-            &copy Copyright &nbsp | &nbsp <span style="font-size:11PX;"> VENDO</span>
+        <footer
+            style="background: #858585;position: fixed;bottom: 0px;width: 100%; padding: 5px; color: white; text-align: center; font-size:12PX;">
+            &copy Copyright &nbsp | &nbsp <span style="font-size:11PX;"> ACTIVATR</span>
         </footer>
     </div>
 
     <script src="http://maps.google.com/maps/api/js"></script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu3OtJvVA5KJHCCkErmL36Mc8R6KZUlYA&libraries=places&sensor=false"> </script>
-     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6owI5bEVA60dXKIvdFy06BAsZLxsgATY&sensor=false&libraries=geometry"></script>-->
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu3OtJvVA5KJHCCkErmL36Mc8R6KZUlYA&libraries=places&sensor=false"> </script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6owI5bEVA60dXKIvdFy06BAsZLxsgATY&sensor=false&libraries=geometry"></script>-->
     <!-- build:js scripts/vendor.js -->
-   <!-- -->
+    <!-- -->
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/Pdfview/bootstrap.min.js"></script>
@@ -96,7 +91,7 @@
     <script src="bower_components/angular-aria/angular-aria.min.js"></script>
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
- 
+
 
 
     <script src="bower_components/Pdfview/FileSaver.js"></script>
@@ -105,8 +100,8 @@
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
     <script src="bower_components/angular-tree-view-master/js/treeView.js"></script>
-<!--    <script src="styles/treeview/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
-    
+    <!--    <script src="styles/treeview/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
+
     <script src="bower_components/importexcel/xlsx.core.min.js"></script>
     <script src="bower_components/Pdfview/pdfmake.min.js"></script>
 
@@ -115,16 +110,16 @@
     <script src="bower_components/dashbord/exporting.js"></script>
 
 
-     
+
     <!-- endbuild -->
     <!-- build:js scripts/ui.js -->
     <script src="bower_components/angular-material/angular-material.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
-   <!-- <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>-->
+    <!-- <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>-->
 
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
-   <!-- <script src="bower_components/treeview/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
+    <!-- <script src="bower_components/treeview/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
     <script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
     <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
     <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
@@ -137,616 +132,618 @@
     <script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
 
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
-    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-  
-     <script src="app/core/uibmodal.js"></script>
-    
-     <script src="vendors/echarts.js"></script>
-    <script src="vendors/ngecharts.js"></script>   
+    <script
+        src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
-<!--    <script src="bower_components/Pdfview/vfs_fonts.js"></script>-->
+    <script src="app/core/uibmodal.js"></script>
 
-    
+    <script src="vendors/echarts.js"></script>
+    <script src="vendors/ngecharts.js"></script>
+
+    <!--    <script src="bower_components/Pdfview/vfs_fonts.js"></script>-->
+
+
     <script src="app/signalr/jquery-1.10.2.js"></script>
     <script src="app/signalr/jquery.signalR-2.2.0.js"></script>
     <script src="app/signalr/generated-hub-proxy.js"></script>
     <!-- endbuild -->
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
-   
-  
+
+
     <script src="app/app.module.js"></script>
-   
-  
+
+
     <script src="app/chart/chart.module.js"></script>
-   
-  
+
+
     <script src="app/controllers/customer.module.js"></script>
-   
-  
+
+
     <script src="app/controllers/form.module.js"></script>
-   
-  
+
+
     <script src="app/controllers/formValidation.module.js"></script>
-   
-  
+
+
     <script src="app/core/core.module.js"></script>
-   
-  
+
+
     <script src="app/layout/layout.module.js"></script>
-   
-  
+
+
     <script src="app/page/page.module.js"></script>
-   
-  
+
+
     <script src="app/ui/ui.module.js"></script>
-   
-  
+
+
     <script src="app/chart/echarts.controller.js"></script>
-   
-  
+
+
     <script src="app/controllers/agencyagent.js"></script>
-   
-  
+
+
     <script src="app/controllers/agencyaudit.js"></script>
-   
-  
+
+
     <script src="app/controllers/agencyinvoice.js"></script>
-   
-  
+
+
     <script src="app/controllers/agencyispreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/agencysignup.js"></script>
-   
-  
+
+
     <script src="app/controllers/appversion.js"></script>
-   
-  
+
+
     <script src="app/controllers/appvhistory.js"></script>
-   
-  
+
+
     <script src="app/controllers/area.js"></script>
-   
-  
+
+
     <script src="app/controllers/assignauditor.js"></script>
-   
-  
+
+
     <script src="app/controllers/auditreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/auditusertaskrate.js"></script>
-   
-  
+
+
     <script src="app/controllers/autoincmaster.js"></script>
-   
-  
+
+
     <script src="app/controllers/city.js"></script>
-   
-  
+
+
     <script src="app/controllers/client.js"></script>
-   
-  
+
+
     <script src="app/controllers/collecteditemreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/companytype.js"></script>
-   
-  
+
+
     <script src="app/controllers/contact.js"></script>
-   
-  
+
+
     <script src="app/controllers/contacttype.js"></script>
-   
-  
+
+
     <script src="app/controllers/department.js"></script>
-   
-  
+
+
     <script src="app/controllers/emailtemplate.js"></script>
-   
-  
+
+
     <script src="app/controllers/form.controller.js"></script>
-   
-  
+
+
     <script src="app/controllers/form.directive.js"></script>
-   
-  
+
+
     <script src="app/controllers/formValidation.controller.js"></script>
-   
-  
+
+
     <script src="app/controllers/gender.js"></script>
-   
-  
+
+
     <script src="app/controllers/generalsetting.js"></script>
-   
-  
+
+
     <script src="app/controllers/home.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoice.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoicefrequency.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoicereport.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoicerequest.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoicerequestotp.js"></script>
-   
-  
+
+
     <script src="app/controllers/invoicetax.js"></script>
-   
-  
+
+
     <script src="app/controllers/item.js"></script>
-   
-  
+
+
     <script src="app/controllers/location.js"></script>
-   
-  
+
+
     <script src="app/controllers/locationtype.js"></script>
-   
-  
+
+
     <script src="app/controllers/login.js"></script>
-   
-  
+
+
     <script src="app/controllers/newtask copy.js"></script>
-   
-  
+
+
     <script src="app/controllers/newtask.js"></script>
-   
-  
+
+
     <script src="app/controllers/payment.js"></script>
-   
-  
+
+
     <script src="app/controllers/paymentmode.js"></script>
-   
-  
+
+
     <script src="app/controllers/paymentstatus.js"></script>
-   
-  
+
+
     <script src="app/controllers/ppmsuser.js"></script>
-   
-  
+
+
     <script src="app/controllers/progress.js"></script>
-   
-  
+
+
     <script src="app/controllers/project.js"></script>
-   
-  
+
+
     <script src="app/controllers/projectreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/projectstatus.js"></script>
-   
-  
+
+
     <script src="app/controllers/prooftype.js"></script>
-   
-  
+
+
     <script src="app/controllers/reassign.js"></script>
-   
-  
+
+
     <script src="app/controllers/register.js"></script>
-   
-  
+
+
     <script src="app/controllers/role.js"></script>
-   
-  
+
+
     <script src="app/controllers/setting.js"></script>
-   
-  
+
+
     <script src="app/controllers/skill.js"></script>
-   
-  
+
+
     <script src="app/controllers/state.js"></script>
-   
-  
+
+
     <script src="app/controllers/subagent.js"></script>
-   
-  
+
+
     <script src="app/controllers/target.js"></script>
-   
-  
+
+
     <script src="app/controllers/targetfiles.js"></script>
-   
-  
+
+
     <script src="app/controllers/targetmapping.js"></script>
-   
-  
+
+
     <script src="app/controllers/task.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskbucket.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskcancelreason.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskclosecallreason.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskdone.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskhistory.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskpool.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskprocessreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskprogress.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskprogressfilter.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskprogressivereport.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskquestiontype.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskreport.js"></script>
-   
-  
+
+
     <script src="app/controllers/taskstatus.js"></script>
-   
-  
+
+
     <script src="app/controllers/tasksteps.js"></script>
-   
-  
+
+
     <script src="app/controllers/tasksteptype.js"></script>
-   
-  
+
+
     <script src="app/controllers/tax.js"></script>
-   
-  
+
+
     <script src="app/controllers/tracking.js"></script>
-   
-  
+
+
     <script src="app/controllers/user.js"></script>
-   
-  
+
+
     <script src="app/controllers/userbankdet.js"></script>
-   
-  
+
+
     <script src="app/controllers/usercompany.js"></script>
-   
-  
+
+
     <script src="app/controllers/userexp.js"></script>
-   
-  
+
+
     <script src="app/controllers/userloc.js"></script>
-   
-  
+
+
     <script src="app/controllers/userprojectimagereport.js"></script>
-   
-  
+
+
     <script src="app/controllers/userproof.js"></script>
-   
-  
+
+
     <script src="app/controllers/userskill.js"></script>
-   
-  
+
+
     <script src="app/controllers/userstatus.js"></script>
-   
-  
+
+
     <script src="app/controllers/usertype.js"></script>
-   
-  
+
+
     <script src="app/core/app.config.js"></script>
-   
-  
+
+
     <script src="app/core/app.controller.js"></script>
-   
-  
+
+
     <script src="app/core/config.route.js"></script>
-   
-  
+
+
     <script src="app/core/i18n.js"></script>
-   
-  
+
+
     <script src="app/core/uibmodal.js"></script>
-   
-  
+
+
     <script src="app/dashboard/dashboard.controller.js"></script>
-   
-  
+
+
     <script src="app/layout/layout.controller.js"></script>
-   
-  
+
+
     <script src="app/layout/layout.diretive.js"></script>
-   
-  
+
+
     <script src="app/layout/loader.js"></script>
-   
-  
+
+
     <script src="app/layout/sidebar.controller.js"></script>
-   
-  
+
+
     <script src="app/layout/sidebar.directive.js"></script>
-   
-  
+
+
     <script src="app/model/agencyinvoice_model.js"></script>
-   
-  
+
+
     <script src="app/model/appversion_model.js"></script>
-   
-  
+
+
     <script src="app/model/appvhistory_model.js"></script>
-   
-  
+
+
     <script src="app/model/area_model.js"></script>
-   
-  
+
+
     <script src="app/model/assignauditor_model.js"></script>
-   
-  
+
+
     <script src="app/model/auditusertaskrate_model.js"></script>
-   
-  
+
+
     <script src="app/model/autoincmaster_model.js"></script>
-   
-  
+
+
     <script src="app/model/city_model.js"></script>
-   
-  
+
+
     <script src="app/model/client_model.js"></script>
-   
-  
+
+
     <script src="app/model/common_model.js"></script>
-   
-  
+
+
     <script src="app/model/companytype_model.js"></script>
-   
-  
+
+
     <script src="app/model/contacttype_model.js"></script>
-   
-  
+
+
     <script src="app/model/contact_model.js"></script>
-   
-  
+
+
     <script src="app/model/department_model.js"></script>
-   
-  
+
+
     <script src="app/model/emailtemplate_model.js"></script>
-   
-  
+
+
     <script src="app/model/gender_model.js"></script>
-   
-  
+
+
     <script src="app/model/generalsetting_model.js"></script>
-   
-  
+
+
     <script src="app/model/invoicefrequency_model.js"></script>
-   
-  
+
+
     <script src="app/model/invoicerequest_model.js"></script>
-   
-  
+
+
     <script src="app/model/invoicetax_model.js"></script>
-   
-  
+
+
     <script src="app/model/invoice_model.js"></script>
-   
-  
+
+
     <script src="app/model/item_model.js"></script>
-   
-  
+
+
     <script src="app/model/locationtype_model.js"></script>
-   
-  
+
+
     <script src="app/model/location_model.js"></script>
-   
-  
+
+
     <script src="app/model/login_model.js"></script>
-   
-  
+
+
     <script src="app/model/newtask_model.js"></script>
-   
-  
+
+
     <script src="app/model/paymentmode_model.js"></script>
-   
-  
+
+
     <script src="app/model/paymentstatus_model.js"></script>
-   
-  
+
+
     <script src="app/model/payment_model.js"></script>
-   
-  
+
+
     <script src="app/model/ppmsuser_model.js"></script>
-   
-  
+
+
     <script src="app/model/progress_model.js"></script>
-   
-  
+
+
     <script src="app/model/projectstatus_model.js"></script>
-   
-  
+
+
     <script src="app/model/project_model.js"></script>
-   
-  
+
+
     <script src="app/model/prooftype_model.js"></script>
-   
-  
+
+
     <script src="app/model/reassign_model.js"></script>
-   
-  
+
+
     <script src="app/model/register_model.js"></script>
-   
-  
+
+
     <script src="app/model/report_model.js"></script>
-   
-  
+
+
     <script src="app/model/role_model.js"></script>
-   
-  
+
+
     <script src="app/model/setting_model.js"></script>
-   
-  
+
+
     <script src="app/model/skill_model.js"></script>
-   
-  
+
+
     <script src="app/model/state_model.js"></script>
-   
-  
+
+
     <script src="app/model/targetfiles_model.js"></script>
-   
-  
+
+
     <script src="app/model/target_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskbucket_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskcancelreason_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskclosecallreason_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskdone_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskhistory_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskpool_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskprogress_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskquestiontype_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskstatus_model.js"></script>
-   
-  
+
+
     <script src="app/model/taskstepprogress_model.js"></script>
-   
-  
+
+
     <script src="app/model/tasksteps_model.js"></script>
-   
-  
+
+
     <script src="app/model/tasksteptype_model.js"></script>
-   
-  
+
+
     <script src="app/model/task_model.js"></script>
-   
-  
+
+
     <script src="app/model/tax_model.js"></script>
-   
-  
+
+
     <script src="app/model/tracking_model.js"></script>
-   
-  
+
+
     <script src="app/model/userbankdet_model.js"></script>
-   
-  
+
+
     <script src="app/model/usercompany_model.js"></script>
-   
-  
+
+
     <script src="app/model/userexp_model.js"></script>
-   
-  
+
+
     <script src="app/model/userlocprefer_model.js"></script>
-   
-  
+
+
     <script src="app/model/userloc_model.js"></script>
-   
-  
+
+
     <script src="app/model/userproof_model.js"></script>
-   
-  
+
+
     <script src="app/model/userskill_model.js"></script>
-   
-  
+
+
     <script src="app/model/userstatus_model.js"></script>
-   
-  
+
+
     <script src="app/model/usertype_model.js"></script>
-   
-  
+
+
     <script src="app/model/user_model.js"></script>
-   
-  
+
+
     <script src="app/page/dashboard.controller.js"></script>
-   
-  
+
+
     <script src="app/page/forgetpassword.js"></script>
-   
-  
+
+
     <script src="app/page/home.controller.js"></script>
-   
-  
+
+
     <script src="app/page/page.controller.js"></script>
-   
-  
+
+
     <script src="app/page/page.directive.js"></script>
-   
-  
+
+
     <script src="app/page/profile.js"></script>
-   
-  
+
+
     <script src="app/page/profile_model.js"></script>
-   
-  
+
+
     <script src="app/services/appConstants.js"></script>
-   
-  
+
+
     <script src="app/services/authData.js"></script>
-   
-  
+
+
     <script src="app/services/AuthenticationService.js"></script>
-   
-  
+
+
     <script src="app/services/config.js"></script>
-   
-  
+
+
     <script src="app/services/directive.js"></script>
-   
-  
+
+
     <script src="app/services/filter.js"></script>
-   
-  
+
+
     <script src="app/services/loginService.js"></script>
-   
-  
+
+
     <script src="app/services/materials.service.js"></script>
-   
-  
+
+
     <script src="app/services/service.js"></script>
-   
-  
-    <script src="app/signalr/generated-hub-proxy.js"></script>
-   
-  
-    <script src="app/signalr/jquery-1.10.2.js"></script>
-   
-  
-    <script src="app/signalr/jquery.signalR-2.2.0.js"></script>
-   
-  
+
+
     <script src="app/ui/material.controller.js"></script>
-   
-  
+
+
     <script src="app/ui/ui.controller.js"></script>
-   
-  
+
+
     <script src="app/ui/ui.directive.js"></script>
-   
-  
+
+
+    <script src="app/signalr/generated-hub-proxy.js"></script>
+
+
+    <script src="app/signalr/jquery-1.10.2.js"></script>
+
+
+    <script src="app/signalr/jquery.signalR-2.2.0.js"></script>
+
+
     <script src="app/form/dashboard/dashboard.controller.js"></script>
-   
-  
+
+
     <!-- endinject -->
     <!-- build:js scripts/app.js -->
 </body>
+
 </html>

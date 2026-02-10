@@ -1,8 +1,0 @@
-[
-    {
-      "name":"Customer",
-      "iconclass":"zmdi zmdi-account",
-	  "Code":"BAN",
-      "anchorlinks":"#/form/customer"
-    }
-]
